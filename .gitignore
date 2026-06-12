@@ -1,0 +1,47 @@
+# ==========================================
+# 1. Compilación y Construcción (Maven)
+# ==========================================
+# Ignora la carpeta donde Maven genera el empaquetado (.jar, clases compiladas, etc.)
+/target/
+
+# Ignora archivos .class sueltos por si algo es compilado manualmente
+*.class
+
+# Archivo de bitácora de NetBeans para acciones personalizadas de Maven
+nbactions.xml
+
+
+# ==========================================
+# 2. Entornos de Desarrollo (IDEs)
+# ==========================================
+
+### --- IntelliJ IDEA ---
+# Ignora la carpeta de configuración interna de IntelliJ
+/.idea/
+# Ignora archivos de módulos específicos de IntelliJ
+*.iml
+# Ignora carpetas de salida alternativas que a veces genera IntelliJ
+/out/
+
+### --- NetBeans ---
+# Ignora la carpeta de configuración local del proyecto de NetBeans
+/nbproject/
+# Archivo donde NetBeans guarda la configuración de la vista privada del usuario
+/nbproject/private/
+
+
+# ==========================================
+# 3. Archivos del Sistema y Logs de Error
+# ==========================================
+# Historial del shell interactivo de Java (si se llega a usar jshell)
+jshell.history
+
+# Archivos de volcado de memoria (Crash logs) de la JVM.
+hs_err_pid*.log
+reply_pid*.log
+
+# Archivos temporales o de configuración de editores ligeros como VS Code
+.vscode/
+.vs/
+.DS_Store
+Thumbs.db
