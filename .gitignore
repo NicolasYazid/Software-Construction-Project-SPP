@@ -1,11 +1,10 @@
-/SPP/target/
 # ==========================================
 # 1. Compilación y Construcción (Maven)
 # ==========================================
-# Ignora la carpeta donde Maven genera el empaquetado (.jar, clases compiladas, etc.)
-/target/
+# Ignora la carpeta 'target' en cualquier nivel de profundidad (raíz o subcarpetas)
+**/target/
 
-# Ignora archivos .class sueltos por si algo es compilado manualmente
+# Ignora archivos .class sueltos por si acaso se compila algo manualmente
 *.class
 
 # Archivo de bitácora de NetBeans para acciones personalizadas de Maven
@@ -17,31 +16,29 @@ nbactions.xml
 # ==========================================
 
 ### --- IntelliJ IDEA ---
-# Ignora la carpeta de configuración interna de IntelliJ
-/.idea/
+# Ignora la carpeta .idea en cualquier nivel
+**/.idea/
 # Ignora archivos de módulos específicos de IntelliJ
 *.iml
-# Ignora carpetas de salida alternativas que a veces genera IntelliJ
-/out/
+# Ignora carpetas de salida alternativas
+**/out/
 
 ### --- NetBeans ---
-# Ignora la carpeta de configuración local del proyecto de NetBeans
-/nbproject/
-# Archivo donde NetBeans guarda la configuración de la vista privada del usuario
-/nbproject/private/
+# Ignora la carpeta de configuración de NetBeans en cualquier nivel
+**/nbproject/
 
 
 # ==========================================
 # 3. Archivos del Sistema y Logs de Error
 # ==========================================
-# Historial del shell interactivo de Java (si se llega a usar jshell)
+# Historial del shell interactivo de Java (si llegas a usar jshell)
 jshell.history
 
-# Archivos de volcado de memoria (Crash logs) de la JVM.
+# Archivos de volcado de memoria (Crash logs) de la JVM
 hs_err_pid*.log
 reply_pid*.log
 
-# Archivos temporales o de configuración de editores ligeros como VS Code
+# Archivos temporales o de configuración de editores ligeros o del sistema
 .vscode/
 .vs/
 .DS_Store
