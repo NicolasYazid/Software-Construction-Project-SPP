@@ -1,0 +1,163 @@
+/* ----------------------------------------------------------------
+ * login.css  —  Estilos de la pantalla de autenticación (SPP)
+ * Paleta: azul institucional UV #1C3A6E / blanco / gris neutro.
+ * ---------------------------------------------------------------- */
+
+/* Fondo general de la pantalla ----------------------------------- */
+.fondo-login {
+    -fx-background-color: #1C3A6E;
+}
+
+/* Tarjeta central (contenedor de dos paneles) ------------------- */
+.tarjeta-login {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 24, 0, 0, 6);
+    -fx-pref-width: 820;
+    -fx-min-height: 460;
+}
+
+/* Panel izquierdo: identidad institucional ----------------------- */
+.panel-marca {
+    -fx-background-color: #152D56;
+    -fx-background-radius: 12 0 0 12;
+    -fx-min-width: 300;
+    -fx-pref-width: 300;
+    -fx-alignment: center;
+}
+
+.lbl-marca-siglas {
+    -fx-font-size: 54;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.lbl-marca-linea {
+    -fx-font-size: 14;
+    -fx-text-fill: #B8CCE4;
+    -fx-text-alignment: center;
+}
+
+.separador-marca {
+    -fx-pref-width: 140;
+    -fx-opacity: 0.35;
+}
+
+.lbl-marca-inst {
+    -fx-font-size: 12;
+    -fx-text-fill: #8FAFD6;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+}
+
+.lbl-marca-periodo {
+    -fx-font-size: 11;
+    -fx-text-fill: #6B91BE;
+}
+
+/* Panel derecho: formulario ------------------------------------- */
+.panel-formulario {
+    -fx-pref-width: 520;
+    -fx-alignment: center-left;
+}
+
+.lbl-titulo-form {
+    -fx-font-size: 24;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1C3A6E;
+}
+
+.lbl-subtitulo-form {
+    -fx-font-size: 12;
+    -fx-text-fill: #7F8C8D;
+    -fx-pref-width: 380;
+}
+
+/* Etiquetas de campo -------------------------------------------- */
+.lbl-campo {
+    -fx-font-size: 13;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2C3E50;
+}
+
+/* Campos de texto y contraseña ---------------------------------- */
+.txt-login {
+    -fx-pref-height: 38;
+    -fx-background-color: white;
+    -fx-background-radius: 6;
+    -fx-border-color: #BDC3C7;
+    -fx-border-radius: 6;
+    -fx-border-width: 1.5;
+    -fx-font-size: 13;
+    -fx-padding: 0 12;
+}
+
+.txt-login:focused {
+    -fx-border-color: #1C3A6E;
+    -fx-border-width: 2;
+}
+
+/* ComboBox de tipo de usuario ----------------------------------- */
+.cmb-login {
+    -fx-pref-height: 38;
+    -fx-background-color: white;
+    -fx-background-radius: 6;
+    -fx-border-color: #BDC3C7;
+    -fx-border-radius: 6;
+    -fx-border-width: 1.5;
+    -fx-font-size: 13;
+}
+
+.cmb-login:focused {
+    -fx-border-color: #1C3A6E;
+    -fx-border-width: 2;
+}
+
+/* Botón principal de login -------------------------------------- */
+.btn-login {
+    -fx-background-color: #1C3A6E;
+    -fx-text-fill: white;
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6;
+    -fx-pref-height: 42;
+    -fx-cursor: hand;
+}
+
+.btn-login:hover {
+    -fx-background-color: #2E6DA4;
+}
+
+.btn-login:pressed {
+    -fx-background-color: #152D56;
+}
+
+.btn-login:disabled {
+    -fx-opacity: 0.55;
+    -fx-cursor: default;
+}
+
+/* Etiqueta de mensajes ------------------------------------------ */
+.lbl-mensaje-oculto {
+    -fx-text-fill: transparent;
+    -fx-font-size: 12;
+    -fx-min-height: 36;
+}
+
+.lbl-mensaje-error {
+    -fx-text-fill: #922B21;
+    -fx-font-size: 12;
+    -fx-min-height: 36;
+    -fx-background-color: #FADBD8;
+    -fx-background-radius: 5;
+    -fx-padding: 8 12;
+}
+
+.lbl-mensaje-info {
+    -fx-text-fill: #1A5276;
+    -fx-font-size: 12;
+    -fx-min-height: 36;
+    -fx-background-color: #D6EAF8;
+    -fx-background-radius: 5;
+    -fx-padding: 8 12;
+}
