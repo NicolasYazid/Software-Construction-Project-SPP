@@ -43,3 +43,4 @@ reply_pid*.log
 .vs/
 .DS_Store
 Thumbs.db
+/.claude/
