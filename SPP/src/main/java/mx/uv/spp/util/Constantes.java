@@ -114,4 +114,87 @@ public final class Constantes {
     /** Estado de un proyecto publicado y visible para los estudiantes. */
     public static final String ESTADO_PROYECTO_DISPONIBLE = "Disponible";
 
+    // --- Tipos de evidencia (FK id_tipo_evidencia en BD) ---
+
+    /** Oficio emitido por la OV aceptando al Practicante. */
+    public static final int TIPO_EVIDENCIA_OFICIO_ACEPTACION = 1;
+
+    /** Oficio generado por el sistema al asignar el proyecto. */
+    public static final int TIPO_EVIDENCIA_OFICIO_ASIGNACION = 2;
+
+    /** Horario de la Experiencia Educativa (EE). */
+    public static final int TIPO_EVIDENCIA_HORARIO_CLASES = 3;
+
+    /** Horario en la OV firmado y sellado por el responsable. */
+    public static final int TIPO_EVIDENCIA_HORARIO_LABORAL = 4;
+
+    /** Cronograma de actividades del periodo de práctica. */
+    public static final int TIPO_EVIDENCIA_CRONOGRAMA = 5;
+
+    /** Reporte de avance mensual del Practicante. */
+    public static final int TIPO_EVIDENCIA_REPORTE_MENSUAL = 6;
+
+    /** Informe al concluir las primeras 210 horas (RN-03). */
+    public static final int TIPO_EVIDENCIA_INFORME_PARCIAL = 7;
+
+    /** Informe al concluir las 420 horas requeridas (RN-02). */
+    public static final int TIPO_EVIDENCIA_INFORME_FINAL = 8;
+
+    /** Presentación final ante el Profesor Asesor. */
+    public static final int TIPO_EVIDENCIA_PRESENTACION = 9;
+
+    /** Evaluación de la OV realizada por el Practicante. */
+    public static final int TIPO_EVIDENCIA_EVALUACION_OV = 10;
+
+    /** Autoevaluación del Practicante (10 afirmaciones, escala 1-5). */
+    public static final int TIPO_EVIDENCIA_AUTOEVALUACION = 11;
+
+    // --- Estados de documento (FK id_estado_documento en BD) ---
+
+    /** Documento creado; el Practicante aún no ha entregado archivo. */
+    public static final int ESTADO_DOCUMENTO_PENDIENTE = 1;
+
+    /** El Practicante subió el archivo; pendiente de evaluación. */
+    public static final int ESTADO_DOCUMENTO_ENTREGADO = 2;
+
+    /** El Profesor evaluó y aprobó la evidencia. */
+    public static final int ESTADO_DOCUMENTO_APROBADO = 3;
+
+    /** El Profesor evaluó y rechazó la evidencia. */
+    public static final int ESTADO_DOCUMENTO_RECHAZADO = 4;
+
+    /** El Coordinador o Profesor otorgó prórroga al documento. */
+    public static final int ESTADO_DOCUMENTO_CON_PRORROGA = 5;
+
+    /** El Profesor calificó la evidencia (estado propio para calif.). */
+    public static final int ESTADO_DOCUMENTO_EVALUADO = 6;
+
+    // --- Autoevaluación Likert (rediseño sesión 4) ---
+
+    /** Afirmaciones que componen la autoevaluación del Practicante. */
+    public static final int NUM_AFIRMACIONES_AUTOEVALUACION = 10;
+
+    /** Puntuación máxima posible (10 afirmaciones × escala máx. 5). */
+    public static final int PUNTUACION_MAX_AUTOEVALUACION = 50;
+
+    // --- Rango de calificación asignada por el Profesor (escala 1-10) ---
+
+    /**
+     * Mínimo que el Profesor puede asignar a una evidencia; distinto
+     * de CALIFICACION_MINIMA (0) que aplica a la calificación final.
+     */
+    public static final double CALIFICACION_MIN = 1.0;
+
+    /** Máximo que el Profesor puede asignar a una evidencia. */
+    public static final double CALIFICACION_MAX = 10.0;
+
+    // --- Centinela de calificación en capa POJO/DAO ---
+
+    /**
+     * Valor que el DAO asigna en Java cuando la BD almacena NULL en
+     * la columna calificacion. Permite distinguir "sin calificar" de
+     * una calificación real de 0.0 (que JDBC mapearía igual sin wasNull).
+     */
+    public static final double CENTINELA_SIN_CALIFICACION = -1.0;
+
 }

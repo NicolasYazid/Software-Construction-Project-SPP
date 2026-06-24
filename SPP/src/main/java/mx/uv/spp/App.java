@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import mx.uv.spp.util.Navegador;
 
 /**
  * Punto de entrada de la aplicación SPP.
@@ -48,6 +49,7 @@ public class App extends Application {
         escenario.setTitle(TITULO_APP);
         escenario.setResizable(false);
         escenario.setScene(escena);
+        Navegador.inicializar(escenario);
         escenario.show();
     }
 

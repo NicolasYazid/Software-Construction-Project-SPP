@@ -25,6 +25,16 @@ import mx.uv.spp.modelo.Documento;
 public interface DocumentoDAO {
 
     /**
+     * Recupera un documento por su clave primaria, o {@code null}
+     * si no existe ningún registro con ese identificador.
+     *
+     * @param idDocumento Clave primaria en la tabla {@code documento}.
+     * @return el documento encontrado o {@code null}.
+     * @throws SQLException si ocurre un error de acceso a la BD.
+     */
+    Documento obtenerPorId(int idDocumento) throws SQLException;
+
+    /**
      * Recupera todos los documentos de un tipo específico para
      * una inscripción dada.
      *

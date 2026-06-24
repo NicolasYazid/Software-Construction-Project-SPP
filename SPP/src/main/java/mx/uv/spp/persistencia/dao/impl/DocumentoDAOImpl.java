@@ -46,6 +46,28 @@ public class DocumentoDAOImpl implements DocumentoDAO {
      * {@inheritDoc}
      */
     @Override
+    public Documento obtenerPorId(int idDocumento)
+            throws SQLException {
+        String sql = SQL_SELECT_CAMPOS
+                + " FROM documento"
+                + " WHERE id_documento = ?";
+        Connection con = ConexionBD.obtenerInstancia()
+                .obtenerConexion();
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idDocumento);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapearResultSet(rs);
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public List<Documento> obtenerPorInscripcionYTipo(
             int idInscripcion, int idTipoEvidencia)
             throws SQLException {

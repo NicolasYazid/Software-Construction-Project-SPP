@@ -22,6 +22,7 @@ import mx.uv.spp.modelo.ResultadoAutenticacion;
 import mx.uv.spp.modelo.TipoUsuario;
 import mx.uv.spp.negocio.LoginServicio;
 import mx.uv.spp.persistencia.dao.impl.UsuarioDAOImpl;
+import mx.uv.spp.util.Navegador;
 
 /**
  * Controlador de la pantalla de autenticación (login.fxml).
@@ -266,20 +267,24 @@ public class LoginController implements Initializable {
      */
     private void navegarAPantallaPrincipal(
             ResultadoAutenticacion resultado) {
-        mostrarMensaje(ESTILO_INFO,
-                "¡Bienvenido/a, "
-                + resultado.getNombreCompleto() + "!");
-        // Navegar según el rol una vez que las pantallas existan:
-        // switch (resultado.getTipo()) {
-        //   case ADMINISTRADOR →
-        //     App.cambiarVista(".../administrador/principal.fxml");
-        //   case COORDINADOR   →
-        //     App.cambiarVista(".../coordinador/principal.fxml");
-        //   case PROFESOR      →
-        //     App.cambiarVista(".../profesor/principal.fxml");
-        //   case PRACTICANTE   →
-        //     App.cambiarVista(".../practicante/principal.fxml");
-        // }
+        switch (resultado.getTipo()) {
+            case PRACTICANTE:
+                Navegador.irAPanelEstudiante();
+                break;
+            case PROFESOR:
+                Navegador.irAPanelProfesor();
+                break;
+            case COORDINADOR:
+                Navegador.irAPanelCoordinador();
+                break;
+            case ADMINISTRADOR:
+                Navegador.irAPanelAdministrador();
+                break;
+            default:
+                mostrarMensaje(ESTILO_ERROR,
+                        "Tipo de usuario no reconocido.");
+                break;
+        }
     }
 
 }
