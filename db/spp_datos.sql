@@ -65,12 +65,16 @@ INSERT INTO tipo_evidencia (nombre, descripcion) VALUES
     ('Autoevaluacion',
      'Autoevaluacion del practicante (5 criterios, escala 1-5)');
 
-INSERT INTO estado_documento (nombre) VALUES
-    ('Pendiente'),
-    ('Entregado'),
-    ('Aprobado'),
-    ('Rechazado'),
-    ('ConProrroga');
+INSERT INTO estado_documento
+    (id_estado_documento, nombre)
+VALUES
+    (1, 'Pendiente'),
+    (2, 'Entregado'),
+    (3, 'Aprobado'),
+    (4, 'Rechazado'),
+    (5, 'ConProrroga'),
+    -- id=6 requerido por Constantes.ESTADO_DOCUMENTO_EVALUADO
+    (6, 'Evaluado');
 
 
 -- ------------------------------------------------------------
