@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<!--
+    panel_estudiante.fxml — Panel principal del Practicante.
+    Controlador: mx.uv.spp.controladores.practicante.PanelEstudianteController
+    Los botones del menú se habilitarán cuando su vista esté implementada.
+-->
+<BorderPane xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="mx.uv.spp.controladores.practicante.PanelEstudianteController"
+            prefHeight="700.0" prefWidth="1100.0">
+
+    <!-- ── Barra lateral izquierda ─────────────────────────────── -->
+    <left>
+        <VBox prefWidth="220.0" spacing="8.0">
+            <padding>
+                <Insets top="24.0" right="12.0"
+                        bottom="24.0" left="12.0" />
+            </padding>
+
+            <Label text="Menú del Practicante" />
+            <Separator />
+
+            <Button fx:id="btnElegirProyecto"
+                    text="Elegir Proyecto"
+                    maxWidth="Infinity"
+                    disable="true" />
+
+            <Button fx:id="btnDocumentosIniciales"
+                    text="Documentos Iniciales"
+                    maxWidth="Infinity"
+                    disable="true" />
+
+            <Button fx:id="btnReportesInformes"
+                    text="Reportes e Informes"
+                    maxWidth="Infinity"
+                    disable="true" />
+
+            <Button fx:id="btnAutoevaluacion"
+                    text="Autoevaluación"
+                    maxWidth="Infinity"
+                    disable="true" />
+
+            <Button fx:id="btnBuzon"
+                    text="Buzón"
+                    maxWidth="Infinity"
+                    disable="true" />
+
+            <Separator />
+
+            <Button fx:id="btnCerrarSesion"
+                    text="Cerrar sesión"
+                    maxWidth="Infinity"
+                    onAction="#onBtnCerrarSesion" />
+        </VBox>
+    </left>
+
+    <!-- ── Área central de contenido ───────────────────────────── -->
+    <center>
+        <StackPane fx:id="contenedor">
+            <Label text="Seleccione una opción del menú." />
+        </StackPane>
+    </center>
+
+</BorderPane>
