@@ -371,17 +371,38 @@ CREATE TABLE IF NOT EXISTS documento (
         ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Los 5 criterios son fijos (sec. 8); columnas nombradas
--- evitan joins adicionales al evaluar la autoevaluacion.
+-- Las 10 afirmaciones tienen escala Likert 1-5.
+-- calificacion = (puntuacion_total / 50.0) * 10; rango 2.0-10.0.
 -- CHECK sobre rango 1-5 ignorado en MySQL 5.5 (documentado).
+-- UNIQUE en id_documento: un Practicante entrega exactamente
+-- una autoevaluacion por documento (accion irreversible, sec. 8).
 CREATE TABLE IF NOT EXISTS autoevaluacion (
-    id_autoevaluacion        INT NOT NULL AUTO_INCREMENT,
-    id_documento             INT NOT NULL,
-    aplicacion_conocimientos INT NOT NULL,
-    resolucion_problemas     INT NOT NULL,
-    trabajo_equipo           INT NOT NULL,
-    puntualidad_asistencia   INT NOT NULL,
-    calidad_trabajo          INT NOT NULL,
+    id_autoevaluacion  INT          NOT NULL AUTO_INCREMENT,
+    id_documento       INT          NOT NULL,
+    afirmacion_1       INT          NOT NULL
+        COMMENT 'Mi participacion en la OV fue productiva.',
+    afirmacion_2       INT          NOT NULL
+        COMMENT 'Logre la aplicacion de conocimientos teorico-practicos.',
+    afirmacion_3       INT          NOT NULL
+        COMMENT 'Me senti seguro al realizar las actividades.',
+    afirmacion_4       INT          NOT NULL
+        COMMENT 'Las actividades despertaron mi interes.',
+    afirmacion_5       INT          NOT NULL
+        COMMENT 'La OV me proporciono informacion y facilidades adecuadas.',
+    afirmacion_6       INT          NOT NULL
+        COMMENT 'La OV me dio a conocer las reglas internas.',
+    afirmacion_7       INT          NOT NULL
+        COMMENT 'El Responsable del Proyecto me oriento correctamente.',
+    afirmacion_8       INT          NOT NULL
+        COMMENT 'El Responsable realizo seguimiento efectivo.',
+    afirmacion_9       INT          NOT NULL
+        COMMENT 'El proyecto es congruente con la formacion de mi carrera.',
+    afirmacion_10      INT          NOT NULL
+        COMMENT 'Considero que las practicas son importantes para mi formacion.',
+    puntuacion_total   INT          NOT NULL
+        COMMENT 'Suma de afirmacion_1 a afirmacion_10. Rango: 10-50.',
+    calificacion       DECIMAL(4,2) NOT NULL
+        COMMENT 'Formula: (puntuacion_total / 50.0) * 10. Rango: 2.0-10.0.',
     CONSTRAINT pk_autoevaluacion
         PRIMARY KEY (id_autoevaluacion),
     CONSTRAINT uq_autoevaluacion_documento
@@ -440,6 +461,61 @@ CREATE TABLE IF NOT EXISTS mensaje (
     leido              TINYINT(1)   NOT NULL DEFAULT 0,
     CONSTRAINT pk_mensaje
         PRIMARY KEY (id_mensaje)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- ------------------------------------------------------------
+-- PERIODO DE INSCRIPCIONES (CU-20: Establecer periodo)
+-- UNIQUE en id_ciclo_escolar: solo un periodo de inscripciones
+-- por ciclo escolar.
+-- ------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS periodo_inscripciones (
+    id_periodo_inscripciones INT  NOT NULL AUTO_INCREMENT,
+    id_ciclo_escolar         INT  NOT NULL,
+    fecha_inicio             DATE NOT NULL,
+    fecha_cierre             DATE NOT NULL,
+    CONSTRAINT pk_periodo_inscripciones
+        PRIMARY KEY (id_periodo_inscripciones),
+    CONSTRAINT uq_pi_ciclo
+        UNIQUE (id_ciclo_escolar),
+    CONSTRAINT fk_pi_ciclo
+        FOREIGN KEY (id_ciclo_escolar)
+        REFERENCES ciclo_escolar (id_ciclo_escolar)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- ------------------------------------------------------------
+-- MENSAJE DE GRUPO (CU-31: Profesor envia mensaje a su grupo)
+-- Se crea una tabla separada de `mensaje` para no alterar el
+-- esquema de mensajes individuales ya definido. Soporta adjunto
+-- PDF opcional (ruta_archivo y nombre_archivo pueden ser NULL).
+-- ------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS mensaje_grupo (
+    id_mensaje_grupo  INT          NOT NULL AUTO_INCREMENT,
+    id_inscripcion    INT          NOT NULL
+        COMMENT 'FK al grupo via estudiante_inscrito',
+    id_profesor       INT          NOT NULL,
+    texto             TEXT,
+    ruta_archivo      VARCHAR(500)
+        COMMENT 'Ruta local del PDF adjunto, puede ser NULL',
+    nombre_archivo    VARCHAR(200),
+    fecha_publicacion DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT pk_mensaje_grupo
+        PRIMARY KEY (id_mensaje_grupo),
+    CONSTRAINT fk_mg_inscripcion
+        FOREIGN KEY (id_inscripcion)
+        REFERENCES estudiante_inscrito (id_inscripcion)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    CONSTRAINT fk_mg_profesor
+        FOREIGN KEY (id_profesor)
+        REFERENCES profesor (id_profesor)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

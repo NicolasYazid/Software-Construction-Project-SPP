@@ -374,4 +374,14 @@ INSERT INTO documento (
      '2026-03-01 16:00:00', '2026-03-05', NULL, NULL);
 
 
+-- ------------------------------------------------------------
+-- AUTOEVALUACION DE VALENTINA
+-- No se inserta dato: en el escenario de prueba Valentina lleva
+-- 50 horas (EnDesarrollo) y aun no ha entregado el documento de
+-- tipo Autoevaluacion (id_tipo_evidencia=11). Cuando ese documento
+-- exista, se podra insertar una fila en autoevaluacion referenciando
+-- su id_documento.
+-- ------------------------------------------------------------
+
+
 SET FOREIGN_KEY_CHECKS = 1;
