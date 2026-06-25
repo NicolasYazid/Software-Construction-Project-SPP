@@ -82,14 +82,23 @@ VALUES
 -- ------------------------------------------------------------
 
 INSERT INTO ciclo_escolar
-    (periodo, fecha_inicio, fecha_fin, activo)
+    (periodo, fecha_inicio, fecha_fin, estado)
 VALUES
-    ('FEB-JUL 2026', '2026-02-02', '2026-07-31', 1);
+    ('FEB-JUL 2026', '2026-02-02', '2026-07-31', 'Iniciado');
 
 INSERT INTO experiencia_educativa
     (nombre, clave, creditos)
 VALUES
     ('Practicas Profesionales', 'IIS-302', 10);
+
+-- Dos grupos del periodo FEB-JUL 2026, ambos atendidos por el
+-- unico Profesor de prueba (id=1). Los Estudiantes se distribuyen
+-- entre los dos grupos en los INSERTs de estudiante_inscrito.
+INSERT INTO grupo
+    (id_ciclo_escolar, id_profesor, nombre, nrc)
+VALUES
+    (1, 1, 'Grupo A', 'NRC-001'),
+    (1, 1, 'Grupo B', 'NRC-002');
 
 
 -- ------------------------------------------------------------
@@ -299,20 +308,21 @@ INSERT INTO estudiante (
 --   1=Ana  2=Luis  3=Sofia  4=Diego  5=Valentina
 -- ------------------------------------------------------------
 
+-- id_grupo: Ana, Luis, Sofia -> Grupo A (1); Diego, Valentina -> Grupo B (2)
 INSERT INTO estudiante_inscrito (
-    id_estudiante, id_ciclo_escolar, id_ee, id_profesor,
+    id_estudiante, id_ciclo_escolar, id_grupo, id_ee, id_profesor,
     estado_practica, horas_acumuladas, fecha_inscripcion
 ) VALUES
     -- Ana: selecciono proyectos, en espera de asignacion
-    (1, 1, 1, 1, 'EnSeleccion',  0, '2026-02-10'),
+    (1, 1, 1, 1, 1, 'EnSeleccion',  0, '2026-02-10'),
     -- Luis: asignado al proyecto 1 (INECOL)
-    (2, 1, 1, 1, 'Asignado',     0, '2026-02-10'),
+    (2, 1, 1, 1, 1, 'Asignado',     0, '2026-02-10'),
     -- Sofia: asignada al proyecto 2 (Coder House)
-    (3, 1, 1, 1, 'Asignado',     0, '2026-02-10'),
+    (3, 1, 1, 1, 1, 'Asignado',     0, '2026-02-10'),
     -- Diego: recien inscrito, sin profesor ni seleccion
-    (4, 1, 1, NULL, 'Inscrito',  0, '2026-02-10'),
+    (4, 1, 2, 1, NULL, 'Inscrito',  0, '2026-02-10'),
     -- Valentina: en desarrollo con documentos iniciales entregados
-    (5, 1, 1, 1, 'EnDesarrollo', 50, '2026-02-10');
+    (5, 1, 2, 1, 1, 'EnDesarrollo', 50, '2026-02-10');
 
 
 -- ------------------------------------------------------------

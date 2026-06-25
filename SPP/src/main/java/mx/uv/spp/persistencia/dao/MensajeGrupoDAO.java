@@ -14,7 +14,7 @@ import mx.uv.spp.modelo.MensajeGrupo;
 /**
  * Contrato de acceso a datos para la tabla {@code mensaje_grupo}.
  * Permite al Profesor publicar mensajes (con adjunto PDF opcional)
- * visibles para todos los Practicantes de su grupo (CU-31).
+ * visibles para todos los Estudiantes de su grupo (CU-31).
  *
  * @author Nicolás Yazid Cruz Hernández
  * @author Isaac Adriano Vázquez Torres
@@ -32,16 +32,15 @@ public interface MensajeGrupoDAO {
     int insertar(MensajeGrupo mensaje) throws SQLException;
 
     /**
-     * Recupera todos los mensajes visibles para una inscripción dada,
+     * Recupera todos los mensajes publicados para el Grupo dado,
      * ordenados por {@code fecha_publicacion} descendente (más
      * recientes primero).
      *
-     * @param idInscripcion FK de {@code estudiante_inscrito};
-     *                      identifica el grupo receptor.
+     * @param idGrupo FK de {@code grupo}; identifica el grupo receptor.
      * @return lista (posiblemente vacía) de mensajes del grupo.
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
-    List<MensajeGrupo> obtenerPorInscripcion(int idInscripcion)
+    List<MensajeGrupo> obtenerPorGrupo(int idGrupo)
             throws SQLException;
 
 }

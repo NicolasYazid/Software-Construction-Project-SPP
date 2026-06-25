@@ -108,7 +108,7 @@ public interface DocumentoDAO {
     /**
      * Recupera todos los documentos en estado {@code Entregado}
      * y sin calificación asignada ({@code calificacion IS NULL})
-     * que pertenecen a Practicantes asignados al Profesor indicado.
+     * que pertenecen a Estudiantes asignados al Profesor indicado.
      * Usado por el Profesor en el CU-29 (Evaluar Evidencia).
      *
      * @param idProfesor Clave primaria en la tabla {@code profesor}.

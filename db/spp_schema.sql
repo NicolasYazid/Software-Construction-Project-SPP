@@ -156,11 +156,37 @@ CREATE TABLE IF NOT EXISTS ciclo_escolar (
     periodo          VARCHAR(20) NOT NULL,
     fecha_inicio     DATE        NOT NULL,
     fecha_fin        DATE        NOT NULL,
-    activo           TINYINT(1)  NOT NULL DEFAULT 0,
+    estado           ENUM('creado','Iniciado','finalizado')
+                     NOT NULL DEFAULT 'creado',
     CONSTRAINT pk_ciclo_escolar
         PRIMARY KEY (id_ciclo_escolar),
     CONSTRAINT uq_ciclo_escolar_periodo
         UNIQUE (periodo)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Grupo de la EE: un Profesor atiende a un conjunto de Estudiantes
+-- dentro de un ciclo escolar. El NRC identifica el grupo de forma
+-- unica por ciclo (convencion de la UV).
+CREATE TABLE IF NOT EXISTS grupo (
+    id_grupo         INT          NOT NULL AUTO_INCREMENT,
+    id_ciclo_escolar INT          NOT NULL,
+    id_profesor      INT          NOT NULL,
+    nombre           VARCHAR(100) NOT NULL,
+    nrc              VARCHAR(20)  NOT NULL,
+    CONSTRAINT pk_grupo
+        PRIMARY KEY (id_grupo),
+    CONSTRAINT uq_grupo_nrc_ciclo
+        UNIQUE (id_ciclo_escolar, nrc),
+    CONSTRAINT fk_grupo_ciclo
+        FOREIGN KEY (id_ciclo_escolar)
+        REFERENCES ciclo_escolar (id_ciclo_escolar)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    CONSTRAINT fk_grupo_profesor
+        FOREIGN KEY (id_profesor)
+        REFERENCES profesor (id_profesor)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS experiencia_educativa (
@@ -241,13 +267,14 @@ CREATE TABLE IF NOT EXISTS proyecto (
 -- ------------------------------------------------------------
 
 -- Registra la inscripcion formal de un estudiante a la EE en un
--- periodo. La transicion de Estudiante a Practicante se refleja
--- en estado_practica = 'Asignado' (maquina de estados, sec. 9).
--- id_profesor es NULL hasta que el Coordinador lo asigne.
+-- periodo. id_grupo conecta al Estudiante con su Grupo (profesor
+-- y ciclo). estado_practica evoluciona segun la maquina de estados
+-- (sec. 9). id_profesor es NULL hasta que el Coordinador lo asigne.
 CREATE TABLE IF NOT EXISTS estudiante_inscrito (
     id_inscripcion    INT         NOT NULL AUTO_INCREMENT,
     id_estudiante     INT         NOT NULL,
     id_ciclo_escolar  INT         NOT NULL,
+    id_grupo          INT         NOT NULL,
     id_ee             INT         NOT NULL,
     id_profesor       INT,
     estado_practica   VARCHAR(30) NOT NULL DEFAULT 'Inscrito',
@@ -265,6 +292,11 @@ CREATE TABLE IF NOT EXISTS estudiante_inscrito (
     CONSTRAINT fk_inscripcion_ciclo
         FOREIGN KEY (id_ciclo_escolar)
         REFERENCES ciclo_escolar (id_ciclo_escolar)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    CONSTRAINT fk_inscripcion_grupo
+        FOREIGN KEY (id_grupo)
+        REFERENCES grupo (id_grupo)
         ON UPDATE CASCADE
         ON DELETE RESTRICT,
     CONSTRAINT fk_inscripcion_ee
@@ -489,26 +521,27 @@ CREATE TABLE IF NOT EXISTS periodo_inscripciones (
 
 -- ------------------------------------------------------------
 -- MENSAJE DE GRUPO (CU-31: Profesor envia mensaje a su grupo)
--- Se crea una tabla separada de `mensaje` para no alterar el
--- esquema de mensajes individuales ya definido. Soporta adjunto
--- PDF opcional (ruta_archivo y nombre_archivo pueden ser NULL).
+-- Un mensaje va dirigido al Grupo completo, no a inscripciones
+-- individuales. Soporta adjunto PDF opcional y asunto opcional.
+-- ruta_archivo y nombre_archivo pueden ser NULL.
 -- ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS mensaje_grupo (
     id_mensaje_grupo  INT          NOT NULL AUTO_INCREMENT,
-    id_inscripcion    INT          NOT NULL
-        COMMENT 'FK al grupo via estudiante_inscrito',
+    id_grupo          INT          NOT NULL,
     id_profesor       INT          NOT NULL,
+    asunto            VARCHAR(200),
     texto             TEXT,
     ruta_archivo      VARCHAR(500)
         COMMENT 'Ruta local del PDF adjunto, puede ser NULL',
     nombre_archivo    VARCHAR(200),
-    fecha_publicacion DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    fecha_publicacion DATETIME     NOT NULL
+                      DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT pk_mensaje_grupo
         PRIMARY KEY (id_mensaje_grupo),
-    CONSTRAINT fk_mg_inscripcion
-        FOREIGN KEY (id_inscripcion)
-        REFERENCES estudiante_inscrito (id_inscripcion)
+    CONSTRAINT fk_mg_grupo
+        FOREIGN KEY (id_grupo)
+        REFERENCES grupo (id_grupo)
         ON UPDATE CASCADE
         ON DELETE RESTRICT,
     CONSTRAINT fk_mg_profesor

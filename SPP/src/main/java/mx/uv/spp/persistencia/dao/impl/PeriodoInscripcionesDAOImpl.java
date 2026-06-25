@@ -19,8 +19,8 @@ import mx.uv.spp.persistencia.dao.PeriodoInscripcionesDAO;
 /**
  * Implementación JDBC de {@link PeriodoInscripcionesDAO}.
  * Accede a la tabla {@code periodo_inscripciones} con JOIN a
- * {@code ciclo_escolar} para filtrar por ciclo activo
- * ({@code activo = 1}). Las fechas se convierten entre
+ * {@code ciclo_escolar} para filtrar por ciclo en estado
+ * {@code 'Iniciado'}. Las fechas se convierten entre
  * {@code java.sql.Date} y {@code java.time.LocalDate}.
  *
  * @author Nicolás Yazid Cruz Hernández
@@ -44,7 +44,7 @@ public class PeriodoInscripcionesDAOImpl
                 + " FROM periodo_inscripciones pi"
                 + " JOIN ciclo_escolar ce"
                 + " ON pi.id_ciclo_escolar = ce.id_ciclo_escolar"
-                + " WHERE ce.activo = 1"
+                + " WHERE ce.estado = 'Iniciado'"
                 + " LIMIT 1";
         Connection con = ConexionBD.obtenerInstancia()
                 .obtenerConexion();
@@ -67,7 +67,7 @@ public class PeriodoInscripcionesDAOImpl
                 + " FROM periodo_inscripciones pi"
                 + " JOIN ciclo_escolar ce"
                 + " ON pi.id_ciclo_escolar = ce.id_ciclo_escolar"
-                + " WHERE ce.activo = 1";
+                + " WHERE ce.estado = 'Iniciado'";
         Connection con = ConexionBD.obtenerInstancia()
                 .obtenerConexion();
         try (PreparedStatement ps = con.prepareStatement(sql)) {

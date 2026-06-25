@@ -177,13 +177,14 @@ public class ProfesorServicio {
     }
 
     /**
-     * Publica un Mensaje del Profesor a su Grupo. Valida que texto
-     * y rutaArchivo no sean ambos nulos o vacíos al mismo tiempo
-     * (al menos uno debe tener contenido).
+     * Publica un Mensaje del Profesor a su Grupo completo. Valida
+     * que texto y rutaArchivo no sean ambos nulos o vacíos al mismo
+     * tiempo (al menos uno debe tener contenido).
      *
-     * @param idInscripcion FK de {@code estudiante_inscrito};
-     *                      identifica el grupo receptor.
+     * @param idGrupo       FK de {@code grupo}; identifica el grupo
+     *                      receptor completo.
      * @param idProfesor    FK del Profesor en tabla {@code profesor}.
+     * @param asunto        Asunto del mensaje; puede ser nulo.
      * @param texto         Cuerpo del mensaje; puede ser nulo si hay
      *                      archivo adjunto.
      * @param rutaArchivo   Ruta local del PDF adjunto; puede ser nula
@@ -194,8 +195,9 @@ public class ProfesorServicio {
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
     public void publicarMensaje(
-            int idInscripcion,
+            int idGrupo,
             int idProfesor,
+            String asunto,
             String texto,
             String rutaArchivo,
             String nombreArchivo)
@@ -211,8 +213,9 @@ public class ProfesorServicio {
         }
         MensajeGrupo mensaje = new MensajeGrupo(
                 0,
-                idInscripcion,
+                idGrupo,
                 idProfesor,
+                asunto,
                 sinTexto ? null : texto.trim(),
                 sinArchivo ? null : rutaArchivo,
                 nombreArchivo,

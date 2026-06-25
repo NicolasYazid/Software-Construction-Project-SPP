@@ -10,11 +10,10 @@ package mx.uv.spp.modelo;
 import java.time.LocalDateTime;
 
 /**
- * Representa un mensaje que el Profesor publica para su grupo de
- * Practicantes (CU-31). El mensaje puede incluir un archivo PDF
- * adjunto opcional. Se diferencia de {@code Mensaje} en que va
- * dirigido a todos los integrantes de una inscripción grupal,
- * no a un destinatario individual.
+ * Representa un mensaje que el Profesor publica para un Grupo
+ * completo de Estudiantes (CU-31). Va dirigido a todos los
+ * integrantes del Grupo, no a un destinatario individual.
+ * Puede contener texto, un PDF adjunto o ambos.
  *
  * @author Nicolás Yazid Cruz Hernández
  * @author Isaac Adriano Vázquez Torres
@@ -22,8 +21,9 @@ import java.time.LocalDateTime;
 public class MensajeGrupo {
 
     private int           idMensajeGrupo;
-    private int           idInscripcion;
+    private int           idGrupo;
     private int           idProfesor;
+    private String        asunto;
     private String        texto;
     private String        rutaArchivo;
     private String        nombreArchivo;
@@ -40,25 +40,28 @@ public class MensajeGrupo {
      * Constructor completo para inicializar un MensajeGrupo con
      * todos sus datos.
      *
-     * @param idMensajeGrupo  Identificador del registro en la BD.
-     * @param idInscripcion   FK hacia {@code estudiante_inscrito};
-     *                        identifica el grupo receptor.
-     * @param idProfesor      FK hacia {@code profesor}; autor del mensaje.
-     * @param texto           Cuerpo del mensaje; puede ser {@code null}
-     *                        si el mensaje solo contiene un archivo adjunto.
-     * @param rutaArchivo     Ruta local del PDF adjunto; {@code null} si
-     *                        no hay adjunto.
-     * @param nombreArchivo   Nombre del archivo adjunto para mostrar en la
-     *                        UI; {@code null} si no hay adjunto.
+     * @param idMensajeGrupo   Identificador del registro en la BD.
+     * @param idGrupo          FK hacia {@code grupo}; identifica el
+     *                         grupo receptor completo.
+     * @param idProfesor       FK hacia {@code profesor}; autor del mensaje.
+     * @param asunto           Asunto del mensaje; puede ser {@code null}.
+     * @param texto            Cuerpo del mensaje; puede ser {@code null}
+     *                         si el mensaje solo contiene un archivo adjunto.
+     * @param rutaArchivo      Ruta local del PDF adjunto; {@code null} si
+     *                         no hay adjunto.
+     * @param nombreArchivo    Nombre del archivo adjunto para mostrar en la
+     *                         UI; {@code null} si no hay adjunto.
      * @param fechaPublicacion Fecha y hora en que el Profesor publicó el
-     *                        mensaje; no puede ser {@code null}.
+     *                         mensaje; no puede ser {@code null}.
      */
-    public MensajeGrupo(int idMensajeGrupo, int idInscripcion,
-            int idProfesor, String texto, String rutaArchivo,
-            String nombreArchivo, LocalDateTime fechaPublicacion) {
+    public MensajeGrupo(int idMensajeGrupo, int idGrupo,
+            int idProfesor, String asunto, String texto,
+            String rutaArchivo, String nombreArchivo,
+            LocalDateTime fechaPublicacion) {
         this.idMensajeGrupo   = idMensajeGrupo;
-        this.idInscripcion    = idInscripcion;
+        this.idGrupo          = idGrupo;
         this.idProfesor       = idProfesor;
+        this.asunto           = asunto;
         this.texto            = texto;
         this.rutaArchivo      = rutaArchivo;
         this.nombreArchivo    = nombreArchivo;
@@ -84,21 +87,21 @@ public class MensajeGrupo {
     }
 
     /**
-     * Retorna el identificador de la inscripción grupal receptora.
+     * Retorna el identificador del Grupo receptor del mensaje.
      *
-     * @return FK hacia {@code estudiante_inscrito}.
+     * @return FK hacia {@code grupo}.
      */
-    public int getIdInscripcion() {
-        return idInscripcion;
+    public int getIdGrupo() {
+        return idGrupo;
     }
 
     /**
-     * Establece la inscripción grupal a la que va dirigido el mensaje.
+     * Establece el Grupo al que va dirigido el mensaje.
      *
-     * @param idInscripcion FK hacia {@code estudiante_inscrito}.
+     * @param idGrupo FK hacia {@code grupo}.
      */
-    public void setIdInscripcion(int idInscripcion) {
-        this.idInscripcion = idInscripcion;
+    public void setIdGrupo(int idGrupo) {
+        this.idGrupo = idGrupo;
     }
 
     /**
@@ -117,6 +120,25 @@ public class MensajeGrupo {
      */
     public void setIdProfesor(int idProfesor) {
         this.idProfesor = idProfesor;
+    }
+
+    /**
+     * Retorna el asunto del mensaje, o {@code null} si no se
+     * proporcionó uno.
+     *
+     * @return asunto del mensaje o {@code null}.
+     */
+    public String getAsunto() {
+        return asunto;
+    }
+
+    /**
+     * Establece el asunto del mensaje.
+     *
+     * @param asunto Asunto del mensaje; acepta {@code null}.
+     */
+    public void setAsunto(String asunto) {
+        this.asunto = asunto;
     }
 
     /**
