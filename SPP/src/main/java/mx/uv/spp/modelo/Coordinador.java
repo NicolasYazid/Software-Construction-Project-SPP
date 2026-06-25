@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 /**
  * Representa al Coordinador de Prácticas Profesionales.
  * Es el único actor que puede registrar proyectos, asignar
- * practicantes y generar indicadores (sección 4).
+ * estudiantes y generar indicadores (sección 4).
  * Hereda todos los atributos de {@link Academico}.
  *
  * @author Nicolás Yazid Cruz Hernández

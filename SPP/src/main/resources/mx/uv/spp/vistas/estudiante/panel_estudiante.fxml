@@ -9,13 +9,13 @@
 <?import javafx.scene.layout.VBox?>
 
 <!--
-    panel_estudiante.fxml — Panel principal del Practicante.
-    Controlador: mx.uv.spp.controladores.practicante.PanelEstudianteController
+    panel_estudiante.fxml — Panel principal del Estudiante.
+    Controlador: mx.uv.spp.controladores.estudiante.PanelEstudianteController
     Los botones del menú se habilitarán cuando su vista esté implementada.
 -->
 <BorderPane xmlns="http://javafx.com/javafx/8.0.171"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="mx.uv.spp.controladores.practicante.PanelEstudianteController"
+            fx:controller="mx.uv.spp.controladores.estudiante.PanelEstudianteController"
             prefHeight="700.0" prefWidth="1100.0">
 
     <!-- ── Barra lateral izquierda ─────────────────────────────── -->
@@ -26,7 +26,7 @@
                         bottom="24.0" left="12.0" />
             </padding>
 
-            <Label text="Menú del Practicante" />
+            <Label text="Menú del Estudiante" />
             <Separator />
 
             <Button fx:id="btnElegirProyecto"

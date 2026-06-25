@@ -56,8 +56,8 @@ public class LoginController implements Initializable {
             "Coordinador";
     private static final String ETIQUETA_PROFESOR      =
             "Profesor(a)";
-    private static final String ETIQUETA_PRACTICANTE   =
-            "Practicante";
+    private static final String ETIQUETA_ESTUDIANTE    =
+            "Estudiante";
 
     private static final String LABEL_CORREO     =
             "Correo electrónico:";
@@ -92,7 +92,7 @@ public class LoginController implements Initializable {
                 ETIQUETA_ADMINISTRADOR,
                 ETIQUETA_COORDINADOR,
                 ETIQUETA_PROFESOR,
-                ETIQUETA_PRACTICANTE));
+                ETIQUETA_ESTUDIANTE));
         cmbTipo.getSelectionModel().selectFirst();
 
         cmbTipo.valueProperty().addListener(
@@ -171,10 +171,10 @@ public class LoginController implements Initializable {
             return false;
         }
         if (identificador.trim().isEmpty()) {
-            boolean esPracticante = ETIQUETA_PRACTICANTE
+            boolean esEstudiante = ETIQUETA_ESTUDIANTE
                     .equals(cmbTipo.getValue());
             mostrarMensaje(ESTILO_ERROR,
-                    esPracticante
+                    esEstudiante
                     ? "Ingrese su matrícula."
                     : "Ingrese su correo electrónico.");
             txtIdentificador.requestFocus();
@@ -194,7 +194,7 @@ public class LoginController implements Initializable {
      * {@link TipoUsuario} que espera la capa de negocio.
      *
      * @return {@link TipoUsuario} correspondiente, o
-     *         {@code PRACTICANTE} como valor por defecto.
+     *         {@code ESTUDIANTE} como valor por defecto.
      */
     private TipoUsuario obtenerTipoSeleccionado() {
         String seleccion = cmbTipo.getValue();
@@ -205,7 +205,7 @@ public class LoginController implements Initializable {
         } else if (ETIQUETA_PROFESOR.equals(seleccion)) {
             return TipoUsuario.PROFESOR;
         } else {
-            return TipoUsuario.PRACTICANTE;
+            return TipoUsuario.ESTUDIANTE;
         }
     }
 
@@ -218,7 +218,7 @@ public class LoginController implements Initializable {
      */
     private void actualizarEtiquetaIdentificador(
             String rolSeleccionado) {
-        if (ETIQUETA_PRACTICANTE.equals(rolSeleccionado)) {
+        if (ETIQUETA_ESTUDIANTE.equals(rolSeleccionado)) {
             lblIdentificador.setText(LABEL_MATRICULA);
             txtIdentificador.setPromptText(PROMPT_MATRICULA);
         } else {
@@ -268,7 +268,7 @@ public class LoginController implements Initializable {
     private void navegarAPantallaPrincipal(
             ResultadoAutenticacion resultado) {
         switch (resultado.getTipo()) {
-            case PRACTICANTE:
+            case ESTUDIANTE:
                 Navegador.irAPanelEstudiante();
                 break;
             case PROFESOR:

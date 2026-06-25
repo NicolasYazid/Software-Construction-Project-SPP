@@ -22,7 +22,7 @@ import mx.uv.spp.modelo.Autoevaluacion;
 public interface AutoevaluacionDAO {
 
     /**
-     * Indica si el Practicante ya entregó su autoevaluación en el
+     * Indica si el Estudiante ya entregó su autoevaluación en el
      * ciclo escolar activo ({@code ciclo_escolar.activo = 1}).
      * Se usa para bloquear una segunda entrega (acción irreversible).
      *
@@ -36,7 +36,7 @@ public interface AutoevaluacionDAO {
             throws SQLException;
 
     /**
-     * Inserta la autoevaluación completa del Practicante.
+     * Inserta la autoevaluación completa del Estudiante.
      * El campo {@code idDocumento} de la autoevaluación debe
      * corresponder a un registro ya existente en {@code documento}.
      *

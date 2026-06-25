@@ -9,7 +9,7 @@ package mx.uv.spp.modelo;
 
 /**
  * Representa al encargado dentro de la Organización Vinculada (OV)
- * que supervisa directamente al Practicante en campo.
+ * que supervisa directamente al Estudiante en campo.
  * Cada proyecto tiene un único responsable; un responsable puede
  * estar asociado a varios proyectos dentro de la misma OV.
  *

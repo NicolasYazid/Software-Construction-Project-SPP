@@ -81,7 +81,7 @@ public class LoginServicio {
             String identificador, String contrasena,
             TipoUsuario tipo) throws SQLException {
 
-        String campo = (tipo == TipoUsuario.PRACTICANTE)
+        String campo = (tipo == TipoUsuario.ESTUDIANTE)
                 ? "matrícula" : "correo electrónico";
         Validador.validarCadenaNoVacia(identificador, campo);
         Validador.validarCadenaNoVacia(contrasena, "contraseña");

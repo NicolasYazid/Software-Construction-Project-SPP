@@ -9,7 +9,7 @@ package mx.uv.spp.modelo;
 
 /**
  * Representa a una Organización Vinculada (OV), que es la empresa
- * o institución donde el Practicante realiza su práctica profesional.
+ * o institución donde el Estudiante realiza su práctica profesional.
  * Solo el Coordinador puede dar de alta, actualizar o inactivar OVs.
  *
  * @author Nicolás Yazid Cruz Hernández

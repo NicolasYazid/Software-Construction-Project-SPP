@@ -12,7 +12,7 @@ package mx.uv.spp.modelo;
  * Determina qué tabla de la base de datos se consulta al autenticar
  * y qué campo se usa como identificador de login: correo electrónico
  * para ADMINISTRADOR, COORDINADOR y PROFESOR; matrícula UV para
- * PRACTICANTE (sección 4 del CLAUDE.md).
+ * ESTUDIANTE (sección 4 del CLAUDE.md).
  *
  * @author Nicolás Yazid Cruz Hernández
  * @author Isaac Adriano Vázquez Torres
@@ -22,10 +22,10 @@ public enum TipoUsuario {
     /** Gestiona altas y bajas de Coordinadores y Profesores. */
     ADMINISTRADOR,
 
-    /** Gestiona proyectos, OV y practicantes del periodo. */
+    /** Gestiona proyectos, OV y estudiantes del periodo. */
     COORDINADOR,
 
-    /** Evalúa evidencias y califica a los practicantes asignados. */
+    /** Evalúa evidencias y califica a los estudiantes asignados. */
     PROFESOR,
 
     /**
@@ -33,5 +33,5 @@ public enum TipoUsuario {
      * Es el único rol que se autentica con matrícula en lugar de
      * correo electrónico.
      */
-    PRACTICANTE
+    ESTUDIANTE
 }

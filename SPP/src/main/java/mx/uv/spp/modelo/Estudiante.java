@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 /**
  * Representa a un Estudiante que desea inscribirse en la
  * Experiencia Educativa de Prácticas Profesionales.
- * Distinción crítica: un Estudiante se convierte en Practicante
- * solo al recibir su Oficio de Asignación (glosario, sección 6).
+ * Distinción crítica: un Estudiante queda formalmente asignado
+ * a una OV solo al recibir su Oficio de Asignación (sección 6).
  * El login se realiza con matrícula, no con correo (sección 4).
  *
  * @author Nicolás Yazid Cruz Hernández

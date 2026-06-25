@@ -69,11 +69,11 @@ public final class Navegador {
     }
 
     /**
-     * Navega al panel principal del Practicante (Estudiante).
+     * Navega al panel principal del Estudiante.
      */
     public static void irAPanelEstudiante() {
         cargarVista(FXML_PANEL_ESTUDIANTE,
-                "SPP — Panel del Practicante");
+                "SPP — Panel del Estudiante");
     }
 
     /**

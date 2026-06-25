@@ -49,14 +49,14 @@ public class Proyecto {
      * @param idResponsable     FK hacia {@link ResponsableDeProyecto}.
      * @param nombreProyecto    Nombre descriptivo del proyecto.
      * @param descripcion       Descripción general del proyecto.
-     * @param actividades       Actividades que realizará el Practicante.
+     * @param actividades       Actividades que realizará el Estudiante.
      * @param metodologia       Metodología de trabajo; null si no especificada.
      * @param duracionMeses     Duración en meses (debe cubrir 420 hrs, RN-02).
      * @param horarioLaboral    Horario en la OV (distinto al HorarioClases).
      * @param recurso           Recursos provistos por la OV; null si ninguno.
-     * @param responsabilidades Responsabilidades adicionales del Practicante;
+     * @param responsabilidades Responsabilidades adicionales del Estudiante;
      *                          null si no aplica.
-     * @param cupoMaximo        Número máximo de Practicantes que admite.
+     * @param cupoMaximo        Número máximo de Estudiantes que admite.
      * @param cupoDisponible    Cupos restantes; se decrementa al asignar.
      * @param estado            Disponible o No Activo.
      */
@@ -174,7 +174,7 @@ public class Proyecto {
     }
 
     /**
-     * Retorna las actividades que realizará el Practicante.
+     * Retorna las actividades que realizará el Estudiante.
      *
      * @return descripción de actividades asignadas.
      */
@@ -183,7 +183,7 @@ public class Proyecto {
     }
 
     /**
-     * Establece las actividades del Practicante en el proyecto.
+     * Establece las actividades del Estudiante en el proyecto.
      *
      * @param actividades Descripción de las tareas a realizar.
      */
@@ -248,7 +248,7 @@ public class Proyecto {
     }
 
     /**
-     * Retorna los recursos provistos por la OV al Practicante,
+     * Retorna los recursos provistos por la OV al Estudiante,
      * o {@code null} si no se especificaron.
      *
      * @return recursos disponibles o {@code null}.
@@ -258,7 +258,7 @@ public class Proyecto {
     }
 
     /**
-     * Establece los recursos que la OV provee al Practicante.
+     * Establece los recursos que la OV provee al Estudiante.
      *
      * @param recurso Equipos, software u otros recursos; acepta {@code null}.
      */
@@ -267,7 +267,7 @@ public class Proyecto {
     }
 
     /**
-     * Retorna las responsabilidades adicionales del Practicante,
+     * Retorna las responsabilidades adicionales del Estudiante,
      * o {@code null} si no aplican.
      *
      * @return responsabilidades adicionales o {@code null}.
@@ -277,7 +277,7 @@ public class Proyecto {
     }
 
     /**
-     * Establece las responsabilidades adicionales del Practicante.
+     * Establece las responsabilidades adicionales del Estudiante.
      *
      * @param responsabilidades Responsabilidades adicionales; acepta {@code null}.
      */
@@ -286,7 +286,7 @@ public class Proyecto {
     }
 
     /**
-     * Retorna el número máximo de Practicantes que admite el proyecto.
+     * Retorna el número máximo de Estudiantes que admite el proyecto.
      *
      * @return cupo máximo (entero positivo).
      */
@@ -297,7 +297,7 @@ public class Proyecto {
     /**
      * Establece el cupo máximo del proyecto.
      *
-     * @param cupoMaximo Número máximo de Practicantes permitidos.
+     * @param cupoMaximo Número máximo de Estudiantes permitidos.
      */
     public void setCupoMaximo(int cupoMaximo) {
         this.cupoMaximo = cupoMaximo;
@@ -305,7 +305,7 @@ public class Proyecto {
 
     /**
      * Retorna los cupos disponibles restantes en el proyecto.
-     * Se decrementa cada vez que el Coordinador asigna un Practicante.
+     * Se decrementa cada vez que el Coordinador asigna un Estudiante.
      *
      * @return cupos disponibles (entero ≥ 0).
      */

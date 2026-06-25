@@ -56,7 +56,7 @@ public final class Constantes {
     public static final int HORAS_PRACTICA = 420;
 
     /**
-     * Horas acumuladas en que el practicante debe entregar el informe parcial.
+     * Horas acumuladas en que el estudiante debe entregar el informe parcial.
      */
     public static final int HORAS_INFORME_PARCIAL = 210;
 
@@ -80,16 +80,16 @@ public final class Constantes {
 
     // --- Calificaciones ---
 
-    /** Valor numérico mínimo que puede recibir un practicante. */
+    /** Valor numérico mínimo que puede recibir un estudiante. */
     public static final int CALIFICACION_MINIMA = 0;
 
-    /** Valor numérico máximo que puede recibir un practicante. */
+    /** Valor numérico máximo que puede recibir un estudiante. */
     public static final int CALIFICACION_MAXIMA = 10;
 
-    // --- Autoevaluación del practicante ---
+    // --- Autoevaluación del estudiante ---
 
-    /** Número de criterios que componen la autoevaluación. */
-    public static final int CRITERIOS_AUTOEVALUACION = 5;
+    /** Número de afirmaciones que componen la autoevaluación. */
+    public static final int CRITERIOS_AUTOEVALUACION = 10;
 
     /** Valor mínimo de la escala de autoevaluación por criterio. */
     public static final int ESCALA_AUTOEVALUACION_MIN = 1;
@@ -116,7 +116,7 @@ public final class Constantes {
 
     // --- Tipos de evidencia (FK id_tipo_evidencia en BD) ---
 
-    /** Oficio emitido por la OV aceptando al Practicante. */
+    /** Oficio emitido por la OV aceptando al Estudiante. */
     public static final int TIPO_EVIDENCIA_OFICIO_ACEPTACION = 1;
 
     /** Oficio generado por el sistema al asignar el proyecto. */
@@ -131,7 +131,7 @@ public final class Constantes {
     /** Cronograma de actividades del periodo de práctica. */
     public static final int TIPO_EVIDENCIA_CRONOGRAMA = 5;
 
-    /** Reporte de avance mensual del Practicante. */
+    /** Reporte de avance mensual del Estudiante. */
     public static final int TIPO_EVIDENCIA_REPORTE_MENSUAL = 6;
 
     /** Informe al concluir las primeras 210 horas (RN-03). */
@@ -143,18 +143,18 @@ public final class Constantes {
     /** Presentación final ante el Profesor Asesor. */
     public static final int TIPO_EVIDENCIA_PRESENTACION = 9;
 
-    /** Evaluación de la OV realizada por el Practicante. */
+    /** Evaluación de la OV realizada por el Estudiante. */
     public static final int TIPO_EVIDENCIA_EVALUACION_OV = 10;
 
-    /** Autoevaluación del Practicante (10 afirmaciones, escala 1-5). */
+    /** Autoevaluación del Estudiante (10 afirmaciones, escala 1-5). */
     public static final int TIPO_EVIDENCIA_AUTOEVALUACION = 11;
 
     // --- Estados de documento (FK id_estado_documento en BD) ---
 
-    /** Documento creado; el Practicante aún no ha entregado archivo. */
+    /** Documento creado; el Estudiante aún no ha entregado archivo. */
     public static final int ESTADO_DOCUMENTO_PENDIENTE = 1;
 
-    /** El Practicante subió el archivo; pendiente de evaluación. */
+    /** El Estudiante subió el archivo; pendiente de evaluación. */
     public static final int ESTADO_DOCUMENTO_ENTREGADO = 2;
 
     /** El Profesor evaluó y aprobó la evidencia. */
@@ -171,7 +171,7 @@ public final class Constantes {
 
     // --- Autoevaluación Likert (rediseño sesión 4) ---
 
-    /** Afirmaciones que componen la autoevaluación del Practicante. */
+    /** Afirmaciones que componen la autoevaluación del Estudiante. */
     public static final int NUM_AFIRMACIONES_AUTOEVALUACION = 10;
 
     /** Puntuación máxima posible (10 afirmaciones × escala máx. 5). */

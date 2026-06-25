@@ -20,7 +20,7 @@ import javax.crypto.spec.SecretKeySpec;
 /**
  * Utilidad de cifrado y descifrado AES-128 en modo CBC (SEG-04).
  * Cifra nombre, correo y contraseña de todos los usuarios, y las
- * actividades de los practicantes, antes de persistirlos en la BD.
+ * actividades de los estudiantes, antes de persistirlos en la BD.
  * La clave y el IV se leen de {@code bd.properties} para evitar
  * credenciales en el código fuente.
  *

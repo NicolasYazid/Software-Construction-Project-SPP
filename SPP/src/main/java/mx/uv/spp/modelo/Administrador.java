@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 /**
  * Representa al Administrador del sistema SPP.
  * Su única función es registrar e inactivar Coordinadores y Profesores.
- * No tiene acceso a información de practicantes (sección 4).
+ * No tiene acceso a información de estudiantes (sección 4).
  * No forma parte de la jerarquía académica, por eso no extiende
  * {@link Academico}.
  *

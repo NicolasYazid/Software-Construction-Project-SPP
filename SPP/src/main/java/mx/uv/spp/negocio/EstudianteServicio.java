@@ -25,7 +25,7 @@ import mx.uv.spp.persistencia.dao.SeleccionProyectoDAO;
 import mx.uv.spp.util.Constantes;
 
 /**
- * Lógica de negocio para los casos de uso del Estudiante/Practicante.
+ * Lógica de negocio para los casos de uso del Estudiante.
  * Cubre la selección de proyectos por prioridad (RN-11), la entrega
  * de documentos y la autoevaluación. No accede a la BD directamente;
  * delega en los DAO recibidos por inyección de dependencia.

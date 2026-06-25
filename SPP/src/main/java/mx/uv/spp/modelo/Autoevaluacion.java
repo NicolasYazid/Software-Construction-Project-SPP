@@ -8,7 +8,7 @@
 package mx.uv.spp.modelo;
 
 /**
- * Representa la autoevaluación que realiza el Practicante al concluir
+ * Representa la autoevaluación que realiza el Estudiante al concluir
  * su práctica profesional (sección 8). Contiene 10 afirmaciones con
  * escala Likert del 1 al 5. La calificación se obtiene con la fórmula:
  * {@code (puntuacionTotal / 50.0) * 10}, lo que produce un valor en

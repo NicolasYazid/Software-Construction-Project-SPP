@@ -50,7 +50,7 @@ public class Documento {
      *
      * @param idDocumento       Identificador del registro en la BD.
      * @param idInscripcion     FK hacia {@code estudiante_inscrito};
-     *                          identifica al Practicante propietario.
+     *                          identifica al Estudiante propietario.
      * @param idTipoEvidencia   FK hacia {@code tipo_evidencia}; discrimina
      *                          el subtipo de documento (DocumentoInicial
      *                          o Evidencia, sección 6).
@@ -61,7 +61,7 @@ public class Documento {
      *                          {@code null} si aún no se ha entregado.
      * @param nombreArchivo     Nombre del archivo para la UI;
      *                          {@code null} si no aplica.
-     * @param fechaEntrega      Momento de la entrega del Practicante;
+     * @param fechaEntrega      Momento de la entrega del Estudiante;
      *                          {@code null} si aún no fue entregado.
      * @param fechaLimite       Fecha límite de entrega original;
      *                          {@code null} si no fue establecida.
@@ -205,7 +205,7 @@ public class Documento {
     }
 
     /**
-     * Retorna la fecha y hora en que el Practicante entregó el
+     * Retorna la fecha y hora en que el Estudiante entregó el
      * documento, o {@code null} si aún no fue entregado.
      *
      * @return momento de entrega o {@code null}.

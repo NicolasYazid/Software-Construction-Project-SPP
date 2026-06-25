@@ -18,7 +18,7 @@ import mx.uv.spp.persistencia.dao.AutoevaluacionDAO;
 /**
  * Implementación JDBC de {@link AutoevaluacionDAO}.
  * Accede a las tablas {@code autoevaluacion} y {@code documento}
- * para verificar y persistir la autoevaluación del Practicante.
+ * para verificar y persistir la autoevaluación del Estudiante.
  * La verificación de existencia hace JOIN porque la tabla
  * {@code autoevaluacion} referencia {@code documento}, y el
  * vínculo con la inscripción está en {@code documento}.

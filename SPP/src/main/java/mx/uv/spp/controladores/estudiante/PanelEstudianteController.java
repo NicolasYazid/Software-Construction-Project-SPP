@@ -5,7 +5,7 @@
  * Este software es de uso académico y privado.
  * Fecha de creación: 24 de junio del 2026
  */
-package mx.uv.spp.controladores.practicante;
+package mx.uv.spp.controladores.estudiante;
 
 import java.io.IOException;
 import java.net.URL;
@@ -18,7 +18,7 @@ import javafx.scene.layout.StackPane;
 import mx.uv.spp.util.Navegador;
 
 /**
- * Controlador del panel principal del Practicante
+ * Controlador del panel principal del Estudiante
  * (panel_estudiante.fxml). Gestiona la navegación entre
  * las sub-vistas de su menú lateral y el cierre de sesión.
  * No contiene lógica de negocio ni acceso directo a la BD.
