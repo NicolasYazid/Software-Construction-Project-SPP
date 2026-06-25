@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+
+<!--
+    documentos_iniciales.fxml — Entrega de Documentos Iniciales.
+    Controlador:
+      mx.uv.spp.controladores.estudiante.DocumentosInicialesController
+-->
+<VBox xmlns="http://javafx.com/javafx/8.0.171"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller=
+        "mx.uv.spp.controladores.estudiante.DocumentosInicialesController"
+      spacing="12.0">
+    <padding>
+        <Insets top="20.0" right="20.0"
+                bottom="20.0" left="20.0" />
+    </padding>
+
+    <Label text="Documentos Iniciales"
+           style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+
+    <Label fx:id="lblEstado"
+           wrapText="true"
+           maxWidth="Infinity"
+           style="-fx-text-fill: #1C3A6E;" />
+
+    <TableView fx:id="tblDocumentos"
+               VBox.vgrow="ALWAYS"
+               prefHeight="300.0">
+        <columns>
+            <TableColumn fx:id="colDocumento"
+                         text="Documento" prefWidth="220.0" />
+            <TableColumn fx:id="colEstado"
+                         text="Estado" prefWidth="130.0" />
+            <TableColumn fx:id="colArchivo"
+                         text="Archivo" prefWidth="220.0" />
+            <TableColumn fx:id="colAccion"
+                         text="Acción" prefWidth="110.0" />
+        </columns>
+        <placeholder>
+            <Label text="No hay documentos que mostrar." />
+        </placeholder>
+    </TableView>
+
+</VBox>

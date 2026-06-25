@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<!--
+    elegir_proyecto.fxml — CU-21 Elegir Proyecto por Prioridad.
+    Controlador: mx.uv.spp.controladores.estudiante.ElegirProyectoController
+-->
+<VBox xmlns="http://javafx.com/javafx/8.0.171"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller=
+        "mx.uv.spp.controladores.estudiante.ElegirProyectoController"
+      spacing="12.0">
+    <padding>
+        <Insets top="20.0" right="20.0" bottom="20.0" left="20.0" />
+    </padding>
+
+    <Label text="Elegir Proyecto por Prioridad (CU-21)"
+           style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+
+    <Label fx:id="lblEstado"
+           wrapText="true"
+           maxWidth="Infinity"
+           style="-fx-text-fill: #1C3A6E;" />
+
+    <TableView fx:id="tblProyectos"
+               VBox.vgrow="ALWAYS"
+               prefHeight="350.0">
+        <columns>
+            <TableColumn fx:id="colPrioridad"
+                         text="Prioridad" prefWidth="80.0" />
+            <TableColumn fx:id="colNombre"
+                         text="Proyecto" prefWidth="220.0" />
+            <TableColumn fx:id="colDescripcion"
+                         text="Descripción" prefWidth="300.0" />
+            <TableColumn fx:id="colCupo"
+                         text="Cupos" prefWidth="80.0" />
+        </columns>
+        <placeholder>
+            <Label text="No hay proyectos disponibles." />
+        </placeholder>
+    </TableView>
+
+    <HBox spacing="10.0">
+        <Button fx:id="btnSubir"
+                text="↑ Subir prioridad"
+                onAction="#onBtnSubir" />
+        <Button fx:id="btnBajar"
+                text="↓ Bajar prioridad"
+                onAction="#onBtnBajar" />
+        <Button fx:id="btnConfirmar"
+                text="Confirmar selección (irreversible)"
+                onAction="#onBtnConfirmar"
+                style="-fx-background-color: #1C3A6E;
+                       -fx-text-fill: white;" />
+    </HBox>
+
+</VBox>
