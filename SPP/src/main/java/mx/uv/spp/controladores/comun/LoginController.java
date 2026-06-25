@@ -21,8 +21,10 @@ import javafx.scene.control.TextField;
 import mx.uv.spp.modelo.ResultadoAutenticacion;
 import mx.uv.spp.modelo.TipoUsuario;
 import mx.uv.spp.negocio.LoginServicio;
+import mx.uv.spp.persistencia.dao.impl.EstudianteInscritoDAOImpl;
 import mx.uv.spp.persistencia.dao.impl.UsuarioDAOImpl;
 import mx.uv.spp.util.Navegador;
+import mx.uv.spp.util.SesionUsuario;
 
 /**
  * Controlador de la pantalla de autenticación (login.fxml).
@@ -239,13 +241,33 @@ public class LoginController implements Initializable {
 
     /**
      * Navega a la pantalla principal del rol autenticado.
-     * Cada rol tiene su propia pantalla de inicio definida en los
-     * controladores del paquete correspondiente.
+     * Antes de navegar, deposita el contexto del usuario en
+     * {@link SesionUsuario}. Para el Estudiante, también consulta
+     * el {@code id_inscripcion} del ciclo activo.
      *
      * @param resultado Resultado con el tipo de usuario y nombre completo.
      */
     private void navegarAPantallaPrincipal(
             ResultadoAutenticacion resultado) {
+        SesionUsuario.inicializar(
+                resultado.getIdUsuario(),
+                resultado.getNombreCompleto(),
+                resultado.getTipo());
+
+        if (resultado.getTipo() == TipoUsuario.ESTUDIANTE) {
+            try {
+                int idInscripcion =
+                        new EstudianteInscritoDAOImpl()
+                        .obtenerIdInscripcionActivo(
+                                resultado.getIdUsuario());
+                SesionUsuario.setIdInscripcion(idInscripcion);
+            } catch (java.sql.SQLException e) {
+                System.err.println(
+                        "No se pudo obtener idInscripcion: "
+                        + e.getMessage());
+            }
+        }
+
         switch (resultado.getTipo()) {
             case ESTUDIANTE:
                 Navegador.irAPanelEstudiante();

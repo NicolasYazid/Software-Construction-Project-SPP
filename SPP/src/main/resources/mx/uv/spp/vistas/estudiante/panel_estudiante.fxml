@@ -11,62 +11,85 @@
 <!--
     panel_estudiante.fxml — Panel principal del Estudiante.
     Controlador: mx.uv.spp.controladores.estudiante.PanelEstudianteController
-    Los botones del menú se habilitarán cuando su vista esté implementada.
 -->
 <BorderPane xmlns="http://javafx.com/javafx/8.0.171"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="mx.uv.spp.controladores.estudiante.PanelEstudianteController"
+            fx:controller=
+              "mx.uv.spp.controladores.estudiante.PanelEstudianteController"
             prefHeight="700.0" prefWidth="1100.0">
 
-    <!-- ── Barra lateral izquierda ─────────────────────────────── -->
+    <!-- ── Barra lateral izquierda ───────────────────────────── -->
     <left>
-        <VBox prefWidth="220.0" spacing="8.0">
+        <VBox prefWidth="220.0" spacing="8.0"
+              style="-fx-background-color: #1C3A6E;">
             <padding>
                 <Insets top="24.0" right="12.0"
                         bottom="24.0" left="12.0" />
             </padding>
 
-            <Label text="Menú del Estudiante" />
-            <Separator />
+            <Label fx:id="lblBienvenida"
+                   text="Menú del Estudiante"
+                   wrapText="true"
+                   style="-fx-text-fill: white;
+                          -fx-font-weight: bold;
+                          -fx-font-size: 13px;" />
+            <Separator
+                style="-fx-background-color: #4A6FA8;" />
 
             <Button fx:id="btnElegirProyecto"
                     text="Elegir Proyecto"
                     maxWidth="Infinity"
-                    disable="true" />
+                    onAction="#onBtnElegirProyecto"
+                    style="-fx-background-color: #2C5282;
+                           -fx-text-fill: white;" />
 
             <Button fx:id="btnDocumentosIniciales"
                     text="Documentos Iniciales"
                     maxWidth="Infinity"
-                    disable="true" />
+                    onAction="#onBtnDocumentosIniciales"
+                    style="-fx-background-color: #2C5282;
+                           -fx-text-fill: white;" />
 
             <Button fx:id="btnReportesInformes"
                     text="Reportes e Informes"
                     maxWidth="Infinity"
-                    disable="true" />
+                    onAction="#onBtnReportesInformes"
+                    style="-fx-background-color: #2C5282;
+                           -fx-text-fill: white;" />
 
             <Button fx:id="btnAutoevaluacion"
                     text="Autoevaluación"
                     maxWidth="Infinity"
-                    disable="true" />
+                    onAction="#onBtnAutoevaluacion"
+                    style="-fx-background-color: #2C5282;
+                           -fx-text-fill: white;" />
 
             <Button fx:id="btnBuzon"
                     text="Buzón"
                     maxWidth="Infinity"
-                    disable="true" />
+                    disable="true"
+                    style="-fx-background-color: #2C5282;
+                           -fx-text-fill: white;
+                           -fx-opacity: 0.5;" />
 
-            <Separator />
+            <Separator
+                style="-fx-background-color: #4A6FA8;" />
 
             <Button fx:id="btnCerrarSesion"
                     text="Cerrar sesión"
                     maxWidth="Infinity"
-                    onAction="#onBtnCerrarSesion" />
+                    onAction="#onBtnCerrarSesion"
+                    style="-fx-background-color: #8B0000;
+                           -fx-text-fill: white;" />
         </VBox>
     </left>
 
-    <!-- ── Área central de contenido ───────────────────────────── -->
+    <!-- ── Área central de contenido ────────────────────────── -->
     <center>
         <StackPane fx:id="contenedor">
-            <Label text="Seleccione una opción del menú." />
+            <Label text="Seleccione una opción del menú."
+                   style="-fx-text-fill: #777;
+                          -fx-font-size: 14px;" />
         </StackPane>
     </center>
 

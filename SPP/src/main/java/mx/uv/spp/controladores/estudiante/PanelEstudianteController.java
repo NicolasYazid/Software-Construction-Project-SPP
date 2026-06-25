@@ -14,13 +14,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import mx.uv.spp.util.Navegador;
+import mx.uv.spp.util.SesionUsuario;
 
 /**
  * Controlador del panel principal del Estudiante
- * (panel_estudiante.fxml). Gestiona la navegación entre
- * las sub-vistas de su menú lateral y el cierre de sesión.
+ * (panel_estudiante.fxml). Gestiona la navegación entre las
+ * sub-vistas del menú lateral y el cierre de sesión.
  * No contiene lógica de negocio ni acceso directo a la BD.
  *
  * @author Nicolás Yazid Cruz Hernández
@@ -29,33 +31,84 @@ import mx.uv.spp.util.Navegador;
 public class PanelEstudianteController implements Initializable {
 
     @FXML private StackPane contenedor;
+    @FXML private Label     lblBienvenida;
+
+    private static final String VISTA_ELEGIR =
+            "/mx/uv/spp/vistas/estudiante/elegir_proyecto.fxml";
+    private static final String VISTA_DOCS =
+            "/mx/uv/spp/vistas/estudiante/documentos_iniciales.fxml";
+    private static final String VISTA_REPORTES =
+            "/mx/uv/spp/vistas/estudiante/reportes_informes.fxml";
+    private static final String VISTA_AUTO =
+            "/mx/uv/spp/vistas/estudiante/autoevaluacion.fxml";
 
     /**
-     * Inicializa el controlador tras cargar el FXML.
-     * Los botones del menú se habilitarán individualmente
-     * conforme se implementen sus sub-vistas.
+     * Inicializa el panel: muestra el nombre del Estudiante
+     * autenticado en la etiqueta de bienvenida.
      *
-     * @param ubicacion URL del FXML cargado (no se usa).
-     * @param recursos  Paquete de i18n (no aplicado aún).
+     * @param ubicacion URL del FXML (no usado).
+     * @param recursos  Paquete de i18n (no usado).
      */
     @Override
     public void initialize(URL ubicacion, ResourceBundle recursos) {
+        String nombre = SesionUsuario.getNombreCompleto();
+        if (lblBienvenida != null && !nombre.isEmpty()) {
+            lblBienvenida.setText("Bienvenido, " + nombre);
+        }
+    }
+
+    /* ── Manejadores de botones del menú ────────────────────── */
+
+    /**
+     * Carga la sub-vista de Elegir Proyecto (CU-21).
+     */
+    @FXML
+    private void onBtnElegirProyecto() {
+        cargarVista(VISTA_ELEGIR);
     }
 
     /**
-     * Carga el FXML indicado como contenido central del panel.
-     * Reemplaza cualquier vista previa que hubiera en el contenedor.
-     *
-     * @param rutaFxml Ruta absoluta del FXML en el classpath;
-     *                 no puede ser nula ni vacía.
-     * @throws IllegalArgumentException si {@code rutaFxml} es nula
-     *         o vacía.
+     * Carga la sub-vista de Documentos Iniciales.
      */
-    public void cargarVista(String rutaFxml) {
-        if (rutaFxml == null || rutaFxml.trim().isEmpty()) {
-            throw new IllegalArgumentException(
-                    "La ruta del FXML no puede ser nula ni vacía.");
-        }
+    @FXML
+    private void onBtnDocumentosIniciales() {
+        cargarVista(VISTA_DOCS);
+    }
+
+    /**
+     * Carga la sub-vista de Reportes e Informes.
+     */
+    @FXML
+    private void onBtnReportesInformes() {
+        cargarVista(VISTA_REPORTES);
+    }
+
+    /**
+     * Carga la sub-vista de Autoevaluación (CU-30).
+     */
+    @FXML
+    private void onBtnAutoevaluacion() {
+        cargarVista(VISTA_AUTO);
+    }
+
+    /**
+     * Limpia la sesión activa y vuelve a la pantalla de login.
+     */
+    @FXML
+    private void onBtnCerrarSesion() {
+        SesionUsuario.limpiar();
+        Navegador.irALogin();
+    }
+
+    /* ── Carga de sub-vistas ────────────────────────────────── */
+
+    /**
+     * Carga el FXML indicado como contenido central del panel.
+     * Reemplaza la vista previa en el contenedor.
+     *
+     * @param rutaFxml Ruta del FXML en el classpath; no nula.
+     */
+    private void cargarVista(String rutaFxml) {
         try {
             FXMLLoader cargador = new FXMLLoader(
                     getClass().getResource(rutaFxml));
@@ -67,19 +120,9 @@ public class PanelEstudianteController implements Initializable {
             contenedor.getChildren().setAll(raiz);
         } catch (IOException e) {
             System.err.println(
-                    "Error al cargar vista en panel estudiante: "
+                    "Error al cargar vista en panel: "
                     + e.getMessage());
         }
-    }
-
-    /**
-     * Maneja el clic en el botón "Cerrar sesión".
-     * Vuelve a la pantalla de inicio de sesión a través del
-     * centralizador de navegación.
-     */
-    @FXML
-    private void onBtnCerrarSesion() {
-        Navegador.irALogin();
     }
 
 }
