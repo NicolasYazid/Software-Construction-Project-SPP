@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<!--
+    publicar_mensaje.fxml — CU-31: Publicar Mensaje (Profesor).
+    Controlador:
+      mx.uv.spp.controladores.profesor.PublicarMensajeController
+-->
+<VBox xmlns="http://javafx.com/javafx/8.0.171"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller=
+        "mx.uv.spp.controladores.profesor.PublicarMensajeController"
+      spacing="10.0">
+    <padding>
+        <Insets top="20.0" right="20.0"
+                bottom="20.0" left="20.0" />
+    </padding>
+
+    <Label text="Publicar Mensaje al Grupo (CU-31)"
+           style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+
+    <Label fx:id="lblEstado"
+           wrapText="true"
+           maxWidth="Infinity"
+           style="-fx-text-fill: #1C3A6E;" />
+
+    <Separator />
+
+    <GridPane hgap="10.0" vgap="8.0">
+
+        <Label text="Grupo receptor:"
+               GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <ComboBox fx:id="cmbGrupo" prefWidth="300.0"
+                  GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+        <Label text="Asunto:"
+               GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <TextField fx:id="txtAsunto" prefWidth="300.0"
+                   GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+        <Label text="Mensaje:"
+               GridPane.columnIndex="0" GridPane.rowIndex="2" />
+        <TextArea fx:id="txaTexto" prefWidth="300.0"
+                  prefHeight="120.0" wrapText="true"
+                  GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+    </GridPane>
+
+    <HBox spacing="10.0" alignment="CENTER_LEFT">
+        <Button fx:id="btnAdjuntarPdf"
+                text="Adjuntar PDF"
+                onAction="#onBtnAdjuntarPdf"
+                style="-fx-background-color: #2C5282;
+                       -fx-text-fill: white;" />
+        <Label fx:id="lblArchivo"
+               text="Sin adjunto."
+               style="-fx-text-fill: #555;" />
+    </HBox>
+
+    <Button fx:id="btnPublicar"
+            text="Publicar mensaje"
+            onAction="#onBtnPublicar"
+            style="-fx-background-color: #1C3A6E;
+                   -fx-text-fill: white;" />
+
+</VBox>

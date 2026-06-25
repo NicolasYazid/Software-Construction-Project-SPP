@@ -10,63 +10,87 @@
 
 <!--
     panel_profesor.fxml — Panel principal del Profesor Asesor.
-    Controlador: mx.uv.spp.controladores.profesor.PanelProfesorController
-    Los botones del menú se habilitarán cuando su vista esté implementada.
+    Controlador:
+      mx.uv.spp.controladores.profesor.PanelProfesorController
 -->
 <BorderPane xmlns="http://javafx.com/javafx/8.0.171"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="mx.uv.spp.controladores.profesor.PanelProfesorController"
+            fx:controller=
+              "mx.uv.spp.controladores.profesor.PanelProfesorController"
             prefHeight="700.0" prefWidth="1100.0">
 
-    <!-- ── Barra lateral izquierda ─────────────────────────────── -->
+    <!-- ── Barra lateral izquierda ───────────────────────────── -->
     <left>
-        <VBox prefWidth="220.0" spacing="8.0">
+        <VBox prefWidth="220.0" spacing="8.0"
+              style="-fx-background-color: #1C3A6E;">
             <padding>
                 <Insets top="24.0" right="12.0"
                         bottom="24.0" left="12.0" />
             </padding>
 
-            <Label text="Menú del Profesor" />
-            <Separator />
+            <Label fx:id="lblBienvenida"
+                   text="Menú del Profesor"
+                   wrapText="true"
+                   style="-fx-text-fill: white;
+                          -fx-font-weight: bold;
+                          -fx-font-size: 13px;" />
+            <Separator
+                style="-fx-background-color: #4A6FA8;" />
 
             <Button fx:id="btnEvidencias"
                     text="Evidencias por Evaluar"
                     maxWidth="Infinity"
-                    disable="true" />
+                    onAction="#onBtnEvidencias"
+                    style="-fx-background-color: #2C5282;
+                           -fx-text-fill: white;" />
 
-            <Button fx:id="btnCalificaciones"
-                    text="Calificaciones"
+            <Button fx:id="btnCalificacionOV"
+                    text="Calificación OV"
                     maxWidth="Infinity"
-                    disable="true" />
+                    onAction="#onBtnCalificacionOV"
+                    style="-fx-background-color: #2C5282;
+                           -fx-text-fill: white;" />
 
-            <Button fx:id="btnProrrogas"
-                    text="Prórrogas"
+            <Button fx:id="btnProrroga"
+                    text="Otorgar Prórroga"
                     maxWidth="Infinity"
-                    disable="true" />
+                    onAction="#onBtnProrroga"
+                    style="-fx-background-color: #2C5282;
+                           -fx-text-fill: white;" />
 
-            <Button fx:id="btnMensajes"
-                    text="Mensajes"
+            <Button fx:id="btnMensaje"
+                    text="Publicar Mensaje"
                     maxWidth="Infinity"
-                    disable="true" />
+                    onAction="#onBtnMensaje"
+                    style="-fx-background-color: #2C5282;
+                           -fx-text-fill: white;" />
 
             <Button fx:id="btnBuzon"
                     text="Buzón"
                     maxWidth="Infinity"
-                    disable="true" />
+                    disable="true"
+                    style="-fx-background-color: #2C5282;
+                           -fx-text-fill: white;
+                           -fx-opacity: 0.5;" />
 
-            <Separator />
+            <Separator
+                style="-fx-background-color: #4A6FA8;" />
 
             <Button fx:id="btnCerrarSesion"
                     text="Cerrar sesión"
                     maxWidth="Infinity"
-                    onAction="#onBtnCerrarSesion" />
+                    onAction="#onBtnCerrarSesion"
+                    style="-fx-background-color: #8B0000;
+                           -fx-text-fill: white;" />
         </VBox>
     </left>
 
-    <!-- ── Área central de contenido ───────────────────────────── -->
+    <!-- ── Área central de contenido ────────────────────────── -->
     <center>
         <StackPane fx:id="contenedor">
-            <Label text="Seleccione una opción del menú." />
+            <Label text="Seleccione una opción del menú."
+                   style="-fx-text-fill: #777;
+                          -fx-font-size: 14px;" />
         </StackPane>
     </center>
 
