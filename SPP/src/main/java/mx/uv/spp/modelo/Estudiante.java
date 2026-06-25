@@ -32,7 +32,6 @@ public class Estudiante {
     private String        lenguaIndigena;
     private int           semestre;
     private String        estado;
-    private boolean       contrasenaTemporal;
     private int           intentosFallidos;
     private LocalDateTime fechaBloqueo;
 
@@ -61,8 +60,6 @@ public class Estudiante {
      * @param lenguaIndigena     Lengua indígena del estudiante; null si no aplica.
      * @param semestre           Semestre cursado al momento de la inscripción.
      * @param estado             Activo o No Activo.
-     * @param contrasenaTemporal {@code true} si debe cambiar contraseña
-     *                           en el primer inicio de sesión (SEG-02).
      * @param intentosFallidos   Intentos de login fallidos consecutivos;
      *                           al llegar a 3 la cuenta se bloquea (SEG-01).
      * @param fechaBloqueo       Momento del bloqueo; null si no bloqueado.
@@ -72,22 +69,20 @@ public class Estudiante {
             String segundoApellido, String correo,
             String contrasena, String idioma,
             String lenguaIndigena, int semestre, String estado,
-            boolean contrasenaTemporal, int intentosFallidos,
-            LocalDateTime fechaBloqueo) {
-        this.idEstudiante       = idEstudiante;
-        this.matricula          = matricula;
-        this.nombre             = nombre;
-        this.primerApellido     = primerApellido;
-        this.segundoApellido    = segundoApellido;
-        this.correo             = correo;
-        this.contrasena         = contrasena;
-        this.idioma             = idioma;
-        this.lenguaIndigena     = lenguaIndigena;
-        this.semestre           = semestre;
-        this.estado             = estado;
-        this.contrasenaTemporal = contrasenaTemporal;
-        this.intentosFallidos   = intentosFallidos;
-        this.fechaBloqueo       = fechaBloqueo;
+            int intentosFallidos, LocalDateTime fechaBloqueo) {
+        this.idEstudiante    = idEstudiante;
+        this.matricula       = matricula;
+        this.nombre          = nombre;
+        this.primerApellido  = primerApellido;
+        this.segundoApellido = segundoApellido;
+        this.correo          = correo;
+        this.contrasena      = contrasena;
+        this.idioma          = idioma;
+        this.lenguaIndigena  = lenguaIndigena;
+        this.semestre        = semestre;
+        this.estado          = estado;
+        this.intentosFallidos = intentosFallidos;
+        this.fechaBloqueo    = fechaBloqueo;
     }
 
     /**
@@ -288,26 +283,6 @@ public class Estudiante {
      */
     public void setEstado(String estado) {
         this.estado = estado;
-    }
-
-    /**
-     * Indica si la contraseña es temporal y debe cambiarse en el
-     * próximo inicio de sesión exitoso (SEG-02).
-     *
-     * @return {@code true} si la contraseña es temporal.
-     */
-    public boolean isContrasenaTemporal() {
-        return contrasenaTemporal;
-    }
-
-    /**
-     * Establece si la contraseña del Estudiante es temporal.
-     *
-     * @param contrasenaTemporal {@code true} obliga el cambio en el
-     *        primer inicio de sesión exitoso (SEG-02).
-     */
-    public void setContrasenaTemporal(boolean contrasenaTemporal) {
-        this.contrasenaTemporal = contrasenaTemporal;
     }
 
     /**

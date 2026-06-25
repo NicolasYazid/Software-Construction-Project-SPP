@@ -28,7 +28,6 @@ public class Administrador {
     private String        contrasena;
     private String        estado;
     private LocalDate     fechaRegistro;
-    private boolean       contrasenaTemporal;
     private int           intentosFallidos;
     private LocalDateTime fechaBloqueo;
 
@@ -49,25 +48,22 @@ public class Administrador {
      * @param contrasena         Contraseña cifrada con AES-128 (SEG-04).
      * @param estado             Activo o No Activo.
      * @param fechaRegistro      Fecha de creación de la cuenta.
-     * @param contrasenaTemporal {@code true} si debe cambiar contraseña
-     *                           en el primer inicio de sesión (SEG-02).
      * @param intentosFallidos   Intentos fallidos consecutivos; al llegar
      *                           a 3 la cuenta se bloquea (SEG-01).
      * @param fechaBloqueo       Momento del bloqueo; null si no bloqueado.
      */
     public Administrador(int idAdministrador, String nombre,
             String correo, String contrasena, String estado,
-            LocalDate fechaRegistro, boolean contrasenaTemporal,
-            int intentosFallidos, LocalDateTime fechaBloqueo) {
-        this.idAdministrador    = idAdministrador;
-        this.nombre             = nombre;
-        this.correo             = correo;
-        this.contrasena         = contrasena;
-        this.estado             = estado;
-        this.fechaRegistro      = fechaRegistro;
-        this.contrasenaTemporal = contrasenaTemporal;
-        this.intentosFallidos   = intentosFallidos;
-        this.fechaBloqueo       = fechaBloqueo;
+            LocalDate fechaRegistro, int intentosFallidos,
+            LocalDateTime fechaBloqueo) {
+        this.idAdministrador  = idAdministrador;
+        this.nombre           = nombre;
+        this.correo           = correo;
+        this.contrasena       = contrasena;
+        this.estado           = estado;
+        this.fechaRegistro    = fechaRegistro;
+        this.intentosFallidos = intentosFallidos;
+        this.fechaBloqueo     = fechaBloqueo;
     }
 
     /**
@@ -177,26 +173,6 @@ public class Administrador {
      */
     public void setFechaRegistro(LocalDate fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
-    }
-
-    /**
-     * Indica si la contraseña es temporal y debe cambiarse en el
-     * próximo inicio de sesión exitoso (SEG-02).
-     *
-     * @return {@code true} si la contraseña es temporal.
-     */
-    public boolean isContrasenaTemporal() {
-        return contrasenaTemporal;
-    }
-
-    /**
-     * Establece si la contraseña es temporal.
-     *
-     * @param contrasenaTemporal {@code true} obliga el cambio de
-     *        contraseña en el primer inicio de sesión (SEG-02).
-     */
-    public void setContrasenaTemporal(boolean contrasenaTemporal) {
-        this.contrasenaTemporal = contrasenaTemporal;
     }
 
     /**

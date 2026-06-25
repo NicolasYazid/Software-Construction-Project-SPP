@@ -27,8 +27,6 @@
 --   Estudiante 4  : matricula S21013420    / Alumn4SPP2026
 --   Estudiante 5  : matricula S21013421    / Alumn5SPP2026
 --
--- contrasena_temporal = 0 en datos de prueba para permitir
--- login directo sin flujo de cambio de contrasena.
 -- ============================================================
 
 SET NAMES utf8;
@@ -43,7 +41,7 @@ USE spp;
 
 INSERT INTO tipo_evidencia (nombre, descripcion) VALUES
     ('OficioAceptacion',
-     'Oficio emitido por la OV aceptando al practicante'),
+     'Oficio emitido por la OV aceptando al estudiante'),
     ('OficioAsignacion',
      'Oficio generado por el sistema al asignar proyecto'),
     ('HorarioClases',
@@ -53,7 +51,7 @@ INSERT INTO tipo_evidencia (nombre, descripcion) VALUES
     ('Cronograma',
      'Cronograma de actividades del periodo de practica'),
     ('ReporteMensual',
-     'Reporte de avance mensual del practicante'),
+     'Reporte de avance mensual del estudiante'),
     ('InformeParcial',
      'Informe al concluir las primeras 210 horas (RN-03)'),
     ('InformeFinal',
@@ -61,9 +59,9 @@ INSERT INTO tipo_evidencia (nombre, descripcion) VALUES
     ('Presentacion',
      'Presentacion final ante el Profesor Asesor'),
     ('EvaluacionOV',
-     'Evaluacion de la Organizacion Vinculada por el practicante'),
+     'Evaluacion de la Organizacion Vinculada por el estudiante'),
     ('Autoevaluacion',
-     'Autoevaluacion del practicante (5 criterios, escala 1-5)');
+     'Autoevaluacion del estudiante (10 afirmaciones, escala 1-5)');
 
 INSERT INTO estado_documento
     (id_estado_documento, nombre)
@@ -184,13 +182,12 @@ INSERT INTO proyecto (
 -- Administrador del sistema
 INSERT INTO administrador (
     nombre, correo, contrasena,
-    estado, fecha_registro, contrasena_temporal,
-    intentos_fallidos
+    estado, fecha_registro, intentos_fallidos
 ) VALUES (
     '4FbUdqUNVjZXKdL4NRxpQw==',
     'QDIuDaG2U5gv7GQFBO3gJw==',
     'n5Tb7mQTICc9S71cskZ6MA==',
-    'Activo', '2026-02-01', 0, 0
+    'Activo', '2026-02-01', 0
 );
 
 -- Coordinador de Practicas Profesionales
@@ -198,7 +195,7 @@ INSERT INTO coordinador (
     num_personal, nombre, primer_apellido, segundo_apellido,
     correo, contrasena,
     estado, fecha_registro, tiempo_servicio,
-    contrasena_temporal, intentos_fallidos
+    intentos_fallidos
 ) VALUES (
     'UV-C-0041',
     'dSUM5EMKmnCL7s1wzR7vWg==',
@@ -206,7 +203,7 @@ INSERT INTO coordinador (
     '19n1d5Xp8p6k1g0qtpt4sQ==',
     'TEo4kCS/EJ27Y3+Ly3yjGycZqH1cMqESpSxIzMNoEAY=',
     'cHDGC1yLcX4keCEXoYU07A==',
-    'Activo', '2026-02-01', 8, 0, 0
+    'Activo', '2026-02-01', 8, 0
 );
 
 -- Profesor Asesor
@@ -214,7 +211,7 @@ INSERT INTO profesor (
     num_personal, nombre, primer_apellido, segundo_apellido,
     correo, contrasena,
     estado, fecha_registro, tiempo_servicio, turno,
-    contrasena_temporal, intentos_fallidos
+    intentos_fallidos
 ) VALUES (
     'UV-P-0112',
     'pJu5izpl9qzoUH+50z0K8Q==',
@@ -222,14 +219,14 @@ INSERT INTO profesor (
     'iWvasJKCVw+NB2k002ppSQ==',
     'Gxrdc+ufxX0/skoeUm6gfM/EOStKzxPOU4cMBg1z7bs=',
     'paeQHgfbuV53Q7Wrc+JVdQ==',
-    'Activo', '2026-02-01', 5, 'Matutino', 0, 0
+    'Activo', '2026-02-01', 5, 'Matutino', 0
 );
 
 -- Estudiante 1: Ana Garcia Ruiz (S21013417) — estado EnSeleccion
 INSERT INTO estudiante (
     matricula, nombre, primer_apellido, segundo_apellido,
     correo, contrasena,
-    semestre, estado, contrasena_temporal, intentos_fallidos
+    semestre, estado, intentos_fallidos
 ) VALUES (
     '531rJpX3s+//RxCSBqzIvQ==',
     'iZzRTRia2xeGGL3iooOwjw==',
@@ -237,14 +234,14 @@ INSERT INTO estudiante (
     'ofcL9Ebtt9H1tN/9URQomg==',
     'S6gJ2CgswlDdLQh6B36+aY3Jpn8INFb4+2iEDKuQH7Y=',
     'Tw7dKUXDh0wpTFrpBtbccA==',
-    9, 'Activo', 0, 0
+    9, 'Activo', 0
 );
 
 -- Estudiante 2: Luis Hernandez Mora (S21013418) — estado Asignado
 INSERT INTO estudiante (
     matricula, nombre, primer_apellido, segundo_apellido,
     correo, contrasena,
-    semestre, estado, contrasena_temporal, intentos_fallidos
+    semestre, estado, intentos_fallidos
 ) VALUES (
     'GSOky3T9Y4Lj1wOtAERNdQ==',
     '4praq4GfUwAXNFbo5Jm/Nw==',
@@ -252,14 +249,14 @@ INSERT INTO estudiante (
     'GDDEleVpOXQ50ZwaMyZZFQ==',
     '8HZ5joraT47OAjskjaYOb6h6U8CEJU5fDOO2W7oKf3rGI9RnS9yDgEIs7SnrxMTB',
     'yB2Do5uWsdEb74DRbfnTFw==',
-    9, 'Activo', 0, 0
+    9, 'Activo', 0
 );
 
 -- Estudiante 3: Sofia Martinez Cruz (S21013419) — estado Asignado
 INSERT INTO estudiante (
     matricula, nombre, primer_apellido, segundo_apellido,
     correo, contrasena,
-    semestre, estado, contrasena_temporal, intentos_fallidos
+    semestre, estado, intentos_fallidos
 ) VALUES (
     'dFBBySEnqhkckwx6mUtYtg==',
     'KIJOvnp0G36Km7OABPTDVA==',
@@ -267,7 +264,7 @@ INSERT INTO estudiante (
     'u7ohjKmQcTdfWqvLjCV3Ew==',
     'GKxMz7JcB+PGhHOYue69Ou9dTlC7y+CJERZwDR0hAeeFmW41OYg01IsV8ztNX7a2',
     '+8Jqv45G7JsS1Er0XDfrhg==',
-    9, 'Activo', 0, 0
+    9, 'Activo', 0
 );
 
 -- Estudiante 4: Diego Lopez Vega (S21013420) — estado Inscrito
@@ -275,7 +272,7 @@ INSERT INTO estudiante (
 INSERT INTO estudiante (
     matricula, nombre, primer_apellido, segundo_apellido,
     correo, contrasena,
-    semestre, estado, contrasena_temporal, intentos_fallidos
+    semestre, estado, intentos_fallidos
 ) VALUES (
     'eZj6AU01be+6hjMKQ6hJGg==',
     'rBOOpPG53L9qrpkewYhLjw==',
@@ -283,14 +280,14 @@ INSERT INTO estudiante (
     'N1A3JuGlARPkYqxJaofF2w==',
     'Z9o0PhAgN+gh1z5Qb7+vkPV9aIeFoGkWZMggxKE50EY=',
     'm87dU3Ntq/Ezh8M0r84iyQ==',
-    9, 'Activo', 0, 0
+    9, 'Activo', 0
 );
 
 -- Estudiante 5: Valentina Cruz Diaz (S21013421) — estado EnDesarrollo
 INSERT INTO estudiante (
     matricula, nombre, primer_apellido, segundo_apellido,
     correo, contrasena,
-    semestre, estado, contrasena_temporal, intentos_fallidos
+    semestre, estado, intentos_fallidos
 ) VALUES (
     '36S2CMST4f0DFSGyEvaPkQ==',
     '2y3AHa5jjxd1MTY/n7WItQ==',
@@ -298,7 +295,7 @@ INSERT INTO estudiante (
     'yIH9sKC3wML+blrroAHhfw==',
     '2c0k5bmdz5gYdt+W9r9ZAdFsS+XNiIIazFUb5LrXuCQRwr378plPy8DsZEHyRe4E',
     'yz2c6AKRKKjZa4l4odAJ5g==',
-    9, 'Activo', 0, 0
+    9, 'Activo', 0
 );
 
 

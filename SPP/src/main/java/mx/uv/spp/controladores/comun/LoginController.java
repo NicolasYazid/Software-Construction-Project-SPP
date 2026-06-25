@@ -104,8 +104,7 @@ public class LoginController implements Initializable {
      * Maneja el clic en el botón "Ingresar".
      * Valida los campos en la UI, invoca el servicio de autenticación
      * y actualiza la pantalla según el resultado: navega a la pantalla
-     * principal, redirige al cambio de contraseña (SEG-02), o muestra
-     * el mensaje de error recibido del servicio.
+     * principal o muestra el mensaje de error recibido del servicio.
      */
     @FXML
     private void onBtnIniciarSesion() {
@@ -126,11 +125,7 @@ public class LoginController implements Initializable {
 
             if (resultado.isExitoso()) {
                 pwdContrasena.clear();
-                if (resultado.isContrasenaTemporal()) {
-                    navegarACambioContrasena(resultado);
-                } else {
-                    navegarAPantallaPrincipal(resultado);
-                }
+                navegarAPantallaPrincipal(resultado);
             } else {
                 mostrarMensaje(ESTILO_ERROR,
                         resultado.getMensajeError());
@@ -240,22 +235,6 @@ public class LoginController implements Initializable {
     private void mostrarMensaje(String estilo, String mensaje) {
         lblMensaje.getStyleClass().setAll(estilo);
         lblMensaje.setText(mensaje);
-    }
-
-    /**
-     * Navega a la pantalla de cambio de contraseña obligatorio
-     * (SEG-02). El resultado contiene el ID y tipo de usuario para
-     * que el controlador destino pueda persistir el cambio.
-     *
-     * @param resultado Resultado del login con {@code contrasenaTemporal = true}.
-     */
-    private void navegarACambioContrasena(
-            ResultadoAutenticacion resultado) {
-        mostrarMensaje(ESTILO_INFO,
-                "Bienvenido/a. Debe establecer una nueva contraseña"
-                + " antes de continuar (SEG-02).");
-        // Pantalla de cambio de contraseña pendiente de implementar.
-        // App.cambiarVista("/mx/uv/spp/vistas/comun/cambio_contrasena.fxml");
     }
 
     /**

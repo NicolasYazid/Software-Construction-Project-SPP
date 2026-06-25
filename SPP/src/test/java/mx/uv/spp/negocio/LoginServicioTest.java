@@ -38,8 +38,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  *   <li>Credenciales incorrectas: incremento de intentos</li>
  *   <li>Tercer intento fallido: mensaje de bloqueo</li>
  *   <li>Login exitoso: reinicio de intentos</li>
- *   <li>Login exitoso con contraseña temporal (SEG-02)</li>
- *   <li>Cambio de contraseña: validaciones y persistencia</li>
  * </ul>
  *
  * @author Nicolás Yazid Cruz Hernández
@@ -259,7 +257,7 @@ class LoginServicioTest {
     @DisplayName("Login exitoso retorna exitoso=true y reinicia intentos")
     void autenticarUsuario_exitoso_reiniciaIntentos()
             throws Exception {
-        daoStub.respuesta = resultadoExitoso(false);
+        daoStub.respuesta = resultadoExitoso();
 
         ResultadoAutenticacion r = loginServicio.autenticarUsuario(
                 CORREO_PRUEBA, PASS_PRUEBA, TIPO_PRUEBA);
@@ -268,87 +266,6 @@ class LoginServicioTest {
         assertTrue(daoStub.seReinicioIntentos,
                 "Debe llamar reiniciarIntentos() en login exitoso");
         assertFalse(daoStub.seIncrementoIntentos);
-    }
-
-    /* ── 9. Contraseña temporal (SEG-02) ───────────────────── */
-
-    @Test
-    @DisplayName("Login con contraseña temporal propaga el flag al controlador")
-    void autenticarUsuario_exitosoContrasenaTemporal_flagSet()
-            throws Exception {
-        daoStub.respuesta = resultadoExitoso(true);
-
-        ResultadoAutenticacion r = loginServicio.autenticarUsuario(
-                CORREO_PRUEBA, PASS_PRUEBA, TIPO_PRUEBA);
-
-        assertTrue(r.isExitoso());
-        assertTrue(r.isContrasenaTemporal(),
-                "El flag contrasenaTemporal debe ser true (SEG-02)");
-    }
-
-    @Test
-    @DisplayName("Login sin contraseña temporal: flag es false")
-    void autenticarUsuario_exitosoSinTemporal_flagFalse()
-            throws Exception {
-        daoStub.respuesta = resultadoExitoso(false);
-
-        ResultadoAutenticacion r = loginServicio.autenticarUsuario(
-                CORREO_PRUEBA, PASS_PRUEBA, TIPO_PRUEBA);
-
-        assertTrue(r.isExitoso());
-        assertFalse(r.isContrasenaTemporal());
-    }
-
-    /* ── 10. cambiarContrasena ─────────────────────────────── */
-
-    @Test
-    @DisplayName("cambiarContrasena con idUsuario=0 lanza excepción")
-    void cambiarContrasena_idCero_lanzaExcepcion() {
-        assertThrows(IllegalArgumentException.class,
-                () -> loginServicio.cambiarContrasena(
-                        0, TIPO_PRUEBA, "NuevaPass2026"));
-    }
-
-    @Test
-    @DisplayName("cambiarContrasena con id negativo lanza excepción")
-    void cambiarContrasena_idNegativo_lanzaExcepcion() {
-        assertThrows(IllegalArgumentException.class,
-                () -> loginServicio.cambiarContrasena(
-                        -5, TIPO_PRUEBA, "NuevaPass2026"));
-    }
-
-    @Test
-    @DisplayName("cambiarContrasena con tipo nulo lanza excepción")
-    void cambiarContrasena_tipoNulo_lanzaExcepcion() {
-        assertThrows(IllegalArgumentException.class,
-                () -> loginServicio.cambiarContrasena(
-                        ID_USUARIO, null, "NuevaPass2026"));
-    }
-
-    @Test
-    @DisplayName("cambiarContrasena con contraseña corta lanza excepción")
-    void cambiarContrasena_contrasenaCortaNoValid_lanzaExcepcion() {
-        assertThrows(IllegalArgumentException.class,
-                () -> loginServicio.cambiarContrasena(
-                        ID_USUARIO, TIPO_PRUEBA, "corta"));
-    }
-
-    @Test
-    @DisplayName("cambiarContrasena sin mayúsculas lanza excepción (SEG-03)")
-    void cambiarContrasena_sinMayusculas_lanzaExcepcion() {
-        assertThrows(IllegalArgumentException.class,
-                () -> loginServicio.cambiarContrasena(
-                        ID_USUARIO, TIPO_PRUEBA, "sinmayus2026"));
-    }
-
-    @Test
-    @DisplayName("cambiarContrasena válida llama actualizarContrasena en DAO")
-    void cambiarContrasena_valida_llamaDAO() throws Exception {
-        loginServicio.cambiarContrasena(
-                ID_USUARIO, TIPO_PRUEBA, "NuevaPass2026");
-
-        assertTrue(daoStub.seActualizoContrasena,
-                "Debe persistir la nueva contraseña en el DAO");
     }
 
     /* ── Constructor ───────────────────────────────────────── */
@@ -399,15 +316,13 @@ class LoginServicioTest {
         return r;
     }
 
-    private ResultadoAutenticacion resultadoExitoso(
-            boolean contrasenaTemporal) {
+    private ResultadoAutenticacion resultadoExitoso() {
         ResultadoAutenticacion r = new ResultadoAutenticacion();
         r.setIdUsuario(ID_USUARIO);
         r.setEstado(Constantes.ESTADO_ACTIVO);
         r.setIntentosFallidos(0);
         r.setFechaBloqueo(null);
         r.setExitoso(true);
-        r.setContrasenaTemporal(contrasenaTemporal);
         r.setNombreCompleto("Coordinador Prueba");
         r.setTipo(TIPO_PRUEBA);
         return r;
@@ -423,9 +338,8 @@ class LoginServicioTest {
     static class UsuarioDAOStub implements UsuarioDAO {
 
         ResultadoAutenticacion respuesta;
-        boolean seIncrementoIntentos  = false;
-        boolean seReinicioIntentos    = false;
-        boolean seActualizoContrasena = false;
+        boolean seIncrementoIntentos = false;
+        boolean seReinicioIntentos   = false;
 
         @Override
         public ResultadoAutenticacion autenticar(
@@ -450,7 +364,6 @@ class LoginServicioTest {
         public void actualizarContrasena(int idUsuario,
                 String contrasenaCifrada,
                 TipoUsuario tipo) throws SQLException {
-            seActualizoContrasena = true;
         }
     }
 

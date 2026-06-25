@@ -30,7 +30,6 @@ public abstract class Academico {
     private String        estado;
     private LocalDate     fechaRegistro;
     private int           tiempoServicio;
-    private boolean       contrasenaTemporal;
     private int           intentosFallidos;
     private LocalDateTime fechaBloqueo;
 
@@ -56,8 +55,6 @@ public abstract class Academico {
      * @param estado             Estado: Activo o No Activo.
      * @param fechaRegistro      Fecha de creación de la cuenta.
      * @param tiempoServicio     Años de servicio en la institución.
-     * @param contrasenaTemporal {@code true} si debe cambiar la contraseña
-     *                           en el primer inicio de sesión (SEG-02).
      * @param intentosFallidos   Intentos de login fallidos consecutivos;
      *                           al llegar a 3 se bloquea la cuenta (SEG-01).
      * @param fechaBloqueo       Momento del bloqueo; null si no está bloqueado.
@@ -67,21 +64,19 @@ public abstract class Academico {
             String segundoApellido, String correo,
             String contrasena, String estado,
             LocalDate fechaRegistro, int tiempoServicio,
-            boolean contrasenaTemporal, int intentosFallidos,
-            LocalDateTime fechaBloqueo) {
-        this.id                 = id;
-        this.numPersonal        = numPersonal;
-        this.nombre             = nombre;
-        this.primerApellido     = primerApellido;
-        this.segundoApellido    = segundoApellido;
-        this.correo             = correo;
-        this.contrasena         = contrasena;
-        this.estado             = estado;
-        this.fechaRegistro      = fechaRegistro;
-        this.tiempoServicio     = tiempoServicio;
-        this.contrasenaTemporal = contrasenaTemporal;
-        this.intentosFallidos   = intentosFallidos;
-        this.fechaBloqueo       = fechaBloqueo;
+            int intentosFallidos, LocalDateTime fechaBloqueo) {
+        this.id              = id;
+        this.numPersonal     = numPersonal;
+        this.nombre          = nombre;
+        this.primerApellido  = primerApellido;
+        this.segundoApellido = segundoApellido;
+        this.correo          = correo;
+        this.contrasena      = contrasena;
+        this.estado          = estado;
+        this.fechaRegistro   = fechaRegistro;
+        this.tiempoServicio  = tiempoServicio;
+        this.intentosFallidos = intentosFallidos;
+        this.fechaBloqueo    = fechaBloqueo;
     }
 
     /**
@@ -264,26 +259,6 @@ public abstract class Academico {
      */
     public void setTiempoServicio(int tiempoServicio) {
         this.tiempoServicio = tiempoServicio;
-    }
-
-    /**
-     * Indica si la contraseña es temporal y debe cambiarse en el
-     * próximo inicio de sesión exitoso (SEG-02).
-     *
-     * @return {@code true} si la contraseña es temporal.
-     */
-    public boolean isContrasenaTemporal() {
-        return contrasenaTemporal;
-    }
-
-    /**
-     * Establece si la contraseña del académico es temporal.
-     *
-     * @param contrasenaTemporal {@code true} obliga el cambio de
-     *        contraseña en el primer inicio de sesión (SEG-02).
-     */
-    public void setContrasenaTemporal(boolean contrasenaTemporal) {
-        this.contrasenaTemporal = contrasenaTemporal;
     }
 
     /**

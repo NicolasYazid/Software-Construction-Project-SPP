@@ -122,11 +122,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     private void poblarCamposSeguridad(ResultadoAutenticacion resultado, ResultSet rs) throws SQLException {
         resultado.setIdUsuario(rs.getInt("id_usuario"));
 
-        // Mapeo adaptado del TINYINT(1) 'activo' al String que espera el DTO (o actualiza el DTO a boolean luego)
         boolean activo = rs.getBoolean("activo");
         resultado.setEstado(activo ? "Activo" : "Inactivo");
-
-        // Se descarta resultado.setContrasenaTemporal() por el rechazo de SEG-02
 
         resultado.setIntentosFallidos(rs.getInt("intentos_fallidos"));
         Timestamp tsBloqueo = rs.getTimestamp("fecha_bloqueo");
@@ -134,6 +131,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             resultado.setFechaBloqueo(tsBloqueo.toLocalDateTime());
         }
     }
+
 
     private String construirNombreCompleto(ResultSet rs) throws SQLException {
         String nombre = CifradoAES.descifrar(rs.getString("nombre"));

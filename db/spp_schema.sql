@@ -57,7 +57,6 @@ CREATE TABLE IF NOT EXISTS estado_documento (
 -- Columnas de seguridad comunes en todas las tablas de usuario:
 --   intentos_fallidos  -> contador SEG-01 (max 3)
 --   fecha_bloqueo      -> timestamp del bloqueo (10 min)
---   contrasena_temporal-> 1 = debe cambiar en primer login SEG-02
 -- ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS administrador (
@@ -67,7 +66,6 @@ CREATE TABLE IF NOT EXISTS administrador (
     contrasena          VARCHAR(500) NOT NULL COMMENT '[CIFRADO]',
     estado              VARCHAR(20)  NOT NULL DEFAULT 'Activo',
     fecha_registro      DATE         NOT NULL,
-    contrasena_temporal TINYINT(1)   NOT NULL DEFAULT 1,
     intentos_fallidos   INT          NOT NULL DEFAULT 0,
     fecha_bloqueo       DATETIME,
     CONSTRAINT pk_administrador
@@ -87,7 +85,6 @@ CREATE TABLE IF NOT EXISTS coordinador (
     estado              VARCHAR(20)  NOT NULL DEFAULT 'Activo',
     fecha_registro      DATE         NOT NULL,
     tiempo_servicio     INT          NOT NULL DEFAULT 0,
-    contrasena_temporal TINYINT(1)   NOT NULL DEFAULT 1,
     intentos_fallidos   INT          NOT NULL DEFAULT 0,
     fecha_bloqueo       DATETIME,
     CONSTRAINT pk_coordinador
@@ -110,7 +107,6 @@ CREATE TABLE IF NOT EXISTS profesor (
     fecha_registro      DATE         NOT NULL,
     tiempo_servicio     INT          NOT NULL DEFAULT 0,
     turno               VARCHAR(20)  NOT NULL DEFAULT 'Matutino',
-    contrasena_temporal TINYINT(1)   NOT NULL DEFAULT 1,
     intentos_fallidos   INT          NOT NULL DEFAULT 0,
     fecha_bloqueo       DATETIME,
     CONSTRAINT pk_profesor
@@ -135,7 +131,6 @@ CREATE TABLE IF NOT EXISTS estudiante (
     lengua_indigena     VARCHAR(100),
     semestre            INT          NOT NULL DEFAULT 9,
     estado              VARCHAR(20)  NOT NULL DEFAULT 'Activo',
-    contrasena_temporal TINYINT(1)   NOT NULL DEFAULT 1,
     intentos_fallidos   INT          NOT NULL DEFAULT 0,
     fecha_bloqueo       DATETIME,
     CONSTRAINT pk_estudiante
@@ -338,7 +333,7 @@ CREATE TABLE IF NOT EXISTS seleccion_proyecto (
         ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- La UNIQUE en id_inscripcion garantiza que un Practicante tenga
+-- La UNIQUE en id_inscripcion garantiza que un Estudiante tenga
 -- asignado maximo un proyecto en todo el periodo.
 CREATE TABLE IF NOT EXISTS asignacion (
     id_asignacion    INT  NOT NULL AUTO_INCREMENT,
@@ -368,7 +363,7 @@ CREATE TABLE IF NOT EXISTS asignacion (
 -- Las jerarquias DocumentoInicial y Evidencia (sec. 6) se
 -- representan en una sola tabla diferenciada por tipo_evidencia
 -- (patron tabla-por-jerarquia). Simplifica el acceso JDBC.
--- La re-entrega sobreescribe ruta_archivo (CU Practicante).
+-- La re-entrega sobreescribe ruta_archivo (CU Estudiante).
 -- CHECK sobre calificacion ignorado en MySQL 5.5 (documentado).
 -- ------------------------------------------------------------
 
@@ -406,7 +401,7 @@ CREATE TABLE IF NOT EXISTS documento (
 -- Las 10 afirmaciones tienen escala Likert 1-5.
 -- calificacion = (puntuacion_total / 50.0) * 10; rango 2.0-10.0.
 -- CHECK sobre rango 1-5 ignorado en MySQL 5.5 (documentado).
--- UNIQUE en id_documento: un Practicante entrega exactamente
+-- UNIQUE en id_documento: un Estudiante entrega exactamente
 -- una autoevaluacion por documento (accion irreversible, sec. 8).
 CREATE TABLE IF NOT EXISTS autoevaluacion (
     id_autoevaluacion  INT          NOT NULL AUTO_INCREMENT,
@@ -449,7 +444,7 @@ CREATE TABLE IF NOT EXISTS autoevaluacion (
 
 -- ------------------------------------------------------------
 -- CALIFICACION FINAL (RN-20)
--- UNIQUE en id_inscripcion: un Practicante tiene exactamente
+-- UNIQUE en id_inscripcion: un Estudiante tiene exactamente
 -- una calificacion final por periodo.
 -- ⚠️ Formula pendiente de confirmacion con stakeholders.
 -- ------------------------------------------------------------

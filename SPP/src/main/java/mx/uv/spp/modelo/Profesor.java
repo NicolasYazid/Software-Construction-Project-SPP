@@ -45,8 +45,6 @@ public class Profesor extends Academico {
      * @param estado             Activo o No Activo.
      * @param fechaRegistro      Fecha de creación de la cuenta.
      * @param tiempoServicio     Años de servicio en la institución.
-     * @param contrasenaTemporal {@code true} si debe cambiar contraseña
-     *                           en el primer inicio de sesión (SEG-02).
      * @param intentosFallidos   Intentos de login fallidos consecutivos.
      * @param fechaBloqueo       Momento del bloqueo; null si no bloqueado.
      * @param turno              Turno de trabajo: Matutino o Vespertino.
@@ -56,12 +54,12 @@ public class Profesor extends Academico {
             String segundoApellido, String correo,
             String contrasena, String estado,
             LocalDate fechaRegistro, int tiempoServicio,
-            boolean contrasenaTemporal, int intentosFallidos,
-            LocalDateTime fechaBloqueo, String turno) {
+            int intentosFallidos, LocalDateTime fechaBloqueo,
+            String turno) {
         super(id, numPersonal, nombre, primerApellido,
                 segundoApellido, correo, contrasena, estado,
                 fechaRegistro, tiempoServicio,
-                contrasenaTemporal, intentosFallidos, fechaBloqueo);
+                intentosFallidos, fechaBloqueo);
         this.turno = turno;
     }
 

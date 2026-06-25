@@ -19,8 +19,7 @@ import java.time.LocalDateTime;
  * <p>Flujo de lectura esperado en el controlador:</p>
  * <pre>
  *   if (resultado.isExitoso()) {
- *       if (resultado.isContrasenaTemporal()) { // SEG-02 }
- *       else { // navegar a pantalla principal }
+ *       // navegar a pantalla principal
  *   } else {
  *       // mostrar resultado.getMensajeError()
  *   }
@@ -37,7 +36,6 @@ public class ResultadoAutenticacion {
     private int           idUsuario;
     private String        nombreCompleto;
     private String        estado;
-    private boolean       contrasenaTemporal;
     private int           intentosFallidos;
     private LocalDateTime fechaBloqueo;
 
@@ -156,25 +154,6 @@ public class ResultadoAutenticacion {
      */
     public void setEstado(String estado) {
         this.estado = estado;
-    }
-
-    /**
-     * Indica si la contraseña es temporal y debe cambiarse (SEG-02).
-     *
-     * @return {@code true} si el usuario debe cambiar su contraseña.
-     */
-    public boolean isContrasenaTemporal() {
-        return contrasenaTemporal;
-    }
-
-    /**
-     * Establece si la contraseña es temporal.
-     *
-     * @param contrasenaTemporal {@code true} si se requiere cambio en
-     *                           el primer inicio de sesión (SEG-02).
-     */
-    public void setContrasenaTemporal(boolean contrasenaTemporal) {
-        this.contrasenaTemporal = contrasenaTemporal;
     }
 
     /**

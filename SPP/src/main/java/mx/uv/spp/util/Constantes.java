@@ -20,7 +20,7 @@ public final class Constantes {
     private Constantes() {
     }
 
-    // --- Seguridad y sesión (SEG-01, SEG-02, SEG-03) ---
+    // --- Seguridad y sesión (SEG-01, SEG-03) ---
 
     /** Máximo de intentos de login antes de bloquear la cuenta. */
     public static final int MAX_INTENTOS_LOGIN = 3;

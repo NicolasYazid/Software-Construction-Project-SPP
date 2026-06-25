@@ -13,15 +13,13 @@ import java.time.temporal.ChronoUnit;
 import mx.uv.spp.modelo.ResultadoAutenticacion;
 import mx.uv.spp.modelo.TipoUsuario;
 import mx.uv.spp.persistencia.dao.UsuarioDAO;
-import mx.uv.spp.util.CifradoAES;
 import mx.uv.spp.util.Constantes;
 import mx.uv.spp.util.Validador;
 
 /**
  * Lógica de negocio del módulo de autenticación.
- * Aplica las reglas de seguridad SEG-01 (bloqueo tras 3 intentos
- * fallidos por 10 minutos) y SEG-02 (cambio obligatorio de contraseña
- * temporal en el primer login exitoso).
+ * Aplica la regla de seguridad SEG-01 (bloqueo tras 3 intentos
+ * fallidos por 10 minutos).
  *
  * <p>Esta clase no conoce tablas ni SQL; delega el acceso a datos en
  * {@link UsuarioDAO}. El controlador JavaFX no debe instanciar esta
@@ -63,13 +61,11 @@ public class LoginServicio {
      *       periodo de 10 min expiró, reinicia los contadores.</li>
      *   <li>Si las credenciales son incorrectas, incrementa intentos
      *       y, al llegar a 3, notifica el bloqueo.</li>
-     *   <li>Si son correctas, reinicia contadores y retorna éxito con
-     *       el flag {@code contrasenaTemporal} para que el controlador
-     *       redirija al cambio de contraseña (SEG-02).</li>
+     *   <li>Si son correctas, reinicia contadores y retorna éxito.</li>
      * </ol>
      *
      * @param identificador Correo (ADMIN/COORDINADOR/PROFESOR) o
-     *                      matrícula (PRACTICANTE) en texto plano.
+     *                      matrícula (ESTUDIANTE) en texto plano.
      * @param contrasena    Contraseña en texto plano ingresada por el usuario.
      * @param tipo          Rol seleccionado en la pantalla de login.
      * @return {@link ResultadoAutenticacion} nunca nulo; consultar
@@ -146,44 +142,6 @@ public class LoginServicio {
         // Login exitoso: siempre reiniciar el contador de intentos.
         usuarioDAO.reiniciarIntentos(resultado.getIdUsuario(), tipo);
         return resultado;
-    }
-
-    /**
-     * Cambia la contraseña del usuario, cumpliendo SEG-02 y SEG-03.
-     * Cifra la nueva contraseña con AES-128 antes de persistirla y
-     * desmarca el flag {@code contrasena_temporal}.
-     *
-     * <p>Debe llamarse cuando el controlador detecta que
-     * {@code ResultadoAutenticacion.isContrasenaTemporal()} es
-     * {@code true} y el usuario completó el formulario de cambio.
-     *
-     * @param idUsuario      Clave primaria del usuario en su tabla;
-     *                       debe ser mayor que cero.
-     * @param tipo           Rol del usuario; determina la tabla destino.
-     * @param contrasenaNueva Nueva contraseña en texto plano; debe
-     *                        cumplir SEG-03 (mín. 10 chars, mayúsculas,
-     *                        minúsculas y dígitos).
-     * @throws IllegalArgumentException si {@code idUsuario} ≤ 0,
-     *         {@code tipo} es nulo, o {@code contrasenaNueva} no cumple
-     *         SEG-03.
-     * @throws SQLException si ocurre un error de acceso a la base de datos.
-     */
-    public void cambiarContrasena(int idUsuario, TipoUsuario tipo,
-            String contrasenaNueva) throws SQLException {
-
-        if (idUsuario <= 0) {
-            throw new IllegalArgumentException(
-                    "El identificador de usuario debe ser mayor que cero.");
-        }
-        if (tipo == null) {
-            throw new IllegalArgumentException(
-                    "El tipo de usuario no puede ser nulo.");
-        }
-        Validador.validarContrasena(contrasenaNueva);
-
-        String contrasenaCifrada = CifradoAES.cifrar(contrasenaNueva);
-        usuarioDAO.actualizarContrasena(
-                idUsuario, contrasenaCifrada, tipo);
     }
 
 }

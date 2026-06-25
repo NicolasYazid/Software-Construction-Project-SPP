@@ -32,12 +32,12 @@ public interface UsuarioDAO {
      * descifra la contraseña almacenada (AES-128) y la compara con
      * la recibida. Nunca retorna {@code null}; el DTO indica éxito
      * o fallo y expone todos los campos de seguridad necesarios para
-     * que la capa de negocio aplique SEG-01 y SEG-02.
+     * que la capa de negocio aplique SEG-01.
      *
      * <p>Identificador esperado según tipo:
      * <ul>
      *   <li>ADMINISTRADOR, COORDINADOR, PROFESOR → correo electrónico</li>
-     *   <li>PRACTICANTE → matrícula UV (ej. {@code S21013417})</li>
+     *   <li>ESTUDIANTE → matrícula UV (ej. {@code S21013417})</li>
      * </ul>
      *
      * @param identificador Correo o matrícula ingresado en la pantalla
@@ -83,9 +83,7 @@ public interface UsuarioDAO {
             TipoUsuario tipo) throws SQLException;
 
     /**
-     * Persiste la nueva contraseña cifrada y establece
-     * {@code contrasena_temporal = 0}, completando el cambio
-     * obligatorio de contraseña en el primer login (SEG-02).
+     * Persiste la nueva contraseña cifrada del usuario.
      *
      * <p>La contraseña debe llegar ya cifrada con AES-128 desde la
      * capa de negocio; el DAO no realiza cifrado.
