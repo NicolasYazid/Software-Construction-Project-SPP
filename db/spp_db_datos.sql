@@ -134,15 +134,20 @@ VALUES
      'miguel@techcorp.mx', 1, 'activo');
 
 -- ============================================================
--- 9. ENTREGAS (una fila por estudiante por entregable)
--- Solo se crean las necesarias para los CUs implementados.
--- id_entregable 5=reporte_mensual_1, 9=informe_parcial,
--- 10=informe_final, 11=presentacion_1, 13=evaluacion_ov_1,
--- 15=autoevaluacion
+-- 9. ENTREGAS (una fila por estudiante por entregable, los 15)
+-- id 1=oficio_asignacion, 2=oficio_aceptacion, 3=horario_clases,
+-- 4=cronograma (DocumentoInicial),
+-- 5..8=reporte_mensual_1..4, 9=informe_parcial, 10=informe_final,
+-- 11..12=presentacion_1..2, 13..14=evaluacion_ov_1..2,
+-- 15=autoevaluacion (Evidencia).
 -- ============================================================
 INSERT INTO entrega (estudiante_id, entregable_id, estado)
 VALUES
     -- Estudiante 1 (Luis)
+    (1,  1, 'noEntregada'),
+    (1,  2, 'noEntregada'),
+    (1,  3, 'noEntregada'),
+    (1,  4, 'noEntregada'),
     (1,  5, 'noEntregada'),
     (1,  6, 'noEntregada'),
     (1,  7, 'noEntregada'),
@@ -155,6 +160,10 @@ VALUES
     (1, 14, 'noEntregada'),
     (1, 15, 'noEntregada'),
     -- Estudiante 2 (María)
+    (2,  1, 'noEntregada'),
+    (2,  2, 'noEntregada'),
+    (2,  3, 'noEntregada'),
+    (2,  4, 'noEntregada'),
     (2,  5, 'noEntregada'),
     (2,  6, 'noEntregada'),
     (2,  7, 'noEntregada'),
@@ -167,6 +176,10 @@ VALUES
     (2, 14, 'noEntregada'),
     (2, 15, 'noEntregada'),
     -- Estudiante 3 (Jorge)
+    (3,  1, 'noEntregada'),
+    (3,  2, 'noEntregada'),
+    (3,  3, 'noEntregada'),
+    (3,  4, 'noEntregada'),
     (3,  5, 'noEntregada'),
     (3,  6, 'noEntregada'),
     (3,  7, 'noEntregada'),

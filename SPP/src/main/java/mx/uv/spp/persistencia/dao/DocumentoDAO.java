@@ -106,6 +106,40 @@ public interface DocumentoDAO {
             LocalDate fechaProrroga) throws SQLException;
 
     /**
+     * Recupera DocumentosIniciales (tipos 2,3,4) con estado
+     * {@code entregada} de todos los Estudiantes.
+     * Usado por el Coordinador para revisar la documentación inicial.
+     *
+     * @return lista de documentos iniciales entregados pendientes.
+     * @throws SQLException si ocurre un error de acceso a la BD.
+     */
+    List<Documento> obtenerDocumentosInicialesEntregados()
+            throws SQLException;
+
+    /**
+     * Cambia el estado de una entrega directamente.
+     * Usado por el Coordinador para aprobar o rechazar un documento.
+     *
+     * @param idDocumento Clave primaria en {@code entrega}.
+     * @param nuevoEstado String ENUM destino (p. ej. "evaluada").
+     * @throws SQLException si ocurre un error de acceso a la BD.
+     */
+    void cambiarEstadoDocumento(int idDocumento,
+            String nuevoEstado) throws SQLException;
+
+    /**
+     * Inserta una prórroga en la tabla {@code prorroga} para la
+     * entrega indicada. Si ya existe prórroga activa, la vence y
+     * crea una nueva.
+     *
+     * @param idDocumento Clave primaria en {@code entrega}.
+     * @param fechaFin    Nueva fecha límite extendida.
+     * @throws SQLException si ocurre un error de acceso a la BD.
+     */
+    void insertarProrroga(int idDocumento,
+            LocalDate fechaFin) throws SQLException;
+
+    /**
      * Recupera todos los documentos en estado {@code Entregado}
      * y sin calificación asignada ({@code calificacion IS NULL})
      * que pertenecen a Estudiantes asignados al Profesor indicado.
@@ -117,6 +151,18 @@ public interface DocumentoDAO {
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
     List<Documento> obtenerEntregadosSinCalificarPorProfesor(
+            int idProfesor) throws SQLException;
+
+    /**
+     * Recupera documentos de tipo EvaluacionOV (entregados y sin
+     * calificación) de Estudiantes en grupos del Profesor dado.
+     * Usado en CU-Est.-27 (Asignar calificación de la OV).
+     *
+     * @param idProfesor Clave primaria en la tabla {@code profesor}.
+     * @return lista de documentos OV pendientes de calificación.
+     * @throws SQLException si ocurre un error de acceso a la BD.
+     */
+    List<Documento> obtenerOVSinCalificarPorProfesor(
             int idProfesor) throws SQLException;
 
 }

@@ -7,6 +7,9 @@
  */
 package mx.uv.spp.controladores.profesor;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
@@ -17,12 +20,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.HBox;
 import mx.uv.spp.modelo.Documento;
 import mx.uv.spp.negocio.ProfesorServicio;
 import mx.uv.spp.persistencia.dao.impl.DocumentoDAOImpl;
@@ -102,10 +108,19 @@ public class EvaluarEvidenciaController implements Initializable {
                         c.getValue().nombreArchivo));
 
         colAccion.setCellFactory(col -> new TableCell<>() {
+            private final Button btnVer =
+                    new Button("Ver");
             private final Button btnCalificar =
                     new Button("Calificar");
+            private final HBox celdaAcciones =
+                    new HBox(4, btnVer, btnCalificar);
 
             {
+                btnVer.setOnAction(e -> {
+                    FilaEvidencia fila = getTableView()
+                            .getItems().get(getIndex());
+                    verArchivo(fila);
+                });
                 btnCalificar.setOnAction(e -> {
                     FilaEvidencia fila = getTableView()
                             .getItems().get(getIndex());
@@ -116,7 +131,7 @@ public class EvaluarEvidenciaController implements Initializable {
             @Override
             protected void updateItem(Void item, boolean vacio) {
                 super.updateItem(item, vacio);
-                setGraphic(vacio ? null : btnCalificar);
+                setGraphic(vacio ? null : celdaAcciones);
             }
         });
     }
@@ -138,6 +153,9 @@ public class EvaluarEvidenciaController implements Initializable {
                 fila.idInscripcion  = doc.getIdInscripcion();
                 fila.nombreTipo     =
                         obtenerNombreTipo(doc.getIdTipoEvidencia());
+                fila.rutaArchivo    =
+                        doc.getRutaArchivo() != null
+                        ? doc.getRutaArchivo() : "";
                 fila.nombreArchivo  =
                         doc.getNombreArchivo() != null
                         ? doc.getNombreArchivo() : "";
@@ -160,8 +178,36 @@ public class EvaluarEvidenciaController implements Initializable {
     }
 
     /**
+     * Abre el archivo adjunto de la evidencia con la aplicación
+     * predeterminada del sistema operativo.
+     *
+     * @param fila Fila con la ruta del archivo a abrir.
+     */
+    private void verArchivo(FilaEvidencia fila) {
+        if (fila.rutaArchivo == null
+                || fila.rutaArchivo.isEmpty()) {
+            mostrarMensaje(ESTILO_ERROR,
+                    "No hay archivo adjunto para esta evidencia.");
+            return;
+        }
+        File archivo = new File(fila.rutaArchivo);
+        if (!archivo.exists()) {
+            mostrarMensaje(ESTILO_ERROR,
+                    "El archivo no se encontró en la ruta "
+                    + "registrada.");
+            return;
+        }
+        try {
+            Desktop.getDesktop().open(archivo);
+        } catch (IOException e) {
+            mostrarMensaje(ESTILO_ERROR,
+                    "No fue posible abrir el archivo.");
+        }
+    }
+
+    /**
      * Abre un diálogo para que el Profesor ingrese la calificación
-     * y la registra en la BD.
+     * (entero del 1 al 10) y confirme antes de registrarla en la BD.
      *
      * @param fila Fila de la tabla con los datos de la evidencia.
      */
@@ -169,9 +215,10 @@ public class EvaluarEvidenciaController implements Initializable {
         TextInputDialog dialogo = new TextInputDialog();
         dialogo.setTitle("Calificar evidencia");
         dialogo.setHeaderText(
-                "Inscripción " + fila.idInscripcion
+                "Estudiante " + fila.idInscripcion
                 + " — " + fila.nombreTipo);
-        dialogo.setContentText("Calificación (1.0 — 10.0):");
+        dialogo.setContentText(
+                "Calificación (número entero del 1 al 10):");
 
         Optional<String> resultado = dialogo.showAndWait();
         if (!resultado.isPresent()
@@ -184,9 +231,26 @@ public class EvaluarEvidenciaController implements Initializable {
                     Double.parseDouble(resultado.get().trim());
         } catch (NumberFormatException e) {
             mostrarMensaje(ESTILO_ERROR,
-                    "La calificación debe ser un número válido.");
+                    "La calificación debe ser un número "
+                    + "entero del 1 al 10.");
             return;
         }
+
+        Alert confirmacion = new Alert(
+                Alert.AlertType.CONFIRMATION);
+        confirmacion.setTitle("Confirmar calificación");
+        confirmacion.setHeaderText(
+                "¿Está seguro de registrar la calificación "
+                + (int) calificacion + "?");
+        confirmacion.setContentText(
+                "Esta acción no puede deshacerse.");
+        Optional<ButtonType> confirm =
+                confirmacion.showAndWait();
+        if (!confirm.isPresent()
+                || confirm.get() != ButtonType.OK) {
+            return;
+        }
+
         try {
             profesorServicio.calificarEvidencia(
                     fila.idDocumento, calificacion);
@@ -257,6 +321,7 @@ public class EvaluarEvidenciaController implements Initializable {
         int    idDocumento;
         int    idInscripcion;
         String nombreTipo     = "";
+        String rutaArchivo    = "";
         String nombreArchivo  = "";
     }
 

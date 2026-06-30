@@ -222,6 +222,73 @@ public class DocumentoDAOImpl implements DocumentoDAO {
     /**
      * {@inheritDoc}
      *
+     * <p>Busca documentos iniciales (entregable_id 2, 3, 4) con
+     * estado 'entregada' de todos los Estudiantes.
+     */
+    @Override
+    public List<Documento> obtenerDocumentosInicialesEntregados()
+            throws SQLException {
+        String sql = "SELECT e.id, e.estudiante_id, e.entregable_id,"
+                + " e.estado, e.archivo_adjunto,"
+                + " e.fecha_entrega, e.calificacion"
+                + " FROM entrega e"
+                + " WHERE e.entregable_id IN (2, 3, 4)"
+                + " AND e.estado = 'entregada'";
+        List<Documento> lista = new ArrayList<>();
+        Connection con = ConexionBD.obtenerInstancia()
+                .obtenerConexion();
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    lista.add(mapearResultSet(rs));
+                }
+            }
+        }
+        return lista;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>Actualiza solo el estado ENUM de la entrega indicada.
+     */
+    @Override
+    public void cambiarEstadoDocumento(int idDocumento,
+            String nuevoEstado) throws SQLException {
+        String sql = "UPDATE entrega SET estado = ? WHERE id = ?";
+        Connection con = ConexionBD.obtenerInstancia()
+                .obtenerConexion();
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, nuevoEstado);
+            ps.setInt(2, idDocumento);
+            ps.executeUpdate();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>Inserta una fila en la tabla {@code prorroga} con
+     * {@code fecha_inicio = hoy} y {@code fecha_fin = fechaFin}.
+     */
+    @Override
+    public void insertarProrroga(int idDocumento,
+            LocalDate fechaFin) throws SQLException {
+        String sql = "INSERT INTO prorroga"
+                + " (entrega_id, estado, fecha_inicio, fecha_fin)"
+                + " VALUES (?, 'activa', CURDATE(), ?)";
+        Connection con = ConexionBD.obtenerInstancia()
+                .obtenerConexion();
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idDocumento);
+            ps.setDate(2, java.sql.Date.valueOf(fechaFin));
+            ps.executeUpdate();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * <p>Busca entregas con {@code estado = 'entregada'} y sin
      * calificación, para grupos del profesor dado.
      */
@@ -238,6 +305,42 @@ public class DocumentoDAOImpl implements DocumentoDAO {
                 + " JOIN grupo g"
                 + " ON g.id = i.grupo_id"
                 + " WHERE g.profesor_id = ?"
+                + " AND e.estado = 'entregada'"
+                + " AND e.calificacion IS NULL";
+        List<Documento> lista = new ArrayList<>();
+        Connection con = ConexionBD.obtenerInstancia()
+                .obtenerConexion();
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idProfesor);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    lista.add(mapearResultSet(rs));
+                }
+            }
+        }
+        return lista;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>Filtra solo los tipos EvaluacionOV (ids 13 y 14).
+     */
+    @Override
+    public List<Documento> obtenerOVSinCalificarPorProfesor(
+            int idProfesor) throws SQLException {
+        String sql = "SELECT e.id, e.estudiante_id,"
+                + " e.entregable_id, e.estado,"
+                + " e.archivo_adjunto, e.fecha_entrega,"
+                + " e.calificacion"
+                + " FROM entrega e"
+                + " JOIN inscripcion i"
+                + " ON i.estudiante_id = e.estudiante_id"
+                + " JOIN grupo g ON g.id = i.grupo_id"
+                + " WHERE g.profesor_id = ?"
+                + " AND e.entregable_id IN ("
+                + Constantes.TIPO_EVIDENCIA_EVALUACION_OV + ", "
+                + Constantes.TIPO_EVIDENCIA_EVALUACION_OV_2 + ")"
                 + " AND e.estado = 'entregada'"
                 + " AND e.calificacion IS NULL";
         List<Documento> lista = new ArrayList<>();
@@ -273,8 +376,12 @@ public class DocumentoDAOImpl implements DocumentoDAO {
         doc.setIdTipoEvidencia(rs.getInt("entregable_id"));
         doc.setIdEstadoDocumento(
                 estadoStringAInt(rs.getString("estado")));
-        doc.setRutaArchivo(rs.getString("archivo_adjunto"));
-        doc.setNombreArchivo(rs.getString("archivo_adjunto"));
+        String ruta = rs.getString("archivo_adjunto");
+        doc.setRutaArchivo(ruta);
+        doc.setNombreArchivo(
+                ruta != null
+                ? new java.io.File(ruta).getName()
+                : null);
 
         Timestamp ts = rs.getTimestamp("fecha_entrega");
         doc.setFechaEntrega(ts != null

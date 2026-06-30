@@ -130,8 +130,17 @@ public final class Constantes {
     public static final int TIPO_EVIDENCIA_CRONOGRAMA = 4;
 
 
-    /** id=5 Reporte Mensual 1 (primer reporte, Evidencia). */
+    /** id=5 Reporte Mensual 1 (Evidencia). */
     public static final int TIPO_EVIDENCIA_REPORTE_MENSUAL = 5;
+
+    /** id=6 Reporte Mensual 2 (Evidencia). */
+    public static final int TIPO_EVIDENCIA_REPORTE_MENSUAL_2 = 6;
+
+    /** id=7 Reporte Mensual 3 (Evidencia). */
+    public static final int TIPO_EVIDENCIA_REPORTE_MENSUAL_3 = 7;
+
+    /** id=8 Reporte Mensual 4 (Evidencia). */
+    public static final int TIPO_EVIDENCIA_REPORTE_MENSUAL_4 = 8;
 
     /** id=9 Informe Parcial a las 210 hrs (RN-03). */
     public static final int TIPO_EVIDENCIA_INFORME_PARCIAL = 9;
@@ -142,8 +151,14 @@ public final class Constantes {
     /** id=11 Primera Presentación ante el Cuerpo Colegiado. */
     public static final int TIPO_EVIDENCIA_PRESENTACION = 11;
 
+    /** id=12 Segunda Presentación ante el Cuerpo Colegiado. */
+    public static final int TIPO_EVIDENCIA_PRESENTACION_2 = 12;
+
     /** id=13 Primera Evaluación de la Organización Vinculada. */
     public static final int TIPO_EVIDENCIA_EVALUACION_OV = 13;
+
+    /** id=14 Segunda Evaluación de la Organización Vinculada. */
+    public static final int TIPO_EVIDENCIA_EVALUACION_OV_2 = 14;
 
     /** id=15 Autoevaluación del Estudiante (10 afirmaciones). */
     public static final int TIPO_EVIDENCIA_AUTOEVALUACION = 15;

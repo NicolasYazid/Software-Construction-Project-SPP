@@ -41,8 +41,8 @@
                          text="Archivo"
                          prefWidth="250.0" />
             <TableColumn fx:id="colAccion"
-                         text="Acción"
-                         prefWidth="120.0" />
+                         text="Acciones"
+                         prefWidth="160.0" />
         </columns>
     </TableView>
 
