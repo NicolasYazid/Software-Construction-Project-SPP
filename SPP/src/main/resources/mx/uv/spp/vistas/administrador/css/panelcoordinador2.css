@@ -1,0 +1,100 @@
+/* ----------------------------------------------------------------
+ * panelcoordinador2.css — Estilos del panel principal del
+ * Administrador (SPP).
+ * Paleta: azul institucional UV #1C3A6E / blanco / gris neutro.
+ * ---------------------------------------------------------------- */
+
+/* Barra lateral izquierda --------------------------------------- */
+.sidebar {
+    -fx-background-color: #1C3A6E;
+    -fx-pref-width: 220;
+}
+
+/* Logo / siglas del sistema ------------------------------------- */
+.lbl-sidebar-logo {
+    -fx-font-size: 22;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+}
+
+/* Subtítulo de sección del menú --------------------------------- */
+.lbl-sidebar-seccion {
+    -fx-font-size: 12;
+    -fx-text-fill: #B8CCE4;
+    -fx-wrap-text: true;
+}
+
+/* Separador de la barra lateral --------------------------------- */
+.separador-sidebar {
+    -fx-background-color: #4A6FA8;
+    -fx-opacity: 0.6;
+}
+
+/* Botones de navegación del menú -------------------------------- */
+.btn-menu {
+    -fx-background-color: #2C5282;
+    -fx-text-fill: white;
+    -fx-font-size: 13;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-pref-height: 36;
+    -fx-alignment: center-left;
+    -fx-padding: 0 12;
+}
+
+.btn-menu:hover {
+    -fx-background-color: #2E6DA4;
+}
+
+.btn-menu:pressed {
+    -fx-background-color: #152D56;
+}
+
+/* Botón de cerrar sesión ---------------------------------------- */
+.btn-cerrar-sesion {
+    -fx-background-color: #8B0000;
+    -fx-text-fill: white;
+    -fx-font-size: 13;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-pref-height: 36;
+}
+
+.btn-cerrar-sesion:hover {
+    -fx-background-color: #A93226;
+}
+
+.btn-cerrar-sesion:pressed {
+    -fx-background-color: #6E0000;
+}
+
+/* Área de contenido central ------------------------------------- */
+.area-contenido {
+    -fx-background-color: #F4F6F8;
+}
+
+/* Panel de bienvenida ------------------------------------------- */
+.panel-bienvenida {
+    -fx-alignment: center-left;
+    -fx-padding: 40 60 40 60;
+}
+
+.lbl-bienvenida-siglas {
+    -fx-font-size: 52;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1C3A6E;
+}
+
+.lbl-bienvenida-titulo {
+    -fx-font-size: 24;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1C3A6E;
+    -fx-wrap-text: true;
+}
+
+.lbl-bienvenida-instruccion {
+    -fx-font-size: 16;
+    -fx-text-fill: #4A4A4A;
+    -fx-wrap-text: true;
+}

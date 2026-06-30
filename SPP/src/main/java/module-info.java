@@ -8,5 +8,6 @@ module mx.uv.spp {
     opens mx.uv.spp.controladores.comun to javafx.fxml;
     opens mx.uv.spp.controladores.estudiante to javafx.fxml;
     opens mx.uv.spp.controladores.profesor to javafx.fxml;
+    opens mx.uv.spp.controladores.administrador to javafx.fxml;
     exports mx.uv.spp;
 }
