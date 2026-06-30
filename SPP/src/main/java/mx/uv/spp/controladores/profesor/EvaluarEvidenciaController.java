@@ -218,10 +218,8 @@ public class EvaluarEvidenciaController implements Initializable {
                 return "Oficio de Asignación";
             case Constantes.TIPO_EVIDENCIA_HORARIO_CLASES:
                 return "Horario EE";
-            case Constantes.TIPO_EVIDENCIA_HORARIO_LABORAL:
-                return "Horario Laboral";
             case Constantes.TIPO_EVIDENCIA_CRONOGRAMA:
-                return "Cronograma";
+                return "Cronograma / Horario Laboral";
             case Constantes.TIPO_EVIDENCIA_REPORTE_MENSUAL:
                 return "Reporte Mensual";
             case Constantes.TIPO_EVIDENCIA_INFORME_PARCIAL:

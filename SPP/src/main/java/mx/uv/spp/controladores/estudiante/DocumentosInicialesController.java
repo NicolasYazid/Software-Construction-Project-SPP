@@ -137,13 +137,11 @@ public class DocumentosInicialesController implements Initializable {
         int[] tipos = {
             Constantes.TIPO_EVIDENCIA_OFICIO_ACEPTACION,
             Constantes.TIPO_EVIDENCIA_HORARIO_CLASES,
-            Constantes.TIPO_EVIDENCIA_HORARIO_LABORAL,
             Constantes.TIPO_EVIDENCIA_CRONOGRAMA
         };
         String[] nombres = {
             "Oficio de Aceptación",
             "Horario de la EE",
-            "Horario Laboral (OV)",
             "Cronograma de Actividades"
         };
         try {

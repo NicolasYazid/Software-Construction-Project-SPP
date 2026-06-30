@@ -32,10 +32,10 @@ public class GrupoDAOImpl implements GrupoDAO {
     @Override
     public List<Grupo> obtenerPorProfesor(int idProfesor)
             throws SQLException {
-        String sql = "SELECT id_grupo, id_ciclo_escolar,"
-                + " id_profesor, nombre, nrc"
+        String sql = "SELECT id, periodo_escolar_id,"
+                + " profesor_id, nombre, nrc"
                 + " FROM grupo"
-                + " WHERE id_profesor = ?"
+                + " WHERE profesor_id = ?"
                 + " ORDER BY nombre";
         List<Grupo> lista = new ArrayList<>();
         Connection con = ConexionBD.obtenerInstancia()
@@ -62,9 +62,9 @@ public class GrupoDAOImpl implements GrupoDAO {
     private Grupo mapearResultSet(ResultSet rs)
             throws SQLException {
         Grupo grupo = new Grupo();
-        grupo.setIdGrupo(rs.getInt("id_grupo"));
-        grupo.setIdCicloEscolar(rs.getInt("id_ciclo_escolar"));
-        grupo.setIdProfesor(rs.getInt("id_profesor"));
+        grupo.setIdGrupo(rs.getInt("id"));
+        grupo.setIdCicloEscolar(rs.getInt("periodo_escolar_id"));
+        grupo.setIdProfesor(rs.getInt("profesor_id"));
         grupo.setNombre(rs.getString("nombre"));
         grupo.setNrc(rs.getString("nrc"));
         return grupo;

@@ -15,10 +15,9 @@ import mx.uv.spp.persistencia.ConexionBD;
 import mx.uv.spp.persistencia.dao.EstudianteInscritoDAO;
 
 /**
- * Implementación JDBC de {@link EstudianteInscritoDAO}.
- * Consulta la tabla {@code estudiante_inscrito} cruzada con
- * {@code ciclo_escolar} para localizar la inscripción activa
- * del Estudiante en el ciclo con estado {@code 'Iniciado'}.
+ * Implementación JDBC de {@link EstudianteInscritoDAO} para spp_db.
+ * Consulta la tabla {@code inscripcion} para localizar la inscripción
+ * activa del Estudiante (estado {@code 'enCurso'}).
  *
  * @author Nicolás Yazid Cruz Hernández
  * @author Isaac Adriano Vázquez Torres
@@ -27,14 +26,14 @@ public class EstudianteInscritoDAOImpl
         implements EstudianteInscritoDAO {
 
     private static final String SQL_ID_INSCRIPCION =
-            "SELECT ei.id_inscripcion "
-            + "FROM estudiante_inscrito ei "
-            + "JOIN ciclo_escolar ce "
-            + "    ON ei.id_ciclo_escolar = ce.id_ciclo_escolar "
-            + "WHERE ei.id_estudiante = ? "
-            + "  AND ce.estado = 'Iniciado' "
-            + "LIMIT 1";
+            "SELECT id FROM inscripcion"
+            + " WHERE estudiante_id = ?"
+            + " AND estado = 'enCurso'"
+            + " LIMIT 1";
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int obtenerIdInscripcionActivo(int idEstudiante)
             throws SQLException {
@@ -46,7 +45,7 @@ public class EstudianteInscritoDAOImpl
             ps.setInt(1, idEstudiante);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return rs.getInt("id_inscripcion");
+                    return rs.getInt("id");
                 }
             }
         }
