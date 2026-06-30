@@ -1,5 +1,5 @@
 /*
- * Copyright © 2026 Nicolás Cruz && Isaac Vazqués.
+ * Copyright © 2026 Nicolás Cruz && Isaac Vázquez.
  * Todos los derechos reservados.
  *
  * Este software es de uso académico y privado.
@@ -12,18 +12,24 @@ import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 
 /**
- * FXML Controller class
+ * Controlador base del panel del Administrador (PanelAdministrador.fxml).
+ * La navegación principal del Administrador se delega a
+ * {@link PanelCoordinador2Controller}, que contiene las sub-vistas
+ * de gestión de Profesores y Coordinador.
  *
- * @author yazid
+ * @author Nicolás Yazid Cruz Hernández
+ * @author Isaac Adriano Vázquez Torres
  */
 public class PanelAdministradorController implements Initializable {
 
     /**
-     * Initializes the controller class.
+     * Inicializa el controlador. Sin acciones requeridas al arrancar.
+     *
+     * @param ubicacion URL del FXML (no usado).
+     * @param recursos  Paquete de i18n (no usado).
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
+    public void initialize(URL ubicacion, ResourceBundle recursos) {
+    }
+
 }
