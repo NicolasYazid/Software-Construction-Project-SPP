@@ -11,7 +11,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import mx.uv.spp.modelo.Proyecto;
@@ -21,12 +20,13 @@ import mx.uv.spp.persistencia.dao.SeleccionProyectoDAO;
 import mx.uv.spp.util.Constantes;
 
 /**
- * Implementación JDBC de {@link SeleccionProyectoDAO}.
- * Accede a las tablas {@code seleccion_proyecto} y {@code proyecto}.
- * El método {@code insertarLista} usa una transacción explícita para
- * garantizar atomicidad: o se registran todas las prioridades o
- * ninguna, lo cual es crítico dado que la acción es irreversible
- * (RN-11).
+ * Implementación JDBC de {@link SeleccionProyectoDAO} para spp_db.
+ * Accede a las tablas {@code lista_prioridades} y {@code proyecto}.
+ * En spp_db la selección se vincula al {@code estudiante_id};
+ * cuando el servicio pasa {@code idInscripcion}, este DAO lo
+ * convierte a {@code estudiante_id} con una subconsulta.
+ * El método {@code insertarLista} usa transacción explícita
+ * (RN-11: la selección de proyectos es irreversible).
  *
  * @author Nicolás Yazid Cruz Hernández
  * @author Isaac Adriano Vázquez Torres
@@ -35,12 +35,17 @@ public class SeleccionProyectoDAOImpl implements SeleccionProyectoDAO {
 
     /**
      * {@inheritDoc}
+     *
+     * <p>Verifica en {@code lista_prioridades} si el estudiante de
+     * la inscripción dada ya registró prioridades.
      */
     @Override
     public boolean existeSeleccionPorInscripcion(int idInscripcion)
             throws SQLException {
-        String sql = "SELECT COUNT(*) FROM seleccion_proyecto"
-                + " WHERE id_inscripcion = ?";
+        String sql = "SELECT COUNT(*) FROM lista_prioridades lp"
+                + " JOIN inscripcion i"
+                + " ON i.estudiante_id = lp.estudiante_id"
+                + " WHERE i.id = ?";
         Connection con = ConexionBD.obtenerInstancia()
                 .obtenerConexion();
         try (PreparedStatement ps = con.prepareStatement(sql)) {
@@ -57,23 +62,28 @@ public class SeleccionProyectoDAOImpl implements SeleccionProyectoDAO {
     /**
      * {@inheritDoc}
      *
-     * <p>Flujo de la transacción:
-     * <ol>
-     *   <li>Se desactiva {@code autoCommit}.</li>
-     *   <li>Se inserta cada selección con {@code PreparedStatement}.</li>
-     *   <li>Si todo fue exitoso, se llama {@code commit()}.</li>
-     *   <li>Si ocurre cualquier error, se llama {@code rollback()}
-     *       y se relanza la excepción.</li>
-     *   <li>En {@code finally}, se restaura {@code autoCommit = true}.</li>
-     * </ol>
+     * <p>Obtiene el {@code estudiante_id} desde la inscripción y luego
+     * inserta cada fila en {@code lista_prioridades}. Usa transacción
+     * explícita para garantizar atomicidad (RN-11).
      */
     @Override
     public void insertarLista(List<SeleccionProyecto> selecciones)
             throws SQLException {
-        String sql = "INSERT INTO seleccion_proyecto"
-                + " (id_inscripcion, id_proyecto,"
-                + " prioridad, fecha_seleccion)"
-                + " VALUES (?, ?, ?, ?)";
+        if (selecciones == null || selecciones.isEmpty()) {
+            return;
+        }
+
+        int idInscripcion = selecciones.get(0).getIdInscripcion();
+        int estudianteId  = obtenerEstudianteId(idInscripcion);
+        if (estudianteId == 0) {
+            throw new SQLException(
+                    "No se encontró estudiante_id para inscripción "
+                    + idInscripcion);
+        }
+
+        String sql = "INSERT INTO lista_prioridades"
+                + " (estudiante_id, proyecto_id, posicion)"
+                + " VALUES (?, ?, ?)";
         Connection con = ConexionBD.obtenerInstancia()
                 .obtenerConexion();
         try {
@@ -81,11 +91,9 @@ public class SeleccionProyectoDAOImpl implements SeleccionProyectoDAO {
             for (SeleccionProyecto sel : selecciones) {
                 try (PreparedStatement ps =
                         con.prepareStatement(sql)) {
-                    ps.setInt(1, sel.getIdInscripcion());
+                    ps.setInt(1, estudianteId);
                     ps.setInt(2, sel.getIdProyecto());
                     ps.setInt(3, sel.getPrioridad());
-                    ps.setTimestamp(4, Timestamp.valueOf(
-                            sel.getFechaSeleccion()));
                     ps.executeUpdate();
                 }
             }
@@ -95,7 +103,7 @@ public class SeleccionProyectoDAOImpl implements SeleccionProyectoDAO {
                 con.rollback();
             } catch (SQLException ex) {
                 System.err.println(
-                        "Error en rollback de seleccion: "
+                        "Error en rollback de lista_prioridades: "
                         + ex.getMessage());
             }
             throw e;
@@ -113,22 +121,18 @@ public class SeleccionProyectoDAOImpl implements SeleccionProyectoDAO {
     /**
      * {@inheritDoc}
      *
-     * <p>Filtra por estado usando la constante
-     * {@link Constantes#ESTADO_PROYECTO_DISPONIBLE} para evitar
-     * valores mágicos.
+     * <p>Filtra proyectos con {@code estado = 'activo'} y mapea las
+     * columnas de spp_db al POJO {@link Proyecto}.
      */
     @Override
     public List<Proyecto> obtenerProyectosDisponibles()
             throws SQLException {
-        String sql = "SELECT id_proyecto, id_organizacion,"
-                + " id_responsable, nombre_proyecto,"
-                + " descripcion, actividades, metodologia,"
-                + " duracion_meses, horario_laboral, recurso,"
-                + " responsabilidades, cupo_maximo,"
-                + " cupo_disponible, estado"
+        String sql = "SELECT id, nombre, descripcion_general,"
+                + " metodologia, cupo_maximo, cupo_disponible,"
+                + " estado"
                 + " FROM proyecto"
                 + " WHERE estado = ?"
-                + " ORDER BY id_proyecto";
+                + " ORDER BY id";
         List<Proyecto> lista = new ArrayList<>();
         Connection con = ConexionBD.obtenerInstancia()
                 .obtenerConexion();
@@ -145,27 +149,45 @@ public class SeleccionProyectoDAOImpl implements SeleccionProyectoDAO {
     }
 
     /**
+     * Obtiene el {@code estudiante_id} a partir de un
+     * {@code id} de inscripción.
+     *
+     * @param idInscripcion PK de la inscripción.
+     * @return {@code estudiante_id} o {@code 0} si no existe.
+     * @throws SQLException si ocurre un error de acceso a la BD.
+     */
+    private int obtenerEstudianteId(int idInscripcion)
+            throws SQLException {
+        String sql = "SELECT estudiante_id FROM inscripcion"
+                + " WHERE id = ?";
+        Connection con = ConexionBD.obtenerInstancia()
+                .obtenerConexion();
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idInscripcion);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("estudiante_id");
+                }
+            }
+        }
+        return 0;
+    }
+
+    /**
      * Construye un {@link Proyecto} desde la fila actual del
-     * {@code ResultSet}.
+     * {@code ResultSet} usando las columnas de spp_db.
      *
      * @param rs ResultSet posicionado en la fila a mapear.
-     * @return instancia de {@link Proyecto} con todos los campos.
+     * @return instancia de {@link Proyecto} con los campos disponibles.
      * @throws SQLException si alguna columna no existe en el RS.
      */
     private Proyecto mapearResultSet(ResultSet rs)
             throws SQLException {
         Proyecto p = new Proyecto();
-        p.setIdProyecto(rs.getInt("id_proyecto"));
-        p.setIdOrganizacion(rs.getInt("id_organizacion"));
-        p.setIdResponsable(rs.getInt("id_responsable"));
-        p.setNombreProyecto(rs.getString("nombre_proyecto"));
-        p.setDescripcion(rs.getString("descripcion"));
-        p.setActividades(rs.getString("actividades"));
+        p.setIdProyecto(rs.getInt("id"));
+        p.setNombreProyecto(rs.getString("nombre"));
+        p.setDescripcion(rs.getString("descripcion_general"));
         p.setMetodologia(rs.getString("metodologia"));
-        p.setDuracionMeses(rs.getInt("duracion_meses"));
-        p.setHorarioLaboral(rs.getString("horario_laboral"));
-        p.setRecurso(rs.getString("recurso"));
-        p.setResponsabilidades(rs.getString("responsabilidades"));
         p.setCupoMaximo(rs.getInt("cupo_maximo"));
         p.setCupoDisponible(rs.getInt("cupo_disponible"));
         p.setEstado(rs.getString("estado"));

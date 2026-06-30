@@ -99,74 +99,104 @@ public final class Constantes {
 
     // --- Estados de entidades (evita strings sueltos en la BD) ---
 
-    /** Estado de un usuario o entidad operativa en el sistema. */
-    public static final String ESTADO_ACTIVO = "Activo";
+    /** Estado activo de usuario, proyecto u entidad en la nueva BD. */
+    public static final String ESTADO_ACTIVO = "activo";
 
     /**
-     * Estado de una cuenta dada de baja; solo permite consulta,
+     * Estado de baja lógica; solo permite consulta,
      * no edición (nunca se elimina el registro físicamente).
      */
-    public static final String ESTADO_INACTIVO = "No Activo";
+    public static final String ESTADO_INACTIVO = "inactivo";
 
     /** Estado temporal de una cuenta bloqueada por intentos fallidos. */
     public static final String ESTADO_BLOQUEADO = "Bloqueado";
 
-    /** Estado de un proyecto publicado y visible para los estudiantes. */
-    public static final String ESTADO_PROYECTO_DISPONIBLE = "Disponible";
+    /** Estado de un proyecto publicado y visible para los Estudiantes. */
+    public static final String ESTADO_PROYECTO_DISPONIBLE = "activo";
 
-    // --- Tipos de evidencia (FK id_tipo_evidencia en BD) ---
+    // --- IDs del catálogo entregable (spp_db, tabla entregable) ---
+    // Posición 1-15 según el INSERT semilla del script spp_db.sql.
 
-    /** Oficio emitido por la OV aceptando al Estudiante. */
-    public static final int TIPO_EVIDENCIA_OFICIO_ACEPTACION = 1;
+    /** id=1 Oficio de Asignación (DocumentoInicial). */
+    public static final int TIPO_EVIDENCIA_OFICIO_ASIGNACION = 1;
 
-    /** Oficio generado por el sistema al asignar el proyecto. */
-    public static final int TIPO_EVIDENCIA_OFICIO_ASIGNACION = 2;
+    /** id=2 Oficio de Aceptación (DocumentoInicial). */
+    public static final int TIPO_EVIDENCIA_OFICIO_ACEPTACION = 2;
 
-    /** Horario de la Experiencia Educativa (EE). */
+    /** id=3 Horario de Clases (DocumentoInicial). */
     public static final int TIPO_EVIDENCIA_HORARIO_CLASES = 3;
 
-    /** Horario en la OV firmado y sellado por el responsable. */
-    public static final int TIPO_EVIDENCIA_HORARIO_LABORAL = 4;
+    /** id=4 Cronograma (DocumentoInicial). */
+    public static final int TIPO_EVIDENCIA_CRONOGRAMA = 4;
 
-    /** Cronograma de actividades del periodo de práctica. */
-    public static final int TIPO_EVIDENCIA_CRONOGRAMA = 5;
 
-    /** Reporte de avance mensual del Estudiante. */
-    public static final int TIPO_EVIDENCIA_REPORTE_MENSUAL = 6;
+    /** id=5 Reporte Mensual 1 (Evidencia). */
+    public static final int TIPO_EVIDENCIA_REPORTE_MENSUAL = 5;
 
-    /** Informe al concluir las primeras 210 horas (RN-03). */
-    public static final int TIPO_EVIDENCIA_INFORME_PARCIAL = 7;
+    /** id=6 Reporte Mensual 2 (Evidencia). */
+    public static final int TIPO_EVIDENCIA_REPORTE_MENSUAL_2 = 6;
 
-    /** Informe al concluir las 420 horas requeridas (RN-02). */
-    public static final int TIPO_EVIDENCIA_INFORME_FINAL = 8;
+    /** id=7 Reporte Mensual 3 (Evidencia). */
+    public static final int TIPO_EVIDENCIA_REPORTE_MENSUAL_3 = 7;
 
-    /** Presentación final ante el Profesor Asesor. */
-    public static final int TIPO_EVIDENCIA_PRESENTACION = 9;
+    /** id=8 Reporte Mensual 4 (Evidencia). */
+    public static final int TIPO_EVIDENCIA_REPORTE_MENSUAL_4 = 8;
 
-    /** Evaluación de la OV realizada por el Estudiante. */
-    public static final int TIPO_EVIDENCIA_EVALUACION_OV = 10;
+    /** id=9 Informe Parcial a las 210 hrs (RN-03). */
+    public static final int TIPO_EVIDENCIA_INFORME_PARCIAL = 9;
 
-    /** Autoevaluación del Estudiante (10 afirmaciones, escala 1-5). */
-    public static final int TIPO_EVIDENCIA_AUTOEVALUACION = 11;
+    /** id=10 Informe Final a las 420 hrs (RN-02). */
+    public static final int TIPO_EVIDENCIA_INFORME_FINAL = 10;
 
-    // --- Estados de documento (FK id_estado_documento en BD) ---
+    /** id=11 Primera Presentación ante el Cuerpo Colegiado. */
+    public static final int TIPO_EVIDENCIA_PRESENTACION = 11;
 
-    /** Documento creado; el Estudiante aún no ha entregado archivo. */
-    public static final int ESTADO_DOCUMENTO_PENDIENTE = 1;
+    /** id=12 Segunda Presentación ante el Cuerpo Colegiado. */
+    public static final int TIPO_EVIDENCIA_PRESENTACION_2 = 12;
+
+    /** id=13 Primera Evaluación de la Organización Vinculada. */
+    public static final int TIPO_EVIDENCIA_EVALUACION_OV = 13;
+
+    /** id=14 Segunda Evaluación de la Organización Vinculada. */
+    public static final int TIPO_EVIDENCIA_EVALUACION_OV_2 = 14;
+
+    /** id=15 Autoevaluación del Estudiante (10 afirmaciones). */
+    public static final int TIPO_EVIDENCIA_AUTOEVALUACION = 15;
+
+    // --- Estados de entrega (ENUM en columna entrega.estado) ---
+
+    /** Entrega creada; el Estudiante aún no ha subido archivo. */
+    public static final String ESTADO_ENTREGA_NO_ENTREGADA = "noEntregada";
 
     /** El Estudiante subió el archivo; pendiente de evaluación. */
+    public static final String ESTADO_ENTREGA_ENTREGADA = "entregada";
+
+    /** El Profesor evaluó la evidencia correctamente. */
+    public static final String ESTADO_ENTREGA_EVALUADA = "evaluada";
+
+    /** El Profesor evaluó la evidencia entregada con retardo. */
+    public static final String ESTADO_ENTREGA_CON_RETARDO =
+            "evaluadaConRetardo";
+
+    // --- Constantes de estado de documento (enteros) ---
+    // Usados por la capa de servicio para indicar el estado deseado.
+
+    /** Código interno: sin entregar. */
+    public static final int ESTADO_DOCUMENTO_PENDIENTE = 1;
+
+    /** Código interno: archivo subido por el Estudiante. */
     public static final int ESTADO_DOCUMENTO_ENTREGADO = 2;
 
-    /** El Profesor evaluó y aprobó la evidencia. */
+    /** Código interno: aprobado por el Profesor. */
     public static final int ESTADO_DOCUMENTO_APROBADO = 3;
 
-    /** El Profesor evaluó y rechazó la evidencia. */
+    /** Código interno: rechazado por el Profesor. */
     public static final int ESTADO_DOCUMENTO_RECHAZADO = 4;
 
-    /** El Coordinador o Profesor otorgó prórroga al documento. */
+    /** Código interno: prórroga otorgada. */
     public static final int ESTADO_DOCUMENTO_CON_PRORROGA = 5;
 
-    /** El Profesor calificó la evidencia (estado propio para calif.). */
+    /** Código interno: calificado por el Profesor. */
     public static final int ESTADO_DOCUMENTO_EVALUADO = 6;
 
     // --- Autoevaluación Likert (rediseño sesión 4) ---

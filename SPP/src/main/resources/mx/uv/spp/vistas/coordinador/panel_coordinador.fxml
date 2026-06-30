@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<!--
+    panel_coordinador.fxml — Panel principal del Coordinador.
+    Controlador:
+        mx.uv.spp.controladores.coordinador.PanelCoordinadorController
+-->
+<BorderPane xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller=
+              "mx.uv.spp.controladores.coordinador.PanelCoordinadorController"
+            prefHeight="700.0" prefWidth="1100.0">
+
+    <!-- ── Barra lateral izquierda ───────────────────────────── -->
+    <left>
+        <VBox spacing="8.0" prefWidth="220.0" prefHeight="700.0"
+              style="-fx-background-color: #1C3A6E; -fx-padding: 24 12 24 12;">
+
+            <Label text="SPP" style="-fx-text-fill: white;
+                   -fx-font-size: 28px; -fx-font-weight: bold;
+                   -fx-alignment: center;" maxWidth="Infinity" />
+
+            <Label text="Coordinador" style="-fx-text-fill: #aec6e8;
+                   -fx-font-size: 13px; -fx-alignment: center;"
+                   maxWidth="Infinity" />
+
+            <Separator />
+
+            <Label text="Gestión académica"
+                   style="-fx-text-fill: #aec6e8; -fx-font-size: 11px;
+                   -fx-font-weight: bold;" wrapText="true" />
+
+            <Button fx:id="btnOrganizaciones"
+                    text="Organizaciones Vinculadas"
+                    maxWidth="Infinity"
+                    onAction="#onBtnOrganizaciones"
+                    style="-fx-background-color: transparent;
+                    -fx-text-fill: white; -fx-alignment: CENTER-LEFT;
+                    -fx-cursor: hand;" />
+
+            <Button fx:id="btnProyectos"
+                    text="Proyectos"
+                    maxWidth="Infinity"
+                    onAction="#onBtnProyectos"
+                    style="-fx-background-color: transparent;
+                    -fx-text-fill: white; -fx-alignment: CENTER-LEFT;
+                    -fx-cursor: hand;" />
+
+            <Button fx:id="btnEstudiantes"
+                    text="Estudiantes"
+                    maxWidth="Infinity"
+                    onAction="#onBtnEstudiantes"
+                    style="-fx-background-color: transparent;
+                    -fx-text-fill: white; -fx-alignment: CENTER-LEFT;
+                    -fx-cursor: hand;" />
+
+            <Button fx:id="btnPeriodos"
+                    text="Periodos Escolares"
+                    maxWidth="Infinity"
+                    onAction="#onBtnPeriodos"
+                    style="-fx-background-color: transparent;
+                    -fx-text-fill: white; -fx-alignment: CENTER-LEFT;
+                    -fx-cursor: hand;" />
+
+            <Button fx:id="btnGrupos"
+                    text="Grupos"
+                    maxWidth="Infinity"
+                    onAction="#onBtnGrupos"
+                    style="-fx-background-color: transparent;
+                    -fx-text-fill: white; -fx-alignment: CENTER-LEFT;
+                    -fx-cursor: hand;" />
+
+            <Button fx:id="btnDocumentos"
+                    text="Documentos Iniciales"
+                    maxWidth="Infinity"
+                    onAction="#onBtnDocumentos"
+                    style="-fx-background-color: transparent;
+                    -fx-text-fill: white; -fx-alignment: CENTER-LEFT;
+                    -fx-cursor: hand;" />
+
+            <!-- Empuja el botón de cerrar sesión al fondo -->
+            <Region VBox.vgrow="ALWAYS" />
+
+            <Separator />
+
+            <Button fx:id="btnCerrarSesion"
+                    text="Cerrar sesión"
+                    maxWidth="Infinity"
+                    onAction="#onBtnCerrarSesion"
+                    style="-fx-background-color: #c0392b;
+                    -fx-text-fill: white; -fx-cursor: hand;" />
+        </VBox>
+    </left>
+
+    <!-- ── Área central de contenido ────────────────────────── -->
+    <center>
+        <StackPane fx:id="contenedor"
+                   style="-fx-background-color: #f4f6fb;">
+
+            <!-- Vista de bienvenida inicial -->
+            <VBox fx:id="panelBienvenida"
+                  spacing="16.0" alignment="CENTER"
+                  style="-fx-padding: 40;">
+
+                <Label text="SPP"
+                       style="-fx-font-size: 48px; -fx-font-weight: bold;
+                       -fx-text-fill: #1C3A6E;" />
+
+                <Label text="Bienvenido al Sistema de Prácticas Profesionales"
+                       wrapText="true"
+                       style="-fx-font-size: 20px; -fx-text-fill: #2c3e50;
+                       -fx-alignment: center;" />
+
+                <Label text="Elige una opción del panel izquierdo para comenzar"
+                       wrapText="true"
+                       style="-fx-font-size: 14px; -fx-text-fill: #7f8c8d;
+                       -fx-alignment: center;" />
+            </VBox>
+
+        </StackPane>
+    </center>
+
+</BorderPane>
