@@ -2,6 +2,7 @@ module mx.uv.spp {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
+    requires java.base;
 
     opens mx.uv.spp to javafx.fxml;
     opens mx.uv.spp.controladores.comun to javafx.fxml;
