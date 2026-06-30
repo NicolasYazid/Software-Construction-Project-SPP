@@ -34,8 +34,7 @@ public final class Navegador {
     private static final String FXML_PANEL_COORDINADOR =
             "/mx/uv/spp/vistas/coordinador/panel_coordinador.fxml";
     private static final String FXML_PANEL_ADMINISTRADOR =
-            "/mx/uv/spp/vistas/administrador/"
-            + "panel_administrador.fxml";
+            "/mx/uv/spp/vistas/administrador/PanelCoordinador2.fxml";
 
     private static final int ANCHO_PANEL = 1100;
     private static final int ALTO_PANEL  = 700;
@@ -98,6 +97,17 @@ public final class Navegador {
     public static void irAPanelAdministrador() {
         cargarVista(FXML_PANEL_ADMINISTRADOR,
                 "SPP — Panel del Administrador");
+    }
+
+    /**
+     * Navega a la vista indicada por su ruta FXML en el classpath.
+     * Permite navegar a cualquier pantalla sin necesitar un método
+     * dedicado por cada vista.
+     *
+     * @param rutaFxml Ruta absoluta del FXML en el classpath; no nula.
+     */
+    public static void cambiarVista(String rutaFxml) {
+        cargarVista(rutaFxml, "SPP");
     }
 
     /**

@@ -3,11 +3,13 @@ module mx.uv.spp {
     requires javafx.fxml;
     requires java.sql;
     requires java.base;
+    requires java.desktop;
 
     opens mx.uv.spp to javafx.fxml;
     opens mx.uv.spp.controladores.comun to javafx.fxml;
     opens mx.uv.spp.controladores.estudiante to javafx.fxml;
     opens mx.uv.spp.controladores.profesor to javafx.fxml;
     opens mx.uv.spp.controladores.administrador to javafx.fxml;
+    opens mx.uv.spp.controladores.coordinador to javafx.fxml;
     exports mx.uv.spp;
 }

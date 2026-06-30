@@ -10,13 +10,16 @@ package mx.uv.spp.controladores.estudiante;
 import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -135,17 +138,27 @@ public class ReportesInformesController implements Initializable {
         filas.clear();
         int[] tipos = {
             Constantes.TIPO_EVIDENCIA_REPORTE_MENSUAL,
+            Constantes.TIPO_EVIDENCIA_REPORTE_MENSUAL_2,
+            Constantes.TIPO_EVIDENCIA_REPORTE_MENSUAL_3,
+            Constantes.TIPO_EVIDENCIA_REPORTE_MENSUAL_4,
             Constantes.TIPO_EVIDENCIA_INFORME_PARCIAL,
             Constantes.TIPO_EVIDENCIA_INFORME_FINAL,
             Constantes.TIPO_EVIDENCIA_PRESENTACION,
-            Constantes.TIPO_EVIDENCIA_EVALUACION_OV
+            Constantes.TIPO_EVIDENCIA_PRESENTACION_2,
+            Constantes.TIPO_EVIDENCIA_EVALUACION_OV,
+            Constantes.TIPO_EVIDENCIA_EVALUACION_OV_2
         };
         String[] nombres = {
-            "Reporte Mensual",
+            "Reporte Mensual 1",
+            "Reporte Mensual 2",
+            "Reporte Mensual 3",
+            "Reporte Mensual 4",
             "Informe Parcial (210 hrs)",
             "Informe Final (420 hrs)",
-            "Presentación (.pdf/.pptx)",
-            "Evaluación a la OV (irreversible)"
+            "Presentación 1 (.pdf/.pptx)",
+            "Presentación 2 (.pdf/.pptx)",
+            "Evaluación OV 1",
+            "Evaluación OV 2"
         };
         try {
             for (int i = 0; i < tipos.length; i++) {
@@ -178,16 +191,28 @@ public class ReportesInformesController implements Initializable {
 
     /**
      * Abre un {@link FileChooser} para seleccionar el archivo y lo
-     * entrega mediante el servicio. Valida extensión y tamaño.
+     * entrega mediante el servicio. Valida extensión, tamaño y estado.
+     * Bloquea la subida si la evidencia ya fue calificada (FA-02) y
+     * pide confirmación antes de registrar (FN-6).
      *
      * @param fila Fila de la tabla que corresponde a la evidencia.
      */
     private void subirArchivo(FilaEvidencia fila) {
+        if ("Evaluado".equals(fila.estado)
+                || "Rechazado".equals(fila.estado)) {
+            mostrarMensaje(ESTILO_ERROR,
+                    "Lo sentimos, pero esta evidencia ya tiene "
+                    + "calificación asignada y no puede "
+                    + "modificarse.");
+            return;
+        }
+
         FileChooser selector = new FileChooser();
         selector.setTitle("Seleccionar archivo — " + fila.nombre);
 
-        if (fila.idTipo
-                == Constantes.TIPO_EVIDENCIA_PRESENTACION) {
+        if (fila.idTipo == Constantes.TIPO_EVIDENCIA_PRESENTACION
+                || fila.idTipo
+                   == Constantes.TIPO_EVIDENCIA_PRESENTACION_2) {
             selector.getExtensionFilters().addAll(
                     new FileChooser.ExtensionFilter(
                             "PDF o PPTX", "*.pdf", "*.pptx"));
@@ -210,6 +235,19 @@ public class ReportesInformesController implements Initializable {
             return;
         }
 
+        Alert confirmacion = new Alert(
+                Alert.AlertType.CONFIRMATION);
+        confirmacion.setTitle("Confirmar entrega");
+        confirmacion.setHeaderText(
+                "Se registrará la entrega de esta Evidencia.");
+        confirmacion.setContentText("¿Continuar?");
+        Optional<ButtonType> resultado =
+                confirmacion.showAndWait();
+        if (!resultado.isPresent()
+                || resultado.get() != ButtonType.OK) {
+            return;
+        }
+
         int idInscripcion = SesionUsuario.getIdInscripcion();
         try {
             estudianteServicio.entregarDocumento(
@@ -218,8 +256,8 @@ public class ReportesInformesController implements Initializable {
                     archivo.getAbsolutePath(),
                     archivo.getName());
             mostrarMensaje(ESTILO_OK,
-                    "\"" + fila.nombre
-                    + "\" entregado correctamente.");
+                    "Tu evidencia ha sido registrada "
+                    + "exitosamente.");
             cargarFilas();
         } catch (IllegalArgumentException e) {
             mostrarMensaje(ESTILO_ERROR, e.getMessage());

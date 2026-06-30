@@ -10,13 +10,16 @@ package mx.uv.spp.controladores.estudiante;
 import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -35,7 +38,7 @@ import mx.uv.spp.util.Validador;
 /**
  * Controlador de la vista Documentos Iniciales.
  * Permite al Estudiante entregar los documentos iniciales requeridos:
- * Oficio de Aceptación, Horario EE, Horario Laboral y Cronograma.
+ * Oficio de Aceptación, Horario de la EE y Cronograma de Actividades.
  * La re-entrega de un documento sobrescribe el anterior (sección 8).
  *
  * @author Nicolás Yazid Cruz Hernández
@@ -116,7 +119,19 @@ public class DocumentosInicialesController implements Initializable {
             @Override
             protected void updateItem(Void item, boolean vacio) {
                 super.updateItem(item, vacio);
-                setGraphic(vacio ? null : btnSubir);
+                if (vacio) {
+                    setGraphic(null);
+                    return;
+                }
+                FilaDocumento fila = getTableView()
+                        .getItems().get(getIndex());
+                if (fila.idTipo
+                        == Constantes
+                           .TIPO_EVIDENCIA_OFICIO_ASIGNACION) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btnSubir);
+                }
             }
         });
     }
@@ -135,15 +150,15 @@ public class DocumentosInicialesController implements Initializable {
         }
         filas.clear();
         int[] tipos = {
+            Constantes.TIPO_EVIDENCIA_OFICIO_ASIGNACION,
             Constantes.TIPO_EVIDENCIA_OFICIO_ACEPTACION,
             Constantes.TIPO_EVIDENCIA_HORARIO_CLASES,
-            Constantes.TIPO_EVIDENCIA_HORARIO_LABORAL,
             Constantes.TIPO_EVIDENCIA_CRONOGRAMA
         };
         String[] nombres = {
+            "Oficio de Asignación (generado por SPP)",
             "Oficio de Aceptación",
             "Horario de la EE",
-            "Horario Laboral (OV)",
             "Cronograma de Actividades"
         };
         try {
@@ -200,6 +215,20 @@ public class DocumentosInicialesController implements Initializable {
             mostrarMensaje(ESTILO_ERROR, e.getMessage());
             return;
         }
+
+        Alert confirmacion = new Alert(
+                Alert.AlertType.CONFIRMATION);
+        confirmacion.setTitle("Confirmar entrega");
+        confirmacion.setHeaderText(
+                "Se registrará la entrega de este documento.");
+        confirmacion.setContentText("¿Continuar?");
+        Optional<ButtonType> respuesta =
+                confirmacion.showAndWait();
+        if (!respuesta.isPresent()
+                || respuesta.get() != ButtonType.OK) {
+            return;
+        }
+
         int idInscripcion = SesionUsuario.getIdInscripcion();
         try {
             estudianteServicio.entregarDocumento(
@@ -208,8 +237,8 @@ public class DocumentosInicialesController implements Initializable {
                     archivo.getAbsolutePath(),
                     archivo.getName());
             mostrarMensaje(ESTILO_OK,
-                    "Documento \"" + fila.nombre
-                    + "\" entregado correctamente.");
+                    "Tu documento ha sido registrado "
+                    + "exitosamente.");
             cargarFilas();
         } catch (IllegalArgumentException e) {
             mostrarMensaje(ESTILO_ERROR, e.getMessage());

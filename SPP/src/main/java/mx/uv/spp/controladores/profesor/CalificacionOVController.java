@@ -7,32 +7,60 @@
  */
 package mx.uv.spp.controladores.profesor;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.HBox;
+import mx.uv.spp.modelo.Documento;
 import mx.uv.spp.negocio.ProfesorServicio;
 import mx.uv.spp.persistencia.dao.impl.DocumentoDAOImpl;
 import mx.uv.spp.persistencia.dao.impl.MensajeGrupoDAOImpl;
+import mx.uv.spp.util.Constantes;
+import mx.uv.spp.util.SesionUsuario;
 
 /**
- * Controlador de la vista Calificación OV (CU-26).
- * Permite al Profesor registrar la calificación de la Organización
- * Vinculada para un Estudiante dado su identificador de inscripción.
- * La calificación debe estar en el rango 1.0–10.0.
+ * Controlador de la vista Calificación OV (CU-Est.-27).
+ * Muestra al Profesor los documentos de EvaluaciónOV entregados
+ * por sus Estudiantes que aún no tienen calificación. El Profesor
+ * puede ver el documento y registrar la calificación entera (1–10)
+ * que la Organización Vinculada otorgó al Estudiante.
  *
  * @author Nicolás Yazid Cruz Hernández
  * @author Isaac Adriano Vázquez Torres
  */
 public class CalificacionOVController implements Initializable {
 
-    @FXML private Label     lblEstado;
-    @FXML private TextField txtIdInscripcion;
-    @FXML private TextField txtCalificacion;
+    @FXML private Label                    lblEstado;
+    @FXML private TableView<FilaOV>        tblOV;
+    @FXML private TableColumn<FilaOV,
+            String>                        colEstudiante;
+    @FXML private TableColumn<FilaOV,
+            String>                        colTipo;
+    @FXML private TableColumn<FilaOV,
+            String>                        colArchivo;
+    @FXML private TableColumn<FilaOV,
+            Void>                          colAccion;
 
+    private final ObservableList<FilaOV> filas =
+            FXCollections.observableArrayList();
     private ProfesorServicio profesorServicio;
 
     private static final String ESTILO_ERROR =
@@ -46,8 +74,8 @@ public class CalificacionOVController implements Initializable {
             + "Inténtelo de nuevo en unos minutos.";
 
     /**
-     * Inicializa el controlador: instancia el servicio y muestra
-     * instrucciones en la etiqueta de estado.
+     * Inicializa el controlador: instancia el servicio, configura
+     * las columnas de la tabla y carga las evaluaciones OV pendientes.
      *
      * @param ubicacion URL del FXML (no usado).
      * @param recursos  Paquete de i18n (no usado).
@@ -57,51 +85,185 @@ public class CalificacionOVController implements Initializable {
         profesorServicio = new ProfesorServicio(
                 new DocumentoDAOImpl(),
                 new MensajeGrupoDAOImpl());
-        mostrarMensaje(ESTILO_INFO,
-                "Ingrese el ID de inscripción del Estudiante "
-                + "y la calificación de la OV (1.0–10.0).");
+        configurarColumnas();
+        tblOV.setItems(filas);
+        cargarFilas();
     }
 
-    /* ── Manejador de evento ─────────────────────────────────── */
+    /* ── Métodos privados ───────────────────────────────────── */
 
     /**
-     * Valida los campos del formulario y registra la calificación de
-     * la OV para la inscripción indicada.
+     * Configura las columnas de texto y la columna de acción con
+     * los botones "Ver documento" y "Calificar" por fila.
      */
-    @FXML
-    private void onBtnRegistrar() {
-        String txtId  = txtIdInscripcion.getText().trim();
-        String txtCal = txtCalificacion.getText().trim();
+    private void configurarColumnas() {
+        colEstudiante.setCellValueFactory(
+                c -> new SimpleStringProperty(
+                        String.valueOf(
+                                c.getValue().idEstudiante)));
+        colTipo.setCellValueFactory(
+                c -> new SimpleStringProperty(
+                        c.getValue().nombreTipo));
+        colArchivo.setCellValueFactory(
+                c -> new SimpleStringProperty(
+                        c.getValue().nombreArchivo));
 
-        if (txtId.isEmpty() || txtCal.isEmpty()) {
+        colAccion.setCellFactory(col -> new TableCell<>() {
+            private final Button btnVer =
+                    new Button("Ver documento");
+            private final Button btnCalificar =
+                    new Button("Calificar");
+            private final HBox celdaAcciones =
+                    new HBox(4, btnVer, btnCalificar);
+
+            {
+                btnVer.setOnAction(e -> {
+                    FilaOV fila = getTableView()
+                            .getItems().get(getIndex());
+                    verDocumento(fila);
+                });
+                btnCalificar.setOnAction(e -> {
+                    FilaOV fila = getTableView()
+                            .getItems().get(getIndex());
+                    calificarOV(fila);
+                });
+            }
+
+            @Override
+            protected void updateItem(
+                    Void item, boolean vacio) {
+                super.updateItem(item, vacio);
+                setGraphic(vacio ? null : celdaAcciones);
+            }
+        });
+    }
+
+    /**
+     * Carga los documentos de EvaluaciónOV entregados y sin
+     * calificación del grupo del Profesor autenticado.
+     */
+    private void cargarFilas() {
+        int idProfesor = SesionUsuario.getIdUsuario();
+        filas.clear();
+        try {
+            List<Documento> pendientes =
+                    new DocumentoDAOImpl()
+                    .obtenerOVSinCalificarPorProfesor(idProfesor);
+            for (Documento doc : pendientes) {
+                FilaOV fila  = new FilaOV();
+                fila.idDocumento   = doc.getIdDocumento();
+                fila.idEstudiante  = doc.getIdInscripcion();
+                fila.nombreTipo    = doc.getIdTipoEvidencia()
+                        == Constantes.TIPO_EVIDENCIA_EVALUACION_OV
+                        ? "Evaluación OV 1"
+                        : "Evaluación OV 2";
+                fila.rutaArchivo   =
+                        doc.getRutaArchivo() != null
+                        ? doc.getRutaArchivo() : "";
+                fila.nombreArchivo =
+                        doc.getNombreArchivo() != null
+                        ? doc.getNombreArchivo() : "";
+                filas.add(fila);
+            }
+            if (filas.isEmpty()) {
+                mostrarMensaje(ESTILO_INFO,
+                        "No hay evaluaciones OV pendientes de "
+                        + "calificación.");
+            } else {
+                mostrarMensaje(ESTILO_INFO,
+                        filas.size()
+                        + " evaluación(es) OV por calificar.");
+            }
+        } catch (SQLException e) {
+            System.err.println(
+                    "Error al cargar evaluaciones OV: "
+                    + e.getMessage());
+            mostrarMensaje(ESTILO_ERROR, MENSAJE_EX01);
+        }
+    }
+
+    /**
+     * Abre el documento OV con la aplicación predeterminada del
+     * sistema operativo para que el Profesor lo revise.
+     *
+     * @param fila Fila que contiene la ruta del documento.
+     */
+    private void verDocumento(FilaOV fila) {
+        if (fila.rutaArchivo == null
+                || fila.rutaArchivo.isEmpty()) {
             mostrarMensaje(ESTILO_ERROR,
-                    "Todos los campos son obligatorios.");
+                    "No hay documento adjunto para esta "
+                    + "evaluación.");
             return;
         }
-        int idInscripcion;
-        try {
-            idInscripcion = Integer.parseInt(txtId);
-        } catch (NumberFormatException e) {
+        File archivo = new File(fila.rutaArchivo);
+        if (!archivo.exists()) {
             mostrarMensaje(ESTILO_ERROR,
-                    "El ID de inscripción debe ser un "
-                    + "número entero.");
+                    "El archivo no se encontró en la ruta "
+                    + "registrada.");
+            return;
+        }
+        try {
+            Desktop.getDesktop().open(archivo);
+        } catch (IOException e) {
+            mostrarMensaje(ESTILO_ERROR,
+                    "No fue posible abrir el documento.");
+        }
+    }
+
+    /**
+     * Muestra un diálogo para ingresar la calificación entera (1–10)
+     * otorgada por la OV y la registra tras confirmación.
+     *
+     * @param fila Fila con los datos del documento OV.
+     */
+    private void calificarOV(FilaOV fila) {
+        TextInputDialog dialogo = new TextInputDialog();
+        dialogo.setTitle("Calificación de la OV");
+        dialogo.setHeaderText(
+                "Estudiante " + fila.idEstudiante
+                + " — " + fila.nombreTipo);
+        dialogo.setContentText(
+                "Calificación OV (número entero del 1 al 10):");
+
+        Optional<String> resultado = dialogo.showAndWait();
+        if (!resultado.isPresent()
+                || resultado.get().trim().isEmpty()) {
             return;
         }
         double calificacion;
         try {
-            calificacion = Double.parseDouble(txtCal);
+            calificacion =
+                    Double.parseDouble(resultado.get().trim());
         } catch (NumberFormatException e) {
             mostrarMensaje(ESTILO_ERROR,
-                    "La calificación debe ser un número válido.");
+                    "La calificación debe ser un número "
+                    + "entero entre 1 y 10.");
             return;
         }
+
+        Alert confirmacion = new Alert(
+                Alert.AlertType.CONFIRMATION);
+        confirmacion.setTitle("Confirmar calificación OV");
+        confirmacion.setHeaderText(
+                "¿Registrar calificación "
+                + (int) calificacion + " para este Estudiante?");
+        confirmacion.setContentText(
+                "Esta acción no puede deshacerse.");
+        Optional<ButtonType> confirm =
+                confirmacion.showAndWait();
+        if (!confirm.isPresent()
+                || confirm.get() != ButtonType.OK) {
+            return;
+        }
+
         try {
-            profesorServicio.registrarCalificacionOV(
-                    idInscripcion, calificacion);
+            profesorServicio.calificarEvidencia(
+                    fila.idDocumento, calificacion);
             mostrarMensaje(ESTILO_OK,
-                    "Calificación de la OV registrada.");
-            txtIdInscripcion.clear();
-            txtCalificacion.clear();
+                    "Calificación de la OV registrada "
+                    + "exitosamente.");
+            cargarFilas();
         } catch (IllegalArgumentException
                 | IllegalStateException e) {
             mostrarMensaje(ESTILO_ERROR, e.getMessage());
@@ -113,8 +275,6 @@ public class CalificacionOVController implements Initializable {
         }
     }
 
-    /* ── Método privado de apoyo ─────────────────────────────── */
-
     /**
      * Actualiza el texto y el estilo del label de estado.
      *
@@ -124,6 +284,19 @@ public class CalificacionOVController implements Initializable {
     private void mostrarMensaje(String estilo, String mensaje) {
         lblEstado.setStyle(estilo);
         lblEstado.setText(mensaje);
+    }
+
+    /* ── Clase interna de fila ──────────────────────────────── */
+
+    /**
+     * Datos de una fila de la tabla de evaluaciones OV pendientes.
+     */
+    static class FilaOV {
+        int    idDocumento;
+        int    idEstudiante;
+        String nombreTipo     = "";
+        String rutaArchivo    = "";
+        String nombreArchivo  = "";
     }
 
 }

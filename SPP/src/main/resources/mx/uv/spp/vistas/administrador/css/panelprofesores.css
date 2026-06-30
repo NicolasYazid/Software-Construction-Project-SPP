@@ -1,0 +1,147 @@
+/* ----------------------------------------------------------------
+ * panelprofesores.css — Estilos de la ventana de gestión de
+ * Profesores del Administrador (SPP).
+ * Paleta: azul institucional UV #1C3A6E / blanco / gris neutro.
+ * ---------------------------------------------------------------- */
+
+/* Barra lateral izquierda --------------------------------------- */
+.sidebar {
+    -fx-background-color: #1C3A6E;
+    -fx-pref-width: 220;
+}
+
+.lbl-sidebar-logo {
+    -fx-font-size: 22;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+}
+
+.lbl-sidebar-seccion {
+    -fx-font-size: 12;
+    -fx-text-fill: #B8CCE4;
+    -fx-wrap-text: true;
+}
+
+.separador-sidebar {
+    -fx-background-color: #4A6FA8;
+    -fx-opacity: 0.6;
+}
+
+.btn-menu {
+    -fx-background-color: #2C5282;
+    -fx-text-fill: white;
+    -fx-font-size: 13;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-pref-height: 36;
+    -fx-alignment: center-left;
+    -fx-padding: 0 12;
+}
+
+.btn-menu:hover {
+    -fx-background-color: #2E6DA4;
+}
+
+.btn-menu:pressed {
+    -fx-background-color: #152D56;
+}
+
+.btn-cerrar-sesion {
+    -fx-background-color: #8B0000;
+    -fx-text-fill: white;
+    -fx-font-size: 13;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-pref-height: 36;
+}
+
+.btn-cerrar-sesion:hover {
+    -fx-background-color: #A93226;
+}
+
+.btn-cerrar-sesion:pressed {
+    -fx-background-color: #6E0000;
+}
+
+/* Área de contenido central ------------------------------------- */
+.area-contenido {
+    -fx-background-color: #F4F6F8;
+    -fx-padding: 36 48 0 48;
+}
+
+/* Título de sección --------------------------------------------- */
+.lbl-titulo-seccion {
+    -fx-font-size: 22;
+    -fx-font-weight: normal;
+    -fx-text-fill: #1C3A6E;
+    -fx-padding: 0 0 16 0;
+}
+
+/* Tabla de profesores ------------------------------------------- */
+.tbl-profesores {
+    -fx-background-color: white;
+    -fx-border-color: #BDC3C7;
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.tbl-profesores .column-header-background {
+    -fx-background-color: #EAF0F6;
+}
+
+.tbl-profesores .column-header .label {
+    -fx-font-size: 13;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2C3E50;
+    -fx-alignment: center-left;
+}
+
+.tbl-profesores .table-cell {
+    -fx-font-size: 13;
+    -fx-text-fill: #2C3E50;
+    -fx-border-color: transparent #E0E0E0 transparent transparent;
+    -fx-padding: 6 10;
+}
+
+.tbl-profesores .table-row-cell:selected {
+    -fx-background-color: #D6E4F7;
+}
+
+.tbl-profesores .table-row-cell:selected .table-cell {
+    -fx-text-fill: #1C3A6E;
+}
+
+/* Barra inferior de botones ------------------------------------- */
+.barra-acciones {
+    -fx-padding: 20 0 28 0;
+    -fx-alignment: center-left;
+}
+
+/* Botones de acción (outlined) ---------------------------------- */
+.btn-accion {
+    -fx-background-color: white;
+    -fx-text-fill: #1C3A6E;
+    -fx-font-size: 13;
+    -fx-border-color: #1C3A6E;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-pref-height: 38;
+    -fx-pref-width: 190;
+}
+
+.btn-accion:hover {
+    -fx-background-color: #EAF0F6;
+}
+
+.btn-accion:pressed {
+    -fx-background-color: #D6E4F7;
+}
+
+.btn-accion:disabled {
+    -fx-opacity: 0.5;
+    -fx-cursor: default;
+}

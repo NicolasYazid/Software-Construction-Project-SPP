@@ -14,14 +14,20 @@ import java.sql.SQLException;
 import mx.uv.spp.modelo.Autoevaluacion;
 import mx.uv.spp.persistencia.ConexionBD;
 import mx.uv.spp.persistencia.dao.AutoevaluacionDAO;
+import mx.uv.spp.util.Constantes;
 
 /**
- * Implementación JDBC de {@link AutoevaluacionDAO}.
- * Accede a las tablas {@code autoevaluacion} y {@code documento}
- * para verificar y persistir la autoevaluación del Estudiante.
- * La verificación de existencia hace JOIN porque la tabla
- * {@code autoevaluacion} referencia {@code documento}, y el
- * vínculo con la inscripción está en {@code documento}.
+ * Implementación JDBC de {@link AutoevaluacionDAO} para spp_db.
+ * En spp_db no existe tabla {@code autoevaluacion} con columnas
+ * {@code afirmacion_1..10}. En su lugar se usan:
+ * <ul>
+ *   <li>{@code entrega} — fila para el Estudiante con
+ *       {@code entregable_id = TIPO_EVIDENCIA_AUTOEVALUACION}.</li>
+ *   <li>{@code respuesta_autoevaluacion} — una fila por afirmación
+ *       (10 filas en total).</li>
+ * </ul>
+ * El campo {@code idDocumento} del POJO {@link Autoevaluacion}
+ * corresponde al {@code id} de la fila en {@code entrega}.
  *
  * @author Nicolás Yazid Cruz Hernández
  * @author Isaac Adriano Vázquez Torres
@@ -31,22 +37,26 @@ public class AutoevaluacionDAOImpl implements AutoevaluacionDAO {
     /**
      * {@inheritDoc}
      *
-     * <p>Hace JOIN con {@code documento} para relacionar la
-     * autoevaluación con la inscripción, ya que la tabla
-     * {@code autoevaluacion} no almacena directamente
-     * {@code id_inscripcion}.
+     * <p>Verifica si la entrega de autoevaluación del Estudiante
+     * ya tiene respuestas registradas en
+     * {@code respuesta_autoevaluacion}.
      */
     @Override
     public boolean existePorInscripcion(int idInscripcion)
             throws SQLException {
-        String sql = "SELECT COUNT(*) FROM autoevaluacion a"
-                + " JOIN documento d"
-                + " ON a.id_documento = d.id_documento"
-                + " WHERE d.id_inscripcion = ?";
+        String sql = "SELECT COUNT(*)"
+                + " FROM respuesta_autoevaluacion ra"
+                + " JOIN entrega e"
+                + " ON e.id = ra.entrega_id"
+                + " JOIN inscripcion i"
+                + " ON i.estudiante_id = e.estudiante_id"
+                + " WHERE i.id = ?"
+                + " AND e.entregable_id = ?";
         Connection con = ConexionBD.obtenerInstancia()
                 .obtenerConexion();
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idInscripcion);
+            ps.setInt(2, Constantes.TIPO_EVIDENCIA_AUTOEVALUACION);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return rs.getInt(1) > 0;
@@ -58,35 +68,76 @@ public class AutoevaluacionDAOImpl implements AutoevaluacionDAO {
 
     /**
      * {@inheritDoc}
+     *
+     * <p>Inserta 10 filas en {@code respuesta_autoevaluacion} y
+     * actualiza {@code entrega.estado = 'entregada'}. El campo
+     * {@code autoevaluacion.getIdDocumento()} es el {@code id}
+     * de la fila en {@code entrega}.
      */
     @Override
     public void insertar(Autoevaluacion autoevaluacion)
             throws SQLException {
-        String sql = "INSERT INTO autoevaluacion"
-                + " (id_documento,"
-                + " afirmacion_1, afirmacion_2, afirmacion_3,"
-                + " afirmacion_4, afirmacion_5, afirmacion_6,"
-                + " afirmacion_7, afirmacion_8, afirmacion_9,"
-                + " afirmacion_10,"
-                + " puntuacion_total, calificacion)"
-                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        int entregaId = autoevaluacion.getIdDocumento();
+
+        String sqlRespuesta = "INSERT INTO respuesta_autoevaluacion"
+                + " (entrega_id, numero_afirmacion, valor)"
+                + " VALUES (?, ?, ?)";
+
+        int[] valores = {
+            autoevaluacion.getAfirmacion1(),
+            autoevaluacion.getAfirmacion2(),
+            autoevaluacion.getAfirmacion3(),
+            autoevaluacion.getAfirmacion4(),
+            autoevaluacion.getAfirmacion5(),
+            autoevaluacion.getAfirmacion6(),
+            autoevaluacion.getAfirmacion7(),
+            autoevaluacion.getAfirmacion8(),
+            autoevaluacion.getAfirmacion9(),
+            autoevaluacion.getAfirmacion10()
+        };
+
         Connection con = ConexionBD.obtenerInstancia()
                 .obtenerConexion();
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, autoevaluacion.getIdDocumento());
-            ps.setInt(2, autoevaluacion.getAfirmacion1());
-            ps.setInt(3, autoevaluacion.getAfirmacion2());
-            ps.setInt(4, autoevaluacion.getAfirmacion3());
-            ps.setInt(5, autoevaluacion.getAfirmacion4());
-            ps.setInt(6, autoevaluacion.getAfirmacion5());
-            ps.setInt(7, autoevaluacion.getAfirmacion6());
-            ps.setInt(8, autoevaluacion.getAfirmacion7());
-            ps.setInt(9, autoevaluacion.getAfirmacion8());
-            ps.setInt(10, autoevaluacion.getAfirmacion9());
-            ps.setInt(11, autoevaluacion.getAfirmacion10());
-            ps.setInt(12, autoevaluacion.getPuntuacionTotal());
-            ps.setDouble(13, autoevaluacion.getCalificacion());
-            ps.executeUpdate();
+        try {
+            con.setAutoCommit(false);
+
+            for (int i = 0; i < valores.length; i++) {
+                try (PreparedStatement ps =
+                        con.prepareStatement(sqlRespuesta)) {
+                    ps.setInt(1, entregaId);
+                    ps.setInt(2, i + 1);
+                    ps.setInt(3, valores[i]);
+                    ps.executeUpdate();
+                }
+            }
+
+            String sqlEstado = "UPDATE entrega"
+                    + " SET estado = 'entregada'"
+                    + " WHERE id = ?";
+            try (PreparedStatement ps =
+                    con.prepareStatement(sqlEstado)) {
+                ps.setInt(1, entregaId);
+                ps.executeUpdate();
+            }
+
+            con.commit();
+        } catch (SQLException e) {
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                System.err.println(
+                        "Error en rollback de autoevaluacion: "
+                        + ex.getMessage());
+            }
+            throw e;
+        } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException e) {
+                System.err.println(
+                        "Error al restaurar autoCommit: "
+                        + e.getMessage());
+            }
         }
     }
 

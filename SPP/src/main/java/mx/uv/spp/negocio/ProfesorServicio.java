@@ -224,19 +224,19 @@ public class ProfesorServicio {
     }
 
     /**
-     * Valida que una calificación esté en el rango [1.0, 10.0].
+     * Valida que una calificación sea un entero en el rango [1, 10].
      *
      * @param calificacion Valor a validar.
-     * @throws IllegalArgumentException si está fuera del rango.
+     * @throws IllegalArgumentException si está fuera del rango o
+     *         no es un número entero.
      */
     private void validarRangoCalificacion(double calificacion) {
-        if (calificacion < Constantes.CALIFICACION_MIN
+        if (calificacion % 1.0 != 0.0
+                || calificacion < Constantes.CALIFICACION_MIN
                 || calificacion > Constantes.CALIFICACION_MAX) {
             throw new IllegalArgumentException(
-                    "La calificación debe estar entre "
-                    + Constantes.CALIFICACION_MIN
-                    + " y " + Constantes.CALIFICACION_MAX
-                    + ". Valor recibido: " + calificacion + ".");
+                    "La calificación debe ser un número entero"
+                    + " del 1 al 10.");
         }
     }
 

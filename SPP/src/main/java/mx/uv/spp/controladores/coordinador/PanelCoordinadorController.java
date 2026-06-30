@@ -5,7 +5,7 @@
  * Este software es de uso académico y privado.
  * Fecha de creación: 30 de junio del 2026
  */
-package mx.uv.spp.controladores.administrador;
+package mx.uv.spp.controladores.coordinador;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,23 +20,31 @@ import mx.uv.spp.util.Navegador;
 import mx.uv.spp.util.SesionUsuario;
 
 /**
- * Controlador del panel principal del Administrador
- * (PanelCoordinador2.fxml). Gestiona la navegación entre las
- * sub-vistas del menú lateral y el cierre de sesión.
+ * Controlador del panel principal del Coordinador.
+ * Gestiona la navegación entre las sub-vistas del menú lateral
+ * y el cierre de sesión del Coordinador de Prácticas Profesionales.
  * No contiene lógica de negocio ni acceso directo a la BD.
  *
  * @author Nicolás Yazid Cruz Hernández
  * @author Isaac Adriano Vázquez Torres
  */
-public class PanelCoordinador2Controller implements Initializable {
+public class PanelCoordinadorController implements Initializable {
 
     @FXML private StackPane contenedor;
     @FXML private VBox      panelBienvenida;
 
-    private static final String VISTA_PROFESORES =
-            "/mx/uv/spp/vistas/administrador/profesores.fxml";
-    private static final String VISTA_COORDINADOR =
-            "/mx/uv/spp/vistas/administrador/coordinador.fxml";
+    private static final String VISTA_ORGANIZACIONES =
+            "/mx/uv/spp/vistas/coordinador/organizaciones.fxml";
+    private static final String VISTA_PROYECTOS =
+            "/mx/uv/spp/vistas/coordinador/proyectos.fxml";
+    private static final String VISTA_ESTUDIANTES =
+            "/mx/uv/spp/vistas/coordinador/estudiantes.fxml";
+    private static final String VISTA_PERIODOS =
+            "/mx/uv/spp/vistas/coordinador/periodos.fxml";
+    private static final String VISTA_GRUPOS =
+            "/mx/uv/spp/vistas/coordinador/grupos.fxml";
+    private static final String VISTA_DOCUMENTOS =
+            "/mx/uv/spp/vistas/coordinador/documentos.fxml";
 
     /**
      * Inicializa el panel mostrando la vista de bienvenida.
@@ -46,26 +54,56 @@ public class PanelCoordinador2Controller implements Initializable {
      */
     @Override
     public void initialize(URL ubicacion, ResourceBundle recursos) {
-        // La vista de bienvenida ya está declarada en el FXML;
-        // no se requiere acción adicional en la inicialización.
     }
 
     /* ── Manejadores de botones del menú ────────────────────── */
 
     /**
-     * Carga la sub-vista de gestión de Profesores.
+     * Carga la sub-vista de gestión de Organizaciones Vinculadas.
      */
     @FXML
-    private void onBtnProfesores() {
-        cargarVista(VISTA_PROFESORES);
+    private void onBtnOrganizaciones() {
+        cargarVista(VISTA_ORGANIZACIONES);
     }
 
     /**
-     * Carga la sub-vista de gestión del Coordinador.
+     * Carga la sub-vista de gestión de Proyectos.
      */
     @FXML
-    private void onBtnCoordinador() {
-        cargarVista(VISTA_COORDINADOR);
+    private void onBtnProyectos() {
+        cargarVista(VISTA_PROYECTOS);
+    }
+
+    /**
+     * Carga la sub-vista de gestión de Estudiantes.
+     */
+    @FXML
+    private void onBtnEstudiantes() {
+        cargarVista(VISTA_ESTUDIANTES);
+    }
+
+    /**
+     * Carga la sub-vista de gestión de Periodos Escolares.
+     */
+    @FXML
+    private void onBtnPeriodos() {
+        cargarVista(VISTA_PERIODOS);
+    }
+
+    /**
+     * Carga la sub-vista de gestión de Grupos.
+     */
+    @FXML
+    private void onBtnGrupos() {
+        cargarVista(VISTA_GRUPOS);
+    }
+
+    /**
+     * Carga la sub-vista de gestión de Documentos Iniciales.
+     */
+    @FXML
+    private void onBtnDocumentos() {
+        cargarVista(VISTA_DOCUMENTOS);
     }
 
     /**
