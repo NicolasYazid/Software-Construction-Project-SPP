@@ -1,0 +1,162 @@
+/* ----------------------------------------------------------------
+ * panelaltaprofesores.css — Estilos de la ventana de alta de
+ * Profesores del Administrador (SPP).
+ * Paleta: azul institucional UV #1C3A6E / blanco / gris neutro.
+ * ---------------------------------------------------------------- */
+
+/* Barra lateral izquierda --------------------------------------- */
+.sidebar {
+    -fx-background-color: #1C3A6E;
+    -fx-pref-width: 220;
+}
+
+.lbl-sidebar-logo {
+    -fx-font-size: 22;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+}
+
+.lbl-sidebar-seccion {
+    -fx-font-size: 12;
+    -fx-text-fill: #B8CCE4;
+    -fx-wrap-text: true;
+}
+
+.separador-sidebar {
+    -fx-background-color: #4A6FA8;
+    -fx-opacity: 0.6;
+}
+
+.btn-menu {
+    -fx-background-color: #2C5282;
+    -fx-text-fill: white;
+    -fx-font-size: 13;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-pref-height: 36;
+    -fx-alignment: center-left;
+    -fx-padding: 0 12;
+}
+
+.btn-menu:hover {
+    -fx-background-color: #2E6DA4;
+}
+
+.btn-menu:pressed {
+    -fx-background-color: #152D56;
+}
+
+.btn-cerrar-sesion {
+    -fx-background-color: #8B0000;
+    -fx-text-fill: white;
+    -fx-font-size: 13;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-pref-height: 36;
+}
+
+.btn-cerrar-sesion:hover {
+    -fx-background-color: #A93226;
+}
+
+.btn-cerrar-sesion:pressed {
+    -fx-background-color: #6E0000;
+}
+
+/* Área de contenido central ------------------------------------- */
+.area-contenido {
+    -fx-background-color: #F4F6F8;
+    -fx-padding: 36 48 36 48;
+}
+
+/* Título de sección --------------------------------------------- */
+.lbl-titulo-seccion {
+    -fx-font-size: 22;
+    -fx-font-weight: normal;
+    -fx-text-fill: #1C3A6E;
+    -fx-padding: 0 0 16 0;
+}
+
+/* Contenedor del formulario (columna centrada) ------------------ */
+.contenedor-formulario {
+    -fx-alignment: center;
+    -fx-spacing: 0;
+}
+
+/* Panel del formulario ------------------------------------------ */
+.panel-formulario {
+    -fx-spacing: 6;
+    -fx-pref-width: 500;
+    -fx-max-width: 500;
+}
+
+/* Etiquetas de campo -------------------------------------------- */
+.lbl-campo {
+    -fx-font-size: 14;
+    -fx-text-fill: #1A1A1A;
+    -fx-padding: 8 0 2 0;
+}
+
+/* Campos de texto ----------------------------------------------- */
+.txt-campo {
+    -fx-pref-height: 40;
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-border-color: #1A1A1A;
+    -fx-border-radius: 8;
+    -fx-border-width: 1.5;
+    -fx-font-size: 13;
+    -fx-padding: 0 12;
+}
+
+.txt-campo:focused {
+    -fx-border-color: #1C3A6E;
+    -fx-border-width: 2;
+}
+
+/* Campo de contraseña ------------------------------------------- */
+.pwd-campo {
+    -fx-pref-height: 40;
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-border-color: #1A1A1A;
+    -fx-border-radius: 8;
+    -fx-border-width: 1.5;
+    -fx-font-size: 13;
+    -fx-padding: 0 12;
+}
+
+.pwd-campo:focused {
+    -fx-border-color: #1C3A6E;
+    -fx-border-width: 2;
+}
+
+/* Fila de botones ------------------------------------------------ */
+.fila-botones {
+    -fx-alignment: center;
+    -fx-spacing: 12;
+    -fx-padding: 24 0 0 0;
+}
+
+/* Botones de acción (outlined) ---------------------------------- */
+.btn-accion {
+    -fx-background-color: white;
+    -fx-text-fill: #1C3A6E;
+    -fx-font-size: 13;
+    -fx-border-color: #1C3A6E;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-pref-height: 38;
+    -fx-pref-width: 130;
+}
+
+.btn-accion:hover {
+    -fx-background-color: #EAF0F6;
+}
+
+.btn-accion:pressed {
+    -fx-background-color: #D6E4F7;
+}

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<!--
+    PanelProfesores.fxml — Ventana completa de gestión de
+    Profesores del Administrador.
+    Controlador:
+        mx.uv.spp.controladores.administrador.PanelProfesoresController
+-->
+<BorderPane xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller=
+              "mx.uv.spp.controladores.administrador.PanelProfesoresController"
+            prefHeight="700.0" prefWidth="1100.0"
+            stylesheets="@css/panelprofesores.css">
+
+    <!-- ── Barra lateral izquierda ───────────────────────────── -->
+    <left>
+        <VBox styleClass="sidebar" spacing="8.0"
+              prefWidth="220.0" prefHeight="700.0">
+            <padding>
+                <Insets top="28.0" right="12.0"
+                        bottom="24.0" left="12.0" />
+            </padding>
+
+            <Label text="SPP"
+                   maxWidth="Infinity"
+                   styleClass="lbl-sidebar-logo" />
+
+            <Separator styleClass="separador-sidebar" />
+
+            <Label text="Control del personal académico"
+                   wrapText="true"
+                   styleClass="lbl-sidebar-seccion" />
+
+            <Button fx:id="btnInicio"
+                    text="Inicio"
+                    maxWidth="Infinity"
+                    onAction="#onBtnInicio"
+                    styleClass="btn-menu" />
+
+            <Button fx:id="btnProfesores"
+                    text="Profesores"
+                    maxWidth="Infinity"
+                    onAction="#onBtnProfesores"
+                    styleClass="btn-menu" />
+
+            <Button fx:id="btnCoordinador"
+                    text="Coordinador"
+                    maxWidth="Infinity"
+                    onAction="#onBtnCoordinador"
+                    styleClass="btn-menu" />
+
+            <Button fx:id="btnHistorial"
+                    text="Historial"
+                    maxWidth="Infinity"
+                    onAction="#onBtnHistorial"
+                    styleClass="btn-menu" />
+
+            <Region VBox.vgrow="ALWAYS" />
+
+            <Separator styleClass="separador-sidebar" />
+
+            <Button fx:id="btnCerrarSesion"
+                    text="Cerrar sesión"
+                    maxWidth="Infinity"
+                    onAction="#onBtnCerrarSesion"
+                    styleClass="btn-cerrar-sesion" />
+        </VBox>
+    </left>
+
+    <!-- ── Área central de contenido ────────────────────────── -->
+    <center>
+        <BorderPane styleClass="area-contenido">
+
+            <!-- Título + tabla -->
+            <center>
+                <VBox spacing="0.0">
+                    <Label text="Profesores"
+                           styleClass="lbl-titulo-seccion" />
+
+                    <TableView fx:id="tblProfesores"
+                               styleClass="tbl-profesores"
+                               VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colNumPersonal"
+                                         text="No. Personal"
+                                         prefWidth="130.0" />
+                            <TableColumn fx:id="colNombre"
+                                         text="Nombre"
+                                         prefWidth="260.0" />
+                            <TableColumn fx:id="colCorreo"
+                                         text="Correo Institucional"
+                                         prefWidth="320.0" />
+                            <TableColumn fx:id="colEstado"
+                                         text="Estado"
+                                         prefWidth="110.0" />
+                        </columns>
+                        <placeholder>
+                            <Label text="No hay profesores registrados." />
+                        </placeholder>
+                    </TableView>
+                </VBox>
+            </center>
+
+            <!-- Fila inferior: Regresar | ... | Alta  Baja -->
+            <bottom>
+                <BorderPane styleClass="barra-acciones">
+                    <left>
+                        <Button fx:id="btnRegresar"
+                                text="Regresar"
+                                onAction="#onBtnRegresar"
+                                styleClass="btn-accion" />
+                    </left>
+                    <right>
+                        <HBox spacing="16.0">
+                            <Button fx:id="btnAltaProfesor"
+                                    text="Dar de alta profesor"
+                                    onAction="#onBtnAltaProfesor"
+                                    styleClass="btn-accion" />
+                            <Button fx:id="btnBajaProfesor"
+                                    text="Dar de baja profesor"
+                                    onAction="#onBtnBajaProfesor"
+                                    styleClass="btn-accion" />
+                        </HBox>
+                    </right>
+                </BorderPane>
+            </bottom>
+
+        </BorderPane>
+    </center>
+
+</BorderPane>

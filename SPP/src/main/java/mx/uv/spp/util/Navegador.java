@@ -101,6 +101,17 @@ public final class Navegador {
     }
 
     /**
+     * Navega a la vista indicada por su ruta FXML en el classpath.
+     * Permite navegar a cualquier pantalla sin necesitar un método
+     * dedicado por cada vista.
+     *
+     * @param rutaFxml Ruta absoluta del FXML en el classpath; no nula.
+     */
+    public static void cambiarVista(String rutaFxml) {
+        cargarVista(rutaFxml, "SPP");
+    }
+
+    /**
      * Carga el FXML indicado y lo muestra en el Stage principal.
      * Si el Stage no fue inicializado o el FXML no existe, muestra
      * un Alert de error sin interrumpir la ejecución.

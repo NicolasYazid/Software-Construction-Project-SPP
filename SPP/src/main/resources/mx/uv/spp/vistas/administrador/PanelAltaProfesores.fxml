@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<!--
+    PanelAltaProfesores.fxml — Ventana de registro de un nuevo
+    Profesor por parte del Administrador.
+    Controlador:
+        mx.uv.spp.controladores.administrador
+            .PanelAltaProfesoresController
+-->
+<BorderPane xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="mx.uv.spp.controladores.administrador.PanelAltaProfesoresController"
+            prefHeight="700.0" prefWidth="1100.0"
+            stylesheets="@css/panelaltaprofesores.css">
+
+    <!-- ── Barra lateral izquierda ───────────────────────────── -->
+    <left>
+        <VBox styleClass="sidebar" spacing="8.0"
+              prefWidth="220.0" prefHeight="700.0">
+            <padding>
+                <Insets top="28.0" right="12.0"
+                        bottom="24.0" left="12.0" />
+            </padding>
+
+            <Label text="SPP"
+                   maxWidth="Infinity"
+                   styleClass="lbl-sidebar-logo" />
+
+            <Separator styleClass="separador-sidebar" />
+
+            <Label text="Control del personal académico"
+                   wrapText="true"
+                   styleClass="lbl-sidebar-seccion" />
+
+            <Button fx:id="btnInicio"
+                    text="Inicio"
+                    maxWidth="Infinity"
+                    onAction="#onBtnInicio"
+                    styleClass="btn-menu" />
+
+            <Button fx:id="btnProfesores"
+                    text="Profesores"
+                    maxWidth="Infinity"
+                    onAction="#onBtnProfesores"
+                    styleClass="btn-menu" />
+
+            <Button fx:id="btnCoordinador"
+                    text="Coordinador"
+                    maxWidth="Infinity"
+                    onAction="#onBtnCoordinador"
+                    styleClass="btn-menu" />
+
+            <Button fx:id="btnHistorial"
+                    text="Historial"
+                    maxWidth="Infinity"
+                    onAction="#onBtnHistorial"
+                    styleClass="btn-menu" />
+
+            <Region VBox.vgrow="ALWAYS" />
+
+            <Separator styleClass="separador-sidebar" />
+
+            <Button fx:id="btnCerrarSesion"
+                    text="Cerrar sesión"
+                    maxWidth="Infinity"
+                    onAction="#onBtnCerrarSesion"
+                    styleClass="btn-cerrar-sesion" />
+        </VBox>
+    </left>
+
+    <!-- ── Área central de contenido ────────────────────────── -->
+    <center>
+        <VBox styleClass="area-contenido">
+
+            <!-- Título de sección -->
+            <Label text="Alta de profesores"
+                   styleClass="lbl-titulo-seccion" />
+
+            <!-- Formulario centrado horizontalmente -->
+            <HBox styleClass="contenedor-formulario"
+                  VBox.vgrow="ALWAYS">
+
+                <VBox styleClass="panel-formulario">
+
+                    <Label text="Ingresa el número de personal"
+                           styleClass="lbl-campo" />
+                    <TextField fx:id="txtNumPersonal"
+                               maxWidth="Infinity"
+                               styleClass="txt-campo" />
+
+                    <Label text="Ingresa el nombre"
+                           styleClass="lbl-campo" />
+                    <TextField fx:id="txtNombre"
+                               maxWidth="Infinity"
+                               styleClass="txt-campo" />
+
+                    <Label text="Ingresa el apellido paterno"
+                           styleClass="lbl-campo" />
+                    <TextField fx:id="txtApellidoPaterno"
+                               maxWidth="Infinity"
+                               styleClass="txt-campo" />
+
+                    <Label text="Ingresa el apellido materno"
+                           styleClass="lbl-campo" />
+                    <TextField fx:id="txtApellidoMaterno"
+                               maxWidth="Infinity"
+                               styleClass="txt-campo" />
+
+                    <Label text="Ingresa el correo institucional"
+                           styleClass="lbl-campo" />
+                    <TextField fx:id="txtCorreo"
+                               maxWidth="Infinity"
+                               styleClass="txt-campo" />
+
+                    <Label text="Crea y asigna una contraseña"
+                           styleClass="lbl-campo" />
+                    <PasswordField fx:id="pwdContrasena"
+                                   maxWidth="Infinity"
+                                   styleClass="pwd-campo" />
+
+                    <!-- Botones Cancelar y Registrar -->
+                    <HBox styleClass="fila-botones">
+                        <Button fx:id="btnCancelar"
+                                text="Cancelar"
+                                onAction="#onBtnCancelar"
+                                styleClass="btn-accion" />
+                        <Button fx:id="btnRegistrar"
+                                text="Registrar"
+                                onAction="#onBtnRegistrar"
+                                styleClass="btn-accion" />
+                    </HBox>
+
+                </VBox>
+            </HBox>
+
+        </VBox>
+    </center>
+
+</BorderPane>

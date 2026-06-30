@@ -6,16 +6,17 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <!--
-    PanelAdministrador.fxml — Panel principal del Administrador.
+    PanelSeccionCoordinador.fxml — Ventana que muestra los datos
+    del Coordinador activo y permite cambiarlo.
     Controlador:
-        mx.uv.spp.controladores.administrador.PanelAdministradorController
+        mx.uv.spp.controladores.administrador
+            .PanelSeccionCoordinadorController
 -->
 
-<BorderPane prefHeight="700.0" prefWidth="1100.0" stylesheets="@css/paneladministrador.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.spp.controladores.administrador.PanelAdministradorController">
+<BorderPane prefHeight="700.0" prefWidth="1100.0" stylesheets="@css/panelseccioncoordinador.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.spp.controladores.administrador.PanelSeccionCoordinadorController">
 
     <!-- ── Barra lateral izquierda ───────────────────────────── -->
     <left>
@@ -24,15 +25,12 @@
                 <Insets bottom="24.0" left="12.0" right="12.0" top="28.0" />
             </padding>
 
-            <!-- Logo y título del sistema -->
             <Label maxWidth="Infinity" styleClass="lbl-sidebar-logo" text="SPP" />
 
             <Separator styleClass="separador-sidebar" />
 
-            <!-- Sección de control académico -->
             <Label styleClass="lbl-sidebar-seccion" text="Control del personal académico" wrapText="true" />
 
-            <!-- Navegación general -->
             <Button fx:id="btnInicio" maxWidth="Infinity" onAction="#onBtnInicio" styleClass="btn-menu" text="Inicio" />
 
             <Button fx:id="btnProfesores" maxWidth="Infinity" onAction="#onBtnProfesores" styleClass="btn-menu" text="Profesores" />
@@ -41,7 +39,6 @@
 
             <Button fx:id="btnHistorial" maxWidth="Infinity" onAction="#onBtnHistorial" styleClass="btn-menu" text="Historial" />
 
-            <!-- Empuja el botón de cerrar sesión al fondo -->
             <Region VBox.vgrow="ALWAYS" />
 
             <Separator styleClass="separador-sidebar" />
@@ -52,19 +49,36 @@
 
     <!-- ── Área central de contenido ────────────────────────── -->
     <center>
-        <StackPane fx:id="contenedor" styleClass="area-contenido">
+        <BorderPane styleClass="area-contenido">
 
-            <!-- Vista de bienvenida inicial -->
-            <VBox fx:id="panelBienvenida" spacing="16.0" styleClass="panel-bienvenida">
+            <!-- Título + tarjeta + botón Cambiar -->
+            <center>
+                <VBox spacing="24.0">
 
-                <Label styleClass="lbl-bienvenida-siglas" text="SPP" />
+                    <Label styleClass="lbl-titulo-seccion" text="Coordinador actual" />
 
-                <Label styleClass="lbl-bienvenida-titulo" text="Bienvenido al sistema de Prácticas Profesionales de Ingeniería de Software" wrapText="true" />
+                    <!-- Tarjeta con los datos del coordinador -->
+                    <VBox styleClass="tarjeta-coordinador">
+                        <Label fx:id="lblNombre" styleClass="lbl-dato-coordinador" text="Nombre: " />
+                        <Label fx:id="lblNumPersonal" styleClass="lbl-dato-coordinador" text="Número de personal: " />
+                        <Label fx:id="lblCorreo" styleClass="lbl-dato-coordinador" text="Correo: " />
+                    </VBox>
 
-                <Label styleClass="lbl-bienvenida-instruccion" text="Elige una de las opciones del panel izquierdo para poder realizar una operación" wrapText="true" />
-            </VBox>
+                    <Button fx:id="btnCambiarCoordinador" onAction="#onBtnCambiarCoordinador" styleClass="btn-accion" text="Cambiar coordinador" />
 
-        </StackPane>
+                </VBox>
+            </center>
+
+            <!-- Botón Regresar al pie izquierdo -->
+            <bottom>
+                <BorderPane styleClass="barra-acciones">
+                    <left>
+                        <Button fx:id="btnRegresar" onAction="#onBtnRegresar" styleClass="btn-accion" text="Regresar" />
+                    </left>
+                </BorderPane>
+            </bottom>
+
+        </BorderPane>
     </center>
 
 </BorderPane>
