@@ -241,6 +241,14 @@ public class CalificacionOVController implements Initializable {
                     + "entero entre 1 y 10.");
             return;
         }
+        if (calificacion % 1.0 != 0.0
+                || calificacion < Constantes.CALIFICACION_MIN
+                || calificacion > Constantes.CALIFICACION_MAX) {
+            mostrarMensaje(ESTILO_ERROR,
+                    "La calificación debe ser un número "
+                    + "entero entre 1 y 10.");
+            return;
+        }
 
         Alert confirmacion = new Alert(
                 Alert.AlertType.CONFIRMATION);

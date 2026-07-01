@@ -304,12 +304,48 @@ public final class Validador {
             throw new IllegalArgumentException(
                     "El tamaño del archivo no puede ser negativo.");
         }
+        if (tamanoBytes == 0) {
+            throw new IllegalArgumentException(
+                    "El archivo \"" + nombreArchivo
+                    + "\" está vacío y no puede entregarse.");
+        }
         if (tamanoBytes > Constantes.TAMANO_MAX_ARCHIVO_BYTES) {
             throw new IllegalArgumentException(
                     "El archivo \"" + nombreArchivo
                     + "\" supera el tamaño máximo permitido de "
                     + Constantes.TAMANO_MAX_ARCHIVO_MB + " MB.");
         }
+    }
+
+    /**
+     * Verifica que un nombre de archivo termine con alguna de las
+     * extensiones permitidas, sin distinguir mayúsculas/minúsculas.
+     * Se usa como defensa adicional al filtro del {@code FileChooser},
+     * que solo restringe la selección a nivel de interfaz.
+     *
+     * @param nombreArchivo         Nombre del archivo a validar.
+     * @param extensionesPermitidas Extensiones aceptadas, incluido el
+     *                              punto (ej. {@code ".pdf"}).
+     * @throws IllegalArgumentException si {@code nombreArchivo} es
+     *         nulo, vacío, o no termina con ninguna extensión
+     *         permitida.
+     */
+    public static void validarExtension(String nombreArchivo,
+            String... extensionesPermitidas) {
+        if (nombreArchivo == null || nombreArchivo.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "El nombre del archivo no puede estar vacío.");
+        }
+        String nombreMinuscula = nombreArchivo.trim().toLowerCase();
+        for (String extension : extensionesPermitidas) {
+            if (nombreMinuscula.endsWith(extension.toLowerCase())) {
+                return;
+            }
+        }
+        throw new IllegalArgumentException(
+                "El archivo \"" + nombreArchivo
+                + "\" debe tener una de las siguientes extensiones: "
+                + String.join(", ", extensionesPermitidas) + ".");
     }
 
 }

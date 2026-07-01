@@ -209,6 +209,7 @@ public class DocumentosInicialesController implements Initializable {
             return;
         }
         try {
+            Validador.validarExtension(archivo.getName(), ".pdf");
             Validador.validarTamanoArchivo(
                     archivo.length(), archivo.getName());
         } catch (IllegalArgumentException e) {

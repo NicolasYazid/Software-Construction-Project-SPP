@@ -188,7 +188,7 @@ public class EvaluarEvidenciaController implements Initializable {
                 || fila.rutaArchivo.isEmpty()) {
             mostrarMensaje(ESTILO_ERROR,
                     "No hay archivo adjunto para esta evidencia.");
-            return;
+            return; //awas con los returns que no dicen que retornan!!
         }
         File archivo = new File(fila.rutaArchivo);
         if (!archivo.exists()) {
@@ -230,6 +230,14 @@ public class EvaluarEvidenciaController implements Initializable {
             calificacion =
                     Double.parseDouble(resultado.get().trim());
         } catch (NumberFormatException e) {
+            mostrarMensaje(ESTILO_ERROR,
+                    "La calificación debe ser un número "
+                    + "entero del 1 al 10.");
+            return;
+        }
+        if (calificacion % 1.0 != 0.0
+                || calificacion < Constantes.CALIFICACION_MIN
+                || calificacion > Constantes.CALIFICACION_MAX) {
             mostrarMensaje(ESTILO_ERROR,
                     "La calificación debe ser un número "
                     + "entero del 1 al 10.");

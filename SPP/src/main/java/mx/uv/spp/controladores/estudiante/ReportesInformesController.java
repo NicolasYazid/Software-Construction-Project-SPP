@@ -228,6 +228,14 @@ public class ReportesInformesController implements Initializable {
             return;
         }
         try {
+            if (fila.idTipo == Constantes.TIPO_EVIDENCIA_PRESENTACION
+                    || fila.idTipo
+                       == Constantes.TIPO_EVIDENCIA_PRESENTACION_2) {
+                Validador.validarExtension(
+                        archivo.getName(), ".pdf", ".pptx");
+            } else {
+                Validador.validarExtension(archivo.getName(), ".pdf");
+            }
             Validador.validarTamanoArchivo(
                     archivo.length(), archivo.getName());
         } catch (IllegalArgumentException e) {
