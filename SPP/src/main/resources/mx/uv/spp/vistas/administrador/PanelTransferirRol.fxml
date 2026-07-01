@@ -56,6 +56,10 @@
                     <Label text="No hay profesores activos." />
                 </placeholder>
             </TableView>
+
+            <Label fx:id="lblMensaje"
+                   wrapText="true"
+                   styleClass="lbl-mensaje" />
         </VBox>
     </center>
 

@@ -8,15 +8,20 @@
 package mx.uv.spp.controladores.administrador;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import mx.uv.spp.modelo.Profesor;
+import mx.uv.spp.negocio.AdministradorServicio;
+import mx.uv.spp.persistencia.dao.impl.ProfesorDAOImpl;
 import mx.uv.spp.util.Navegador;
 import mx.uv.spp.util.SesionUsuario;
 
@@ -47,15 +52,21 @@ public class PanelProfesoresController implements Initializable {
     private final ObservableList<Profesor> profesores =
             FXCollections.observableArrayList();
 
+    private AdministradorServicio administradorServicio;
+
     /**
      * Inicializa la tabla enlazando cada columna con los
-     * atributos del modelo {@link Profesor}.
+     * atributos del modelo {@link Profesor} y carga los Profesores
+     * registrados desde la BD.
      *
      * @param ubicacion URL del FXML (no usado).
      * @param recursos  Paquete de i18n (no usado).
      */
     @Override
     public void initialize(URL ubicacion, ResourceBundle recursos) {
+        administradorServicio =
+                new AdministradorServicio(new ProfesorDAOImpl());
+
         colNumPersonal.setCellValueFactory(
                 new PropertyValueFactory<>("numPersonal"));
         colNombre.setCellValueFactory(
@@ -147,12 +158,28 @@ public class PanelProfesoresController implements Initializable {
     /* ── Carga de datos ─────────────────────────────────────── */
 
     /**
-     * Consulta el listado de profesores a través del DAO
-     * y lo carga en la tabla.
+     * Consulta el listado de profesores a través del servicio
+     * y lo carga en la tabla. Se invoca cada vez que se abre esta
+     * ventana, por lo que la tabla siempre refleja el estado más
+     * reciente de la BD (p. ej. tras un alta reciente).
      */
     private void cargarProfesores() {
-        // TODO: invocar ProfesorServicio.listarTodos()
-        //       y agregar los resultados a 'profesores'
+        profesores.clear();
+        try {
+            profesores.addAll(
+                    administradorServicio.listarProfesores());
+        } catch (SQLException e) {
+            System.err.println(
+                    "Error al cargar profesores: " + e.getMessage());
+            Alert alerta = new Alert(AlertType.ERROR);
+            alerta.setTitle("Error de conexión con la base de datos");
+            alerta.setHeaderText(null);
+            alerta.setContentText(
+                    "Error: no fue posible conectarse con la base "
+                    + "de datos, inténtelo de nuevo ahora o en unos "
+                    + "minutos");
+            alerta.showAndWait();
+        }
     }
 
 }

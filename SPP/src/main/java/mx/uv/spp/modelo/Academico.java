@@ -208,6 +208,25 @@ public abstract class Academico {
     }
 
     /**
+     * Construye el nombre completo a partir de nombre y apellidos,
+     * omitiendo el segundo apellido si no está presente. Se usa en
+     * las tablas del Administrador (columna "Nombre").
+     *
+     * @return nombre completo en un solo texto, nunca nulo.
+     */
+    public String getNombreCompleto() {
+        StringBuilder completo = new StringBuilder(
+                nombre != null ? nombre : "");
+        if (primerApellido != null && !primerApellido.isEmpty()) {
+            completo.append(" ").append(primerApellido);
+        }
+        if (segundoApellido != null && !segundoApellido.isEmpty()) {
+            completo.append(" ").append(segundoApellido);
+        }
+        return completo.toString();
+    }
+
+    /**
      * Retorna el estado de la cuenta.
      *
      * @return {@code Activo} o {@code No Activo}.

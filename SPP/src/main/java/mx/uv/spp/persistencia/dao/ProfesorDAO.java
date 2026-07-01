@@ -8,6 +8,7 @@
 package mx.uv.spp.persistencia.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 import mx.uv.spp.modelo.Profesor;
 
 /**
@@ -52,5 +53,53 @@ public interface ProfesorDAO {
      *         de la inserción.
      */
     void registrar(Profesor profesor) throws SQLException;
+
+    /**
+     * Recupera todos los Profesores registrados, en estado activo o
+     * inactivo, ordenados por nombre. Usado por el panel de gestión
+     * de Profesores del Administrador.
+     *
+     * @return lista (posiblemente vacía) de Profesores; nunca nula.
+     * @throws SQLException si ocurre un error de acceso a la BD.
+     */
+    List<Profesor> listarTodos() throws SQLException;
+
+    /**
+     * Recupera los Profesores activos que actualmente no tienen el
+     * rol de Coordinador, ordenados por nombre. Usado por la
+     * ventana de transferencia de rol (CU-Admin.-03), donde el
+     * Coordinador vigente no es un destino válido.
+     *
+     * @return lista (posiblemente vacía) de Profesores; nunca nula.
+     * @throws SQLException si ocurre un error de acceso a la BD.
+     */
+    List<Profesor> listarActivosNoCoordinador() throws SQLException;
+
+    /**
+     * Recupera al Profesor que actualmente posee el rol de
+     * Coordinador (columna {@code coordinador = TRUE}).
+     *
+     * @return el Profesor Coordinador vigente, o {@code null} si
+     *         ninguno posee el rol actualmente.
+     * @throws SQLException si ocurre un error de acceso a la BD.
+     */
+    Profesor obtenerCoordinadorActual() throws SQLException;
+
+    /**
+     * Transfiere el rol de Coordinador a un Profesor en una única
+     * transacción: desactiva el rol del Coordinador anterior (si lo
+     * hay) y lo activa para el nuevo, o ninguna de las dos
+     * actualizaciones se aplica si alguna falla (CU-Admin.-03, paso 8).
+     *
+     * @param idNuevoCoordinador     PK del Profesor que recibirá el
+     *                               rol; no puede ser 0.
+     * @param idCoordinadorAnterior  PK del Profesor que actualmente
+     *                               posee el rol; {@code null} si
+     *                               ninguno lo posee.
+     * @throws SQLException si ocurre un error de acceso a la BD; en
+     *         ese caso ningún cambio queda aplicado (rollback).
+     */
+    void transferirRolCoordinador(int idNuevoCoordinador,
+            Integer idCoordinadorAnterior) throws SQLException;
 
 }

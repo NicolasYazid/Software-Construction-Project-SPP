@@ -66,6 +66,8 @@
 
                     <Button fx:id="btnCambiarCoordinador" onAction="#onBtnCambiarCoordinador" styleClass="btn-accion" text="Cambiar coordinador" />
 
+                    <Label fx:id="lblMensaje" styleClass="lbl-mensaje" wrapText="true" />
+
                 </VBox>
             </center>
 

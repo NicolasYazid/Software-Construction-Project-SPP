@@ -54,11 +54,15 @@ public class PanelAdministradorController implements Initializable {
 
     /**
      * Restaura la vista de bienvenida del panel del Administrador.
-     * Si ya se muestra la bienvenida, no realiza ninguna acción.
+     * {@code panelBienvenida} es hijo de {@code contenedor}, así
+     * que al navegar a una sub-vista {@link #cargarVista} lo
+     * reemplaza por completo en el StackPane (no solo lo oculta);
+     * por eso aquí hay que volver a agregarlo explícitamente en vez
+     * de solo cambiar su visibilidad.
      */
     @FXML
     private void onBtnInicio() {
-        contenedor.getChildren().clear();
+        contenedor.getChildren().setAll(panelBienvenida);
         panelBienvenida.setVisible(true);
         panelBienvenida.setManaged(true);
     }
