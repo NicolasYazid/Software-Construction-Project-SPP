@@ -34,7 +34,7 @@ public final class Navegador {
     private static final String FXML_PANEL_COORDINADOR =
             "/mx/uv/spp/vistas/coordinador/panel_coordinador.fxml";
     private static final String FXML_PANEL_ADMINISTRADOR =
-            "/mx/uv/spp/vistas/administrador/PanelCoordinador2.fxml";
+            "/mx/uv/spp/vistas/administrador/PanelAdministrador.fxml";
 
     private static final int ANCHO_PANEL = 1100;
     private static final int ALTO_PANEL  = 700;
