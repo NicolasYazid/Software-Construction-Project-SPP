@@ -56,131 +56,25 @@ public class OrganizacionVinculada {
         this.estado         = estado;
     }
 
-    /**
-     * Retorna el identificador único de la OV en la BD.
-     *
-     * @return identificador del registro.
-     */
-    public int getIdOrganizacion() {
-        return idOrganizacion;
-    }
+    public int getIdOrganizacion() { return idOrganizacion; }
+    public void setIdOrganizacion(int idOrganizacion) { this.idOrganizacion = idOrganizacion; }
 
-    /**
-     * Establece el identificador único de la OV.
-     *
-     * @param idOrganizacion Identificador asignado por la base de datos.
-     */
-    public void setIdOrganizacion(int idOrganizacion) {
-        this.idOrganizacion = idOrganizacion;
-    }
+    public String getNombreEmpresa() { return nombreEmpresa; }
+    public void setNombreEmpresa(String nombreEmpresa) { this.nombreEmpresa = nombreEmpresa; }
 
-    /**
-     * Retorna el nombre de la organización.
-     *
-     * @return nombre legal o comercial de la empresa.
-     */
-    public String getNombreEmpresa() {
-        return nombreEmpresa;
-    }
+    public String getSector() { return sector; }
+    public void setSector(String sector) { this.sector = sector; }
 
-    /**
-     * Establece el nombre de la organización.
-     *
-     * @param nombreEmpresa Nombre legal o comercial de la empresa.
-     */
-    public void setNombreEmpresa(String nombreEmpresa) {
-        this.nombreEmpresa = nombreEmpresa;
-    }
+    public String getCiudad() { return ciudad; }
+    public void setCiudad(String ciudad) { this.ciudad = ciudad; }
 
-    /**
-     * Retorna el sector al que pertenece la organización.
-     *
-     * @return sector: Tecnología, Investigación, Salud, etc.
-     */
-    public String getSector() {
-        return sector;
-    }
+    public String getDireccion() { return direccion; }
+    public void setDireccion(String direccion) { this.direccion = direccion; }
 
-    /**
-     * Establece el sector de la organización.
-     *
-     * @param sector Sector productivo o social de la OV.
-     */
-    public void setSector(String sector) {
-        this.sector = sector;
-    }
+    public String getTelefono() { return telefono; }
+    public void setTelefono(String telefono) { this.telefono = telefono; }
 
-    /**
-     * Retorna la ciudad donde opera la organización.
-     *
-     * @return ciudad de la OV.
-     */
-    public String getCiudad() {
-        return ciudad;
-    }
-
-    /**
-     * Establece la ciudad de la organización.
-     *
-     * @param ciudad Ciudad donde se ubica la OV.
-     */
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
-    }
-
-    /**
-     * Retorna la dirección completa de la organización.
-     *
-     * @return dirección de la OV.
-     */
-    public String getDireccion() {
-        return direccion;
-    }
-
-    /**
-     * Establece la dirección de la organización.
-     *
-     * @param direccion Dirección completa de la OV.
-     */
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    /**
-     * Retorna el teléfono de la organización, o {@code null}
-     * si no fue registrado.
-     *
-     * @return teléfono de contacto o {@code null}.
-     */
-    public String getTelefono() {
-        return telefono;
-    }
-
-    /**
-     * Establece el teléfono de la organización.
-     *
-     * @param telefono Teléfono de contacto; acepta {@code null}.
-     */
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    /**
-     * Retorna el estado de la organización.
-     *
-     * @return {@code Activo} o {@code No Activo}.
-     */
-    public String getEstado() {
-        return estado;
-    }
-
-    /**
-     * Establece el estado de la organización.
-     *
-     * @param estado Activo o No Activo; el registro nunca se elimina.
-     */
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
+    public String getEstado() { return estado; }
+    public void setEstado(String estado) { this.estado = estado; }
 
 }
