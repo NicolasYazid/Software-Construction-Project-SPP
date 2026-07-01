@@ -110,7 +110,7 @@ public class EstudianteServicio {
                 idInscripcion)) {
             throw new IllegalStateException(
                     "Ya registraste tu lista de prioridades. "
-                    + "Esta acción es irreversible (RN-11).");
+                    + "Esta acción es irreversible.");
         }
         return seleccionDAO.obtenerProyectosDisponibles();
     }
@@ -143,7 +143,7 @@ public class EstudianteServicio {
                 idInscripcion)) {
             throw new IllegalStateException(
                     "Ya registraste tu lista de prioridades. "
-                    + "Esta acción es irreversible (RN-11).");
+                    + "Esta acción es irreversible.");
         }
         List<Proyecto> disponibles =
                 seleccionDAO.obtenerProyectosDisponibles();
@@ -268,20 +268,29 @@ public class EstudianteServicio {
                     "Ya entregaste tu autoevaluación. "
                     + "Esta acción es irreversible.");
         }
-        LocalDateTime ahora = LocalDateTime.now();
-        Documento docAuto = new Documento(
-                0,
-                idInscripcion,
-                Constantes.TIPO_EVIDENCIA_AUTOEVALUACION,
-                Constantes.ESTADO_DOCUMENTO_ENTREGADO,
-                null,
-                null,
-                ahora,
-                null,
-                null,
-                null,
-                Constantes.CENTINELA_SIN_CALIFICACION);
-        int idDocumento = documentoDAO.insertar(docAuto);
+        Documento docExistente =
+                documentoDAO.obtenerPorInscripcionYTipoUnico(
+                        idInscripcion,
+                        Constantes.TIPO_EVIDENCIA_AUTOEVALUACION);
+        int idDocumento;
+        if (docExistente != null) {
+            idDocumento = docExistente.getIdDocumento();
+        } else {
+            LocalDateTime ahora = LocalDateTime.now();
+            Documento docAuto = new Documento(
+                    0,
+                    idInscripcion,
+                    Constantes.TIPO_EVIDENCIA_AUTOEVALUACION,
+                    Constantes.ESTADO_DOCUMENTO_ENTREGADO,
+                    null,
+                    null,
+                    ahora,
+                    null,
+                    null,
+                    null,
+                    Constantes.CENTINELA_SIN_CALIFICACION);
+            idDocumento = documentoDAO.insertar(docAuto);
+        }
         int puntuacionTotal = 0;
         for (int respuesta : respuestas) {
             puntuacionTotal += respuesta;

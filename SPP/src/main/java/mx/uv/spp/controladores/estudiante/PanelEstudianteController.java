@@ -9,13 +9,16 @@ package mx.uv.spp.controladores.estudiante;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
+import mx.uv.spp.persistencia.dao.impl.AutoevaluacionDAOImpl;
 import mx.uv.spp.util.Navegador;
 import mx.uv.spp.util.SesionUsuario;
 
@@ -84,10 +87,29 @@ public class PanelEstudianteController implements Initializable {
     }
 
     /**
-     * Carga la sub-vista de Autoevaluación (CU-30).
+     * Carga la sub-vista de Autoevaluación solo si el Estudiante
+     * no la ha respondido aún. Si ya fue entregada muestra un aviso.
      */
     @FXML
     private void onBtnAutoevaluacion() {
+        int idInscripcion = SesionUsuario.getIdInscripcion();
+        try {
+            AutoevaluacionDAOImpl autoDAO = new AutoevaluacionDAOImpl();
+            if (autoDAO.existePorInscripcion(idInscripcion)) {
+                Alert aviso = new Alert(Alert.AlertType.INFORMATION);
+                aviso.setTitle("Autoevaluación");
+                aviso.setHeaderText("Ya entregaste tu autoevaluación.");
+                aviso.setContentText(
+                        "Esta acción es irreversible y no "
+                        + "puedes volver a acceder a esta sección.");
+                aviso.showAndWait();
+                return;
+            }
+        } catch (SQLException e) {
+            System.err.println(
+                    "Error al verificar autoevaluacion: "
+                    + e.getMessage());
+        }
         cargarVista(VISTA_AUTO);
     }
 
