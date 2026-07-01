@@ -65,10 +65,14 @@ public class LoginController implements Initializable {
             "Correo electrónico:";
     private static final String LABEL_MATRICULA  =
             "Matrícula:";
+    private static final String LABEL_USUARIO    =
+            "Usuario:";
     private static final String PROMPT_CORREO    =
             "Ingrese su correo electrónico";
     private static final String PROMPT_MATRICULA =
             "Ingrese su matrícula (ej. zS21013417)";
+    private static final String PROMPT_USUARIO   =
+            "Ingrese su usuario";
 
     private static final String ESTILO_OCULTO =
             "lbl-mensaje-oculto";
@@ -95,11 +99,12 @@ public class LoginController implements Initializable {
                 ETIQUETA_COORDINADOR,
                 ETIQUETA_PROFESOR,
                 ETIQUETA_ESTUDIANTE));
-        cmbTipo.getSelectionModel().selectFirst();
-
         cmbTipo.valueProperty().addListener(
                 (obs, anterior, nuevo) ->
                         actualizarEtiquetaIdentificador(nuevo));
+
+        cmbTipo.getSelectionModel().selectFirst();
+        actualizarEtiquetaIdentificador(cmbTipo.getValue());
     }
 
     /**
@@ -218,6 +223,9 @@ public class LoginController implements Initializable {
         if (ETIQUETA_ESTUDIANTE.equals(rolSeleccionado)) {
             lblIdentificador.setText(LABEL_MATRICULA);
             txtIdentificador.setPromptText(PROMPT_MATRICULA);
+        } else if (ETIQUETA_ADMINISTRADOR.equals(rolSeleccionado)) {
+            lblIdentificador.setText(LABEL_USUARIO);
+            txtIdentificador.setPromptText(PROMPT_USUARIO);
         } else {
             lblIdentificador.setText(LABEL_CORREO);
             txtIdentificador.setPromptText(PROMPT_CORREO);
