@@ -68,7 +68,7 @@ public class LoginController implements Initializable {
     private static final String PROMPT_CORREO    =
             "Ingrese su correo electrónico";
     private static final String PROMPT_MATRICULA =
-            "Ingrese su matrícula (ej. S21013417)";
+            "Ingrese su matrícula (ej. zS21013417)";
 
     private static final String ESTILO_OCULTO =
             "lbl-mensaje-oculto";

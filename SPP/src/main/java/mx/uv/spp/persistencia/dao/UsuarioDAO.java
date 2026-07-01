@@ -37,7 +37,7 @@ public interface UsuarioDAO {
      * <p>Identificador esperado según tipo:
      * <ul>
      *   <li>ADMINISTRADOR, COORDINADOR, PROFESOR → correo electrónico</li>
-     *   <li>ESTUDIANTE → matrícula UV (ej. {@code S21013417})</li>
+     *   <li>ESTUDIANTE → matrícula UV (ej. {@code zS21013417})</li>
      * </ul>
      *
      * @param identificador Correo o matrícula ingresado en la pantalla

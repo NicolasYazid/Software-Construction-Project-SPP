@@ -25,9 +25,23 @@ public final class Validador {
     private static final Pattern PATRON_CORREO = Pattern.compile(
             "^[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}$");
 
-    // Formato UV: letra S (mayúscula o minúscula) seguida de 8 dígitos.
+    // Formato UV: z minúscula fija + S mayúscula fija + 8 dígitos.
     private static final Pattern PATRON_MATRICULA =
-            Pattern.compile("^[Ss]\\d{8}$");
+            Pattern.compile("^zS\\d{8}$");
+
+    // Número de personal del Profesor: exactamente 10 dígitos.
+    private static final Pattern PATRON_NUMERO_PERSONAL =
+            Pattern.compile("^\\d{10}$");
+
+    // Correo institucional de Profesor/Coordinador: dominio fijo
+    // @fei.uv.mx, sin caracteres atípicos en la parte local.
+    private static final Pattern PATRON_CORREO_PROFESOR = Pattern.compile(
+            "^[a-zA-Z0-9][a-zA-Z0-9._%+\\-]*@fei\\.uv\\.mx$");
+
+    // Nombres y apellidos: solo letras (con acentos/ñ), espacios,
+    // apóstrofes y guiones; sin dígitos ni símbolos atípicos (FA-04).
+    private static final Pattern PATRON_SOLO_LETRAS =
+            Pattern.compile("^[\\p{L}\\s'.-]+$");
 
     private Validador() {
     }
@@ -134,11 +148,12 @@ public final class Validador {
     }
 
     /**
-     * Verifica que una matrícula tenga el formato UV:
-     * letra {@code S} (mayúscula o minúscula) seguida de 8 dígitos.
-     * La matrícula es el identificador de login del Estudiante (sección 4).
+     * Verifica que una matrícula tenga el formato UV: {@code z}
+     * minúscula fija, seguida de {@code S} mayúscula fija, seguida
+     * de 8 dígitos. La matrícula es el identificador de login del
+     * Estudiante (sección 4).
      *
-     * @param matricula Matrícula a validar (ej. S21013417).
+     * @param matricula Matrícula a validar (ej. zS21013417).
      * @throws IllegalArgumentException si {@code matricula} es nula, vacía
      *         o no sigue el formato esperado.
      */
@@ -150,8 +165,83 @@ public final class Validador {
         if (!PATRON_MATRICULA.matcher(matricula.trim()).matches()) {
             throw new IllegalArgumentException(
                     "La matrícula \"" + matricula
-                    + "\" debe tener formato S + 8 dígitos "
-                    + "(ej. S21013417).");
+                    + "\" debe tener formato zS + 8 dígitos "
+                    + "(ej. zS21013417).");
+        }
+    }
+
+    /**
+     * Verifica que el número de personal de un Profesor tenga
+     * exactamente {@value Constantes#LONGITUD_NUMERO_PERSONAL}
+     * dígitos numéricos (CU-Admin.-01).
+     *
+     * @param numeroPersonal Número de personal a validar.
+     * @throws IllegalArgumentException si es nulo, vacío o no tiene
+     *         exactamente {@value Constantes#LONGITUD_NUMERO_PERSONAL}
+     *         dígitos.
+     */
+    public static void validarNumeroPersonal(String numeroPersonal) {
+        if (numeroPersonal == null
+                || numeroPersonal.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "El número de personal no puede estar vacío.");
+        }
+        if (!PATRON_NUMERO_PERSONAL.matcher(
+                numeroPersonal.trim()).matches()) {
+            throw new IllegalArgumentException(
+                    "El número de personal debe tener exactamente "
+                    + Constantes.LONGITUD_NUMERO_PERSONAL
+                    + " dígitos numéricos.");
+        }
+    }
+
+    /**
+     * Verifica que el correo institucional de un Profesor o
+     * Coordinador use el dominio fijo
+     * {@value Constantes#DOMINIO_CORREO_PROFESOR} y no contenga
+     * caracteres atípicos en la parte local (CU-Admin.-01).
+     *
+     * @param correo Correo institucional a validar.
+     * @throws IllegalArgumentException si es nulo, vacío o no cumple
+     *         el formato {@code nombre@fei.uv.mx}.
+     */
+    public static void validarCorreoInstitucionalProfesor(
+            String correo) {
+        if (correo == null || correo.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "El correo institucional no puede estar vacío.");
+        }
+        if (!PATRON_CORREO_PROFESOR.matcher(
+                correo.trim()).matches()) {
+            throw new IllegalArgumentException(
+                    "El correo \"" + correo
+                    + "\" debe tener el formato nombre"
+                    + Constantes.DOMINIO_CORREO_PROFESOR + ".");
+        }
+    }
+
+    /**
+     * Verifica que un campo de texto (nombre o apellido) contenga
+     * únicamente letras, espacios, apóstrofes, puntos o guiones, sin
+     * dígitos ni símbolos atípicos (CU-Admin.-01, FA-04).
+     *
+     * @param valor       Valor a validar.
+     * @param nombreCampo Nombre del campo, incluido en el mensaje de error.
+     * @throws IllegalArgumentException si {@code valor} es nulo, vacío
+     *         o contiene dígitos u otros caracteres no permitidos.
+     */
+    public static void validarSoloLetras(String valor,
+            String nombreCampo) {
+        if (valor == null || valor.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "El campo " + nombreCampo
+                    + " no puede estar vacío.");
+        }
+        if (!PATRON_SOLO_LETRAS.matcher(valor.trim()).matches()) {
+            throw new IllegalArgumentException(
+                    "El campo " + nombreCampo
+                    + " no debe contener números ni símbolos, "
+                    + "solo letras.");
         }
     }
 

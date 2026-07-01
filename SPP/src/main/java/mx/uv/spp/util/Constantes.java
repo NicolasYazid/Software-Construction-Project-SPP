@@ -227,4 +227,15 @@ public final class Constantes {
      */
     public static final double CENTINELA_SIN_CALIFICACION = -1.0;
 
+    // --- Validación de datos del Profesor (CU-Admin.-01) ---
+
+    /** Longitud exacta exigida para el número de personal del Profesor. */
+    public static final int LONGITUD_NUMERO_PERSONAL = 10;
+
+    /**
+     * Dominio institucional obligatorio en el correo del Profesor
+     * y del Coordinador.
+     */
+    public static final String DOMINIO_CORREO_PROFESOR = "@fei.uv.mx";
+
 }

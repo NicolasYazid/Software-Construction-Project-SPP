@@ -96,36 +96,42 @@
                     <Label text="Ingresa el número de personal"
                            styleClass="lbl-campo" />
                     <TextField fx:id="txtNumPersonal"
+                               promptText="Exactamente 10 dígitos (ej. 1234567890)"
                                maxWidth="Infinity"
                                styleClass="txt-campo" />
 
                     <Label text="Ingresa el nombre"
                            styleClass="lbl-campo" />
                     <TextField fx:id="txtNombre"
+                               promptText="Solo letras (ej. María José)"
                                maxWidth="Infinity"
                                styleClass="txt-campo" />
 
                     <Label text="Ingresa el apellido paterno"
                            styleClass="lbl-campo" />
                     <TextField fx:id="txtApellidoPaterno"
+                               promptText="Solo letras (ej. Hernández)"
                                maxWidth="Infinity"
                                styleClass="txt-campo" />
 
                     <Label text="Ingresa el apellido materno"
                            styleClass="lbl-campo" />
                     <TextField fx:id="txtApellidoMaterno"
+                               promptText="Solo letras, opcional (ej. Cruz)"
                                maxWidth="Infinity"
                                styleClass="txt-campo" />
 
                     <Label text="Ingresa el correo institucional"
                            styleClass="lbl-campo" />
                     <TextField fx:id="txtCorreo"
+                               promptText="nombre@fei.uv.mx"
                                maxWidth="Infinity"
                                styleClass="txt-campo" />
 
                     <Label text="Crea y asigna una contraseña"
                            styleClass="lbl-campo" />
                     <PasswordField fx:id="pwdContrasena"
+                                   promptText="Mín. 10 caracteres, mayúsculas, minúsculas y números"
                                    maxWidth="Infinity"
                                    styleClass="pwd-campo" />
 
