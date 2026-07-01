@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import mx.uv.spp.util.Navegador;
 import mx.uv.spp.util.SesionUsuario;
@@ -26,9 +27,10 @@ import mx.uv.spp.util.SesionUsuario;
  */
 public class PanelSeccionCoordinadorController implements Initializable {
 
-    @FXML private Label lblNombre;
-    @FXML private Label lblNumPersonal;
-    @FXML private Label lblCorreo;
+    @FXML private Label  lblNombre;
+    @FXML private Label  lblNumPersonal;
+    @FXML private Label  lblCorreo;
+    @FXML private Button btnCambiarCoordinador;
 
     private static final String VISTA_PANEL_ADMIN =
             "/mx/uv/spp/vistas/administrador/PanelAdministrador.fxml";
@@ -97,7 +99,8 @@ public class PanelSeccionCoordinadorController implements Initializable {
      */
     @FXML
     private void onBtnCambiarCoordinador() {
-        // TODO: navegar a la vista de cambio de coordinador
+        PanelTransferirRolController.mostrar(
+                btnCambiarCoordinador.getScene().getWindow());
     }
 
     /**

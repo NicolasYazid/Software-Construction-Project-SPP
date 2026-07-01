@@ -26,7 +26,6 @@ public class Administrador {
     private String        nombre;
     private String        correo;
     private String        contrasena;
-    private String        estado;
     private LocalDate     fechaRegistro;
     private int           intentosFallidos;
     private LocalDateTime fechaBloqueo;
@@ -46,21 +45,19 @@ public class Administrador {
      * @param nombre             Nombre cifrado con AES-128 (SEG-04).
      * @param correo             Correo cifrado; identificador de login.
      * @param contrasena         Contraseña cifrada con AES-128 (SEG-04).
-     * @param estado             Activo o No Activo.
      * @param fechaRegistro      Fecha de creación de la cuenta.
      * @param intentosFallidos   Intentos fallidos consecutivos; al llegar
      *                           a 3 la cuenta se bloquea (SEG-01).
      * @param fechaBloqueo       Momento del bloqueo; null si no bloqueado.
      */
     public Administrador(int idAdministrador, String nombre,
-            String correo, String contrasena, String estado,
+            String correo, String contrasena,
             LocalDate fechaRegistro, int intentosFallidos,
             LocalDateTime fechaBloqueo) {
         this.idAdministrador  = idAdministrador;
         this.nombre           = nombre;
         this.correo           = correo;
         this.contrasena       = contrasena;
-        this.estado           = estado;
         this.fechaRegistro    = fechaRegistro;
         this.intentosFallidos = intentosFallidos;
         this.fechaBloqueo     = fechaBloqueo;
@@ -138,25 +135,7 @@ public class Administrador {
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
-
-    /**
-     * Retorna el estado de la cuenta.
-     *
-     * @return {@code Activo} o {@code No Activo}.
-     */
-    public String getEstado() {
-        return estado;
-    }
-
-    /**
-     * Establece el estado de la cuenta.
-     *
-     * @param estado Activo o No Activo; el registro nunca se elimina.
-     */
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
+    
     /**
      * Retorna la fecha en que se creó la cuenta.
      *

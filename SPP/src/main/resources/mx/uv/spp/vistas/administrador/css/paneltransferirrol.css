@@ -1,0 +1,93 @@
+/* ----------------------------------------------------------------
+ * paneltransferirrol.css — Estilos de la ventana emergente para
+ * transferir el rol de Coordinador (SPP).
+ * Paleta: azul institucional UV #1C3A6E / blanco / gris neutro.
+ * ---------------------------------------------------------------- */
+
+/* Cabecera con título ------------------------------------------- */
+.cabecera {
+    -fx-background-color: #F4F6F8;
+    -fx-alignment: center;
+    -fx-padding: 28 40 16 40;
+}
+
+.lbl-titulo {
+    -fx-font-size: 22;
+    -fx-font-weight: normal;
+    -fx-text-fill: #1C3A6E;
+    -fx-alignment: center;
+}
+
+/* Área de la tabla ---------------------------------------------- */
+.area-tabla {
+    -fx-background-color: #F4F6F8;
+    -fx-padding: 0 0 16 0;
+}
+
+/* Tabla de profesores ------------------------------------------- */
+.tbl-profesores {
+    -fx-background-color: white;
+    -fx-border-color: #BDC3C7;
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.tbl-profesores .column-header-background {
+    -fx-background-color: #EAF0F6;
+}
+
+.tbl-profesores .column-header .label {
+    -fx-font-size: 13;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2C3E50;
+    -fx-alignment: center-left;
+}
+
+.tbl-profesores .table-cell {
+    -fx-font-size: 13;
+    -fx-text-fill: #2C3E50;
+    -fx-border-color: transparent #E0E0E0 transparent transparent;
+    -fx-padding: 6 10;
+}
+
+.tbl-profesores .table-row-cell:selected {
+    -fx-background-color: #D6E4F7;
+}
+
+.tbl-profesores .table-row-cell:selected .table-cell {
+    -fx-text-fill: #1C3A6E;
+}
+
+/* Barra inferior de botones ------------------------------------- */
+.barra-acciones {
+    -fx-background-color: #F4F6F8;
+    -fx-padding: 20 0 28 0;
+}
+
+/* Botones de acción (outlined) ---------------------------------- */
+.btn-accion {
+    -fx-background-color: white;
+    -fx-text-fill: #1C3A6E;
+    -fx-font-size: 13;
+    -fx-border-color: #1C3A6E;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-pref-height: 38;
+    -fx-pref-width: 160;
+}
+
+.btn-accion:hover {
+    -fx-background-color: #EAF0F6;
+}
+
+.btn-accion:pressed {
+    -fx-background-color: #D6E4F7;
+}
+
+.btn-accion:disabled {
+    -fx-opacity: 0.5;
+    -fx-cursor: default;
+}
