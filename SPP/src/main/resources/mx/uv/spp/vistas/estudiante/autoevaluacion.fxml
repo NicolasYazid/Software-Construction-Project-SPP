@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.Spinner?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
 <!--
     autoevaluacion.fxml — Autoevaluación del Estudiante (CU-30).
@@ -14,101 +10,73 @@
     Controlador:
       mx.uv.spp.controladores.estudiante.AutoevaluacionController
 -->
-<VBox xmlns="http://javafx.com/javafx/8.0.171"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller=
-        "mx.uv.spp.controladores.estudiante.AutoevaluacionController"
-      spacing="10.0">
+
+<VBox spacing="10.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.spp.controladores.estudiante.AutoevaluacionController">
     <padding>
-        <Insets top="20.0" right="20.0"
-                bottom="20.0" left="20.0" />
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
 
-    <Label text="Autoevaluación (CU-30)"
-           style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+    <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Autoevaluación" />
 
-    <Label fx:id="lblEstado"
-           wrapText="true"
-           maxWidth="Infinity"
-           style="-fx-text-fill: #1C3A6E;" />
+    <Label fx:id="lblEstado" maxWidth="Infinity" style="-fx-text-fill: #1C3A6E;" wrapText="true" />
 
-    <Label fx:id="lblInstrucciones"
-           text="1 = Totalmente en desacuerdo   5 = Totalmente de acuerdo"
-           style="-fx-font-style: italic; -fx-text-fill: #555;" />
+    <Label fx:id="lblInstrucciones" style="-fx-font-style: italic; -fx-text-fill: #555;" text="1 = Totalmente en desacuerdo   5 = Totalmente de acuerdo" />
 
     <Separator />
 
     <!-- Grilla de afirmaciones + spinners -->
     <GridPane hgap="12.0" vgap="8.0">
 
-        <Label text="1. Mi participación en la OV fue productiva."
-               wrapText="true" prefWidth="500.0"
-               GridPane.columnIndex="0" GridPane.rowIndex="0" />
-        <Spinner fx:id="spnA1" prefWidth="70.0"
-                 GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <Label prefWidth="500.0" text="1. Mi participación en la OV fue productiva." wrapText="true" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <Spinner fx:id="spnA1" prefWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-        <Label text="2. Logré aplicar conocimientos teórico-prácticos."
-               wrapText="true" prefWidth="500.0"
-               GridPane.columnIndex="0" GridPane.rowIndex="1" />
-        <Spinner fx:id="spnA2" prefWidth="70.0"
-                 GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <Label prefWidth="500.0" text="2. Logré aplicar conocimientos teórico-prácticos." wrapText="true" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <Spinner fx:id="spnA2" prefWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-        <Label text="3. Me sentí seguro al realizar las actividades."
-               wrapText="true" prefWidth="500.0"
-               GridPane.columnIndex="0" GridPane.rowIndex="2" />
-        <Spinner fx:id="spnA3" prefWidth="70.0"
-                 GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <Label prefWidth="500.0" text="3. Me sentí seguro al realizar las actividades." wrapText="true" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+        <Spinner fx:id="spnA3" prefWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-        <Label text="4. Las actividades despertaron mi interés."
-               wrapText="true" prefWidth="500.0"
-               GridPane.columnIndex="0" GridPane.rowIndex="3" />
-        <Spinner fx:id="spnA4" prefWidth="70.0"
-                 GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <Label prefWidth="500.0" text="4. Las actividades despertaron mi interés." wrapText="true" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+        <Spinner fx:id="spnA4" prefWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-        <Label text="5. La OV me proporcionó información y facilidades."
-               wrapText="true" prefWidth="500.0"
-               GridPane.columnIndex="0" GridPane.rowIndex="4" />
-        <Spinner fx:id="spnA5" prefWidth="70.0"
-                 GridPane.columnIndex="1" GridPane.rowIndex="4" />
+        <Label prefWidth="500.0" text="5. La OV me proporcionó información y facilidades." wrapText="true" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+        <Spinner fx:id="spnA5" prefWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
-        <Label text="6. La OV me dio a conocer sus reglas internas."
-               wrapText="true" prefWidth="500.0"
-               GridPane.columnIndex="0" GridPane.rowIndex="5" />
-        <Spinner fx:id="spnA6" prefWidth="70.0"
-                 GridPane.columnIndex="1" GridPane.rowIndex="5" />
+        <Label prefWidth="500.0" text="6. La OV me dio a conocer sus reglas internas." wrapText="true" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+        <Spinner fx:id="spnA6" prefWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
-        <Label text="7. El Responsable del Proyecto me orientó bien."
-               wrapText="true" prefWidth="500.0"
-               GridPane.columnIndex="0" GridPane.rowIndex="6" />
-        <Spinner fx:id="spnA7" prefWidth="70.0"
-                 GridPane.columnIndex="1" GridPane.rowIndex="6" />
+        <Label prefWidth="500.0" text="7. El Responsable del Proyecto me orientó bien." wrapText="true" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+        <Spinner fx:id="spnA7" prefWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
 
-        <Label text="8. El Responsable realizó seguimiento efectivo."
-               wrapText="true" prefWidth="500.0"
-               GridPane.columnIndex="0" GridPane.rowIndex="7" />
-        <Spinner fx:id="spnA8" prefWidth="70.0"
-                 GridPane.columnIndex="1" GridPane.rowIndex="7" />
+        <Label prefWidth="500.0" text="8. El Responsable realizó seguimiento efectivo." wrapText="true" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+        <Spinner fx:id="spnA8" prefWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
 
-        <Label text="9. El proyecto es congruente con mi formación."
-               wrapText="true" prefWidth="500.0"
-               GridPane.columnIndex="0" GridPane.rowIndex="8" />
-        <Spinner fx:id="spnA9" prefWidth="70.0"
-                 GridPane.columnIndex="1" GridPane.rowIndex="8" />
+        <Label prefWidth="500.0" text="9. El proyecto es congruente con mi formación." wrapText="true" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+        <Spinner fx:id="spnA9" prefWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
 
-        <Label text="10. Las prácticas son importantes para mi carrera."
-               wrapText="true" prefWidth="500.0"
-               GridPane.columnIndex="0" GridPane.rowIndex="9" />
-        <Spinner fx:id="spnA10" prefWidth="70.0"
-                 GridPane.columnIndex="1" GridPane.rowIndex="9" />
+        <Label prefWidth="500.0" text="10. Las prácticas son importantes para mi carrera." wrapText="true" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+        <Spinner fx:id="spnA10" prefWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+      <columnConstraints>
+         <ColumnConstraints />
+         <ColumnConstraints />
+      </columnConstraints>
+      <rowConstraints>
+         <RowConstraints />
+         <RowConstraints />
+         <RowConstraints />
+         <RowConstraints />
+         <RowConstraints />
+         <RowConstraints />
+         <RowConstraints />
+         <RowConstraints />
+         <RowConstraints />
+         <RowConstraints />
+      </rowConstraints>
 
     </GridPane>
 
     <Separator />
 
-    <Button fx:id="btnEnviar"
-            text="Enviar autoevaluación (irreversible)"
-            onAction="#onBtnEnviar"
-            style="-fx-background-color: #1C3A6E;
-                   -fx-text-fill: white;" />
+    <Button fx:id="btnEnviar" onAction="#onBtnEnviar" style="-fx-background-color: #1C3A6E;                    -fx-text-fill: white;" text="Enviar autoevaluación" />
 
 </VBox>
