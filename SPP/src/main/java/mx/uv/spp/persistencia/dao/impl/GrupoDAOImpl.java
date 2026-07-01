@@ -32,7 +32,7 @@ public class GrupoDAOImpl implements GrupoDAO {
     @Override
     public List<Grupo> obtenerPorProfesor(int idProfesor)
             throws SQLException {
-        String sql = "SELECT id, periodo_escolar_id,"
+        String sqlObtenerPorProfesor = "SELECT id, periodo_escolar_id,"
                 + " profesor_id, nombre, nrc"
                 + " FROM grupo"
                 + " WHERE profesor_id = ?"
@@ -40,11 +40,13 @@ public class GrupoDAOImpl implements GrupoDAO {
         List<Grupo> lista = new ArrayList<>();
         Connection con = ConexionBD.obtenerInstancia()
                 .obtenerConexion();
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, idProfesor);
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    lista.add(mapearResultSet(rs));
+        try (PreparedStatement psObtenerPorProfesor =
+                con.prepareStatement(sqlObtenerPorProfesor)) {
+            psObtenerPorProfesor.setInt(1, idProfesor);
+            try (ResultSet rsGrupos =
+                    psObtenerPorProfesor.executeQuery()) {
+                while (rsGrupos.next()) {
+                    lista.add(mapearResultSet(rsGrupos));
                 }
             }
         }
@@ -55,18 +57,19 @@ public class GrupoDAOImpl implements GrupoDAO {
      * Construye un {@link Grupo} desde la fila actual del
      * {@code ResultSet}.
      *
-     * @param rs ResultSet posicionado en la fila a mapear.
+     * @param rsGrupo ResultSet posicionado en la fila a mapear.
      * @return instancia de {@link Grupo} con todos los campos.
      * @throws SQLException si alguna columna no existe en el RS.
      */
-    private Grupo mapearResultSet(ResultSet rs)
+    private Grupo mapearResultSet(ResultSet rsGrupo)
             throws SQLException {
         Grupo grupo = new Grupo();
-        grupo.setIdGrupo(rs.getInt("id"));
-        grupo.setIdCicloEscolar(rs.getInt("periodo_escolar_id"));
-        grupo.setIdProfesor(rs.getInt("profesor_id"));
-        grupo.setNombre(rs.getString("nombre"));
-        grupo.setNrc(rs.getString("nrc"));
+        grupo.setIdGrupo(rsGrupo.getInt("id"));
+        grupo.setIdCicloEscolar(
+                rsGrupo.getInt("periodo_escolar_id"));
+        grupo.setIdProfesor(rsGrupo.getInt("profesor_id"));
+        grupo.setNombre(rsGrupo.getString("nombre"));
+        grupo.setNrc(rsGrupo.getString("nrc"));
         return grupo;
     }
 

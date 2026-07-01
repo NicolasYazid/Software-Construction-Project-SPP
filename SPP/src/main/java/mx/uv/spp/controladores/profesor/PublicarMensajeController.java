@@ -40,21 +40,21 @@ import mx.uv.spp.util.SesionUsuario;
  */
 public class PublicarMensajeController implements Initializable {
 
-    @FXML private Label           lblEstado;
+    @FXML private Label lblEstado;
     @FXML private ComboBox<Grupo> cmbGrupo;
-    @FXML private TextField       txtAsunto;
-    @FXML private TextArea        txaTexto;
-    @FXML private Label           lblArchivo;
+    @FXML private TextField txtAsunto;
+    @FXML private TextArea txaTexto;
+    @FXML private Label lblArchivo;
 
     private ProfesorServicio profesorServicio;
-    private GrupoDAOImpl     grupoDAOImpl;
-    private File             archivoPdf;
+    private GrupoDAOImpl grupoDAOImpl;
+    private File archivoPdf;
 
     private static final String ESTILO_ERROR =
             "-fx-text-fill: #c0392b;";
-    private static final String ESTILO_INFO  =
+    private static final String ESTILO_INFO =
             "-fx-text-fill: #1C3A6E;";
-    private static final String ESTILO_OK    =
+    private static final String ESTILO_OK =
             "-fx-text-fill: #27ae60;";
     private static final String MENSAJE_EX01 =
             "No fue posible conectarse con la base de datos. "
@@ -79,7 +79,7 @@ public class PublicarMensajeController implements Initializable {
         cargarGrupos();
     }
 
-    /* ── Manejadores de eventos ──────────────────────────────── */
+    // Manejadores de eventos
 
     /**
      * Abre un {@link FileChooser} para adjuntar un PDF al mensaje.
@@ -111,11 +111,11 @@ public class PublicarMensajeController implements Initializable {
                     "Seleccione el grupo receptor del mensaje.");
             return;
         }
-        String asunto  = txtAsunto.getText().trim();
-        String texto   = txaTexto.getText();
-        String ruta    = archivoPdf != null
+        String asunto = txtAsunto.getText().trim();
+        String texto = txaTexto.getText();
+        String ruta = archivoPdf != null
                 ? archivoPdf.getAbsolutePath() : null;
-        String nombre  = archivoPdf != null
+        String nombre = archivoPdf != null
                 ? archivoPdf.getName() : null;
         int idProfesor = SesionUsuario.getIdUsuario();
 
@@ -142,14 +142,14 @@ public class PublicarMensajeController implements Initializable {
         }
     }
 
-    /* ── Métodos privados de apoyo ──────────────────────────── */
+    // Métodos privados de apoyo
 
     /**
      * Configura las celdas del ComboBox para mostrar nombre y NRC
      * de cada Grupo.
      */
     private void configurarComboGrupo() {
-        cmbGrupo.setCellFactory(list -> new ListCell<Grupo>() {
+        cmbGrupo.setCellFactory(listaGrupos -> new ListCell<Grupo>() {
             @Override
             protected void updateItem(Grupo item, boolean vacio) {
                 super.updateItem(item, vacio);

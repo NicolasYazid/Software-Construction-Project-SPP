@@ -44,18 +44,21 @@ public class DocumentoDAOImpl implements DocumentoDAO {
     @Override
     public Documento obtenerPorId(int idDocumento)
             throws SQLException {
-        String sql = "SELECT id, estudiante_id, entregable_id,"
+        String sqlObtenerPorId =
+                "SELECT id, estudiante_id, entregable_id,"
                 + " estado, archivo_adjunto,"
                 + " fecha_entrega, calificacion"
                 + " FROM entrega"
                 + " WHERE id = ?";
         Connection con = ConexionBD.obtenerInstancia()
                 .obtenerConexion();
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, idDocumento);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return mapearResultSet(rs);
+        try (PreparedStatement psObtenerPorId =
+                con.prepareStatement(sqlObtenerPorId)) {
+            psObtenerPorId.setInt(1, idDocumento);
+            try (ResultSet rsDocumento =
+                    psObtenerPorId.executeQuery()) {
+                if (rsDocumento.next()) {
+                    return mapearResultSet(rsDocumento);
                 }
             }
         }
@@ -73,7 +76,8 @@ public class DocumentoDAOImpl implements DocumentoDAO {
             int idInscripcion, int idTipoEvidencia)
             throws SQLException {
         int estudianteId = obtenerEstudianteId(idInscripcion);
-        String sql = "SELECT id, estudiante_id, entregable_id,"
+        String sqlObtenerPorTipo =
+                "SELECT id, estudiante_id, entregable_id,"
                 + " estado, archivo_adjunto,"
                 + " fecha_entrega, calificacion"
                 + " FROM entrega"
@@ -82,12 +86,14 @@ public class DocumentoDAOImpl implements DocumentoDAO {
         List<Documento> lista = new ArrayList<>();
         Connection con = ConexionBD.obtenerInstancia()
                 .obtenerConexion();
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, estudianteId);
-            ps.setInt(2, idTipoEvidencia);
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    lista.add(mapearResultSet(rs));
+        try (PreparedStatement psObtenerPorTipo =
+                con.prepareStatement(sqlObtenerPorTipo)) {
+            psObtenerPorTipo.setInt(1, estudianteId);
+            psObtenerPorTipo.setInt(2, idTipoEvidencia);
+            try (ResultSet rsDocumentos =
+                    psObtenerPorTipo.executeQuery()) {
+                while (rsDocumentos.next()) {
+                    lista.add(mapearResultSet(rsDocumentos));
                 }
             }
         }
@@ -105,7 +111,8 @@ public class DocumentoDAOImpl implements DocumentoDAO {
             int idInscripcion, int idTipoEvidencia)
             throws SQLException {
         int estudianteId = obtenerEstudianteId(idInscripcion);
-        String sql = "SELECT id, estudiante_id, entregable_id,"
+        String sqlObtenerUnico =
+                "SELECT id, estudiante_id, entregable_id,"
                 + " estado, archivo_adjunto,"
                 + " fecha_entrega, calificacion"
                 + " FROM entrega"
@@ -114,12 +121,14 @@ public class DocumentoDAOImpl implements DocumentoDAO {
                 + " LIMIT 1";
         Connection con = ConexionBD.obtenerInstancia()
                 .obtenerConexion();
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, estudianteId);
-            ps.setInt(2, idTipoEvidencia);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return mapearResultSet(rs);
+        try (PreparedStatement psObtenerUnico =
+                con.prepareStatement(sqlObtenerUnico)) {
+            psObtenerUnico.setInt(1, estudianteId);
+            psObtenerUnico.setInt(2, idTipoEvidencia);
+            try (ResultSet rsDocumento =
+                    psObtenerUnico.executeQuery()) {
+                if (rsDocumento.next()) {
+                    return mapearResultSet(rsDocumento);
                 }
             }
         }
@@ -136,26 +145,28 @@ public class DocumentoDAOImpl implements DocumentoDAO {
     public int insertar(Documento documento) throws SQLException {
         int estudianteId = obtenerEstudianteId(
                 documento.getIdInscripcion());
-        String sql = "INSERT INTO entrega"
+        String sqlInsertar = "INSERT INTO entrega"
                 + " (estudiante_id, entregable_id, estado,"
                 + " archivo_adjunto, fecha_entrega, calificacion)"
                 + " VALUES (?, ?, ?, ?, ?, ?)";
         Connection con = ConexionBD.obtenerInstancia()
                 .obtenerConexion();
-        try (PreparedStatement ps = con.prepareStatement(sql,
-                Statement.RETURN_GENERATED_KEYS)) {
-            ps.setInt(1, estudianteId);
-            ps.setInt(2, documento.getIdTipoEvidencia());
-            ps.setString(3, estadoIntAString(
+        try (PreparedStatement psInsertar = con.prepareStatement(
+                sqlInsertar, Statement.RETURN_GENERATED_KEYS)) {
+            psInsertar.setInt(1, estudianteId);
+            psInsertar.setInt(2, documento.getIdTipoEvidencia());
+            psInsertar.setString(3, estadoIntAString(
                     documento.getIdEstadoDocumento()));
-            ps.setString(4, documento.getRutaArchivo());
-            establecerTimestamp(ps, 5, documento.getFechaEntrega());
-            establecerCalificacion(ps, 6,
+            psInsertar.setString(4, documento.getRutaArchivo());
+            establecerTimestamp(
+                    psInsertar, 5, documento.getFechaEntrega());
+            establecerCalificacion(psInsertar, 6,
                     documento.getCalificacion());
-            ps.executeUpdate();
-            try (ResultSet rs = ps.getGeneratedKeys()) {
-                if (rs.next()) {
-                    return rs.getInt(1);
+            psInsertar.executeUpdate();
+            try (ResultSet rsClaveGenerada =
+                    psInsertar.getGeneratedKeys()) {
+                if (rsClaveGenerada.next()) {
+                    return rsClaveGenerada.getInt(1);
                 }
             }
         }
@@ -171,19 +182,23 @@ public class DocumentoDAOImpl implements DocumentoDAO {
     @Override
     public void actualizarEntrega(Documento documento)
             throws SQLException {
-        String sql = "UPDATE entrega"
+        String sqlActualizarEntrega = "UPDATE entrega"
                 + " SET archivo_adjunto = ?,"
                 + " fecha_entrega = ?, estado = ?"
                 + " WHERE id = ?";
         Connection con = ConexionBD.obtenerInstancia()
                 .obtenerConexion();
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, documento.getRutaArchivo());
-            establecerTimestamp(ps, 2, documento.getFechaEntrega());
-            ps.setString(3, estadoIntAString(
+        try (PreparedStatement psActualizarEntrega =
+                con.prepareStatement(sqlActualizarEntrega)) {
+            psActualizarEntrega.setString(
+                    1, documento.getRutaArchivo());
+            establecerTimestamp(psActualizarEntrega, 2,
+                    documento.getFechaEntrega());
+            psActualizarEntrega.setString(3, estadoIntAString(
                     documento.getIdEstadoDocumento()));
-            ps.setInt(4, documento.getIdDocumento());
-            ps.executeUpdate();
+            psActualizarEntrega.setInt(
+                    4, documento.getIdDocumento());
+            psActualizarEntrega.executeUpdate();
         }
     }
 
@@ -194,16 +209,18 @@ public class DocumentoDAOImpl implements DocumentoDAO {
     public void actualizarCalificacion(int idDocumento,
             double calificacion, int idEstadoDocumento)
             throws SQLException {
-        String sql = "UPDATE entrega"
+        String sqlActualizarCalificacion = "UPDATE entrega"
                 + " SET calificacion = ?, estado = ?"
                 + " WHERE id = ?";
         Connection con = ConexionBD.obtenerInstancia()
                 .obtenerConexion();
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setDouble(1, calificacion);
-            ps.setString(2, estadoIntAString(idEstadoDocumento));
-            ps.setInt(3, idDocumento);
-            ps.executeUpdate();
+        try (PreparedStatement psActualizarCalificacion =
+                con.prepareStatement(sqlActualizarCalificacion)) {
+            psActualizarCalificacion.setDouble(1, calificacion);
+            psActualizarCalificacion.setString(
+                    2, estadoIntAString(idEstadoDocumento));
+            psActualizarCalificacion.setInt(3, idDocumento);
+            psActualizarCalificacion.executeUpdate();
         }
     }
 
@@ -228,7 +245,7 @@ public class DocumentoDAOImpl implements DocumentoDAO {
     @Override
     public List<Documento> obtenerEntregadosSinCalificarPorProfesor(
             int idProfesor) throws SQLException {
-        String sql = "SELECT e.id, e.estudiante_id,"
+        String sqlObtenerPendientes = "SELECT e.id, e.estudiante_id,"
                 + " e.entregable_id, e.estado,"
                 + " e.archivo_adjunto, e.fecha_entrega,"
                 + " e.calificacion"
@@ -243,11 +260,13 @@ public class DocumentoDAOImpl implements DocumentoDAO {
         List<Documento> lista = new ArrayList<>();
         Connection con = ConexionBD.obtenerInstancia()
                 .obtenerConexion();
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, idProfesor);
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    lista.add(mapearResultSet(rs));
+        try (PreparedStatement psObtenerPendientes =
+                con.prepareStatement(sqlObtenerPendientes)) {
+            psObtenerPendientes.setInt(1, idProfesor);
+            try (ResultSet rsDocumentos =
+                    psObtenerPendientes.executeQuery()) {
+                while (rsDocumentos.next()) {
+                    lista.add(mapearResultSet(rsDocumentos));
                 }
             }
         }
@@ -262,7 +281,7 @@ public class DocumentoDAOImpl implements DocumentoDAO {
     @Override
     public List<Documento> obtenerOVSinCalificarPorProfesor(
             int idProfesor) throws SQLException {
-        String sql = "SELECT e.id, e.estudiante_id,"
+        String sqlObtenerOV = "SELECT e.id, e.estudiante_id,"
                 + " e.entregable_id, e.estado,"
                 + " e.archivo_adjunto, e.fecha_entrega,"
                 + " e.calificacion"
@@ -279,50 +298,54 @@ public class DocumentoDAOImpl implements DocumentoDAO {
         List<Documento> lista = new ArrayList<>();
         Connection con = ConexionBD.obtenerInstancia()
                 .obtenerConexion();
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, idProfesor);
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    lista.add(mapearResultSet(rs));
+        try (PreparedStatement psObtenerOV =
+                con.prepareStatement(sqlObtenerOV)) {
+            psObtenerOV.setInt(1, idProfesor);
+            try (ResultSet rsDocumentos =
+                    psObtenerOV.executeQuery()) {
+                while (rsDocumentos.next()) {
+                    lista.add(mapearResultSet(rsDocumentos));
                 }
             }
         }
         return lista;
     }
 
-    /* ── Métodos privados ───────────────────────────────────── */
+    // Métodos privados
 
     /**
      * Construye un {@link Documento} desde la fila actual del
      * {@code ResultSet}. Convierte el string ENUM de {@code estado}
      * al entero que espera el POJO.
      *
-     * @param rs ResultSet posicionado en la fila a mapear.
+     * @param rsDocumento ResultSet posicionado en la fila a mapear.
      * @return instancia de {@link Documento} con los campos poblados.
      * @throws SQLException si alguna columna no existe en el RS.
      */
-    private Documento mapearResultSet(ResultSet rs)
+    private Documento mapearResultSet(ResultSet rsDocumento)
             throws SQLException {
         Documento doc = new Documento();
-        doc.setIdDocumento(rs.getInt("id"));
-        doc.setIdInscripcion(rs.getInt("estudiante_id"));
-        doc.setIdTipoEvidencia(rs.getInt("entregable_id"));
-        doc.setIdEstadoDocumento(
-                estadoStringAInt(rs.getString("estado")));
-        String ruta = rs.getString("archivo_adjunto");
+        doc.setIdDocumento(rsDocumento.getInt("id"));
+        doc.setIdInscripcion(rsDocumento.getInt("estudiante_id"));
+        doc.setIdTipoEvidencia(rsDocumento.getInt("entregable_id"));
+        doc.setIdEstadoDocumento(estadoStringAInt(
+                rsDocumento.getString("estado")));
+        String ruta = rsDocumento.getString("archivo_adjunto");
         doc.setRutaArchivo(ruta);
         doc.setNombreArchivo(
                 ruta != null
                 ? new java.io.File(ruta).getName()
                 : null);
 
-        Timestamp ts = rs.getTimestamp("fecha_entrega");
-        doc.setFechaEntrega(ts != null
-                ? ts.toLocalDateTime() : null);
+        Timestamp fechaEntrega =
+                rsDocumento.getTimestamp("fecha_entrega");
+        doc.setFechaEntrega(fechaEntrega != null
+                ? fechaEntrega.toLocalDateTime() : null);
 
-        double cal = rs.getDouble("calificacion");
-        doc.setCalificacion(rs.wasNull()
-                ? Constantes.CENTINELA_SIN_CALIFICACION : cal);
+        double calificacion = rsDocumento.getDouble("calificacion");
+        doc.setCalificacion(rsDocumento.wasNull()
+                ? Constantes.CENTINELA_SIN_CALIFICACION
+                : calificacion);
 
         return doc;
     }
@@ -379,15 +402,18 @@ public class DocumentoDAOImpl implements DocumentoDAO {
      */
     private int obtenerEstudianteId(int idInscripcion)
             throws SQLException {
-        String sql = "SELECT estudiante_id FROM inscripcion"
+        String sqlObtenerEstudianteId =
+                "SELECT estudiante_id FROM inscripcion"
                 + " WHERE id = ?";
         Connection con = ConexionBD.obtenerInstancia()
                 .obtenerConexion();
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, idInscripcion);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt("estudiante_id");
+        try (PreparedStatement psObtenerEstudianteId =
+                con.prepareStatement(sqlObtenerEstudianteId)) {
+            psObtenerEstudianteId.setInt(1, idInscripcion);
+            try (ResultSet rsInscripcion =
+                    psObtenerEstudianteId.executeQuery()) {
+                if (rsInscripcion.next()) {
+                    return rsInscripcion.getInt("estudiante_id");
                 }
             }
         }
@@ -397,17 +423,17 @@ public class DocumentoDAOImpl implements DocumentoDAO {
     /**
      * Establece un parámetro {@code TIMESTAMP}, o {@code NULL}.
      *
-     * @param ps     PreparedStatement destino.
-     * @param indice Posición del parámetro (1-based).
-     * @param valor  Valor {@link LocalDateTime} o {@code null}.
+     * @param sentencia PreparedStatement destino.
+     * @param indice    Posición del parámetro (1-based).
+     * @param valor     Valor {@link LocalDateTime} o {@code null}.
      * @throws SQLException si ocurre un error al establecer el param.
      */
-    private void establecerTimestamp(PreparedStatement ps,
+    private void establecerTimestamp(PreparedStatement sentencia,
             int indice, LocalDateTime valor) throws SQLException {
         if (valor != null) {
-            ps.setTimestamp(indice, Timestamp.valueOf(valor));
+            sentencia.setTimestamp(indice, Timestamp.valueOf(valor));
         } else {
-            ps.setNull(indice, Types.TIMESTAMP);
+            sentencia.setNull(indice, Types.TIMESTAMP);
         }
     }
 
@@ -415,17 +441,17 @@ public class DocumentoDAOImpl implements DocumentoDAO {
      * Establece el parámetro de calificación. Si el valor es negativo
      * (centinela -1.0), inserta {@code NULL}.
      *
-     * @param ps     PreparedStatement destino.
-     * @param indice Posición del parámetro (1-based).
-     * @param valor  Calificación real ≥ 0.0, o -1.0 para NULL.
+     * @param sentencia PreparedStatement destino.
+     * @param indice    Posición del parámetro (1-based).
+     * @param valor     Calificación real ≥ 0.0, o -1.0 para NULL.
      * @throws SQLException si ocurre un error al establecer el param.
      */
-    private void establecerCalificacion(PreparedStatement ps,
+    private void establecerCalificacion(PreparedStatement sentencia,
             int indice, double valor) throws SQLException {
         if (valor < 0) {
-            ps.setNull(indice, Types.DECIMAL);
+            sentencia.setNull(indice, Types.DECIMAL);
         } else {
-            ps.setDouble(indice, valor);
+            sentencia.setDouble(indice, valor);
         }
     }
 

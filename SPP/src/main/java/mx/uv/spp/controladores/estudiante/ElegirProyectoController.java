@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -45,15 +46,15 @@ import mx.uv.spp.util.SesionUsuario;
  */
 public class ElegirProyectoController implements Initializable {
 
-    @FXML private Label                     lblEstado;
-    @FXML private TableView<Proyecto>       tblProyectos;
+    @FXML private Label lblEstado;
+    @FXML private TableView<Proyecto> tblProyectos;
     @FXML private TableColumn<Proyecto, Integer> colPrioridad;
-    @FXML private TableColumn<Proyecto, String>  colNombre;
-    @FXML private TableColumn<Proyecto, String>  colDescripcion;
+    @FXML private TableColumn<Proyecto, String> colNombre;
+    @FXML private TableColumn<Proyecto, String> colDescripcion;
     @FXML private TableColumn<Proyecto, Integer> colCupo;
-    @FXML private Button                    btnSubir;
-    @FXML private Button                    btnBajar;
-    @FXML private Button                    btnConfirmar;
+    @FXML private Button btnSubir;
+    @FXML private Button btnBajar;
+    @FXML private Button btnConfirmar;
 
     private final ObservableList<Proyecto> proyectos =
             FXCollections.observableArrayList();
@@ -86,7 +87,7 @@ public class ElegirProyectoController implements Initializable {
         cargarProyectos();
     }
 
-    /* ── Manejadores de eventos ─────────────────────────────── */
+    // Manejadores de eventos
 
     /**
      * Mueve el proyecto seleccionado una posición hacia arriba en la
@@ -97,8 +98,8 @@ public class ElegirProyectoController implements Initializable {
         int indice = tblProyectos.getSelectionModel()
                 .getSelectedIndex();
         if (indice > 0) {
-            Proyecto temp = proyectos.remove(indice);
-            proyectos.add(indice - 1, temp);
+            Proyecto proyectoMovido = proyectos.remove(indice);
+            proyectos.add(indice - 1, proyectoMovido);
             tblProyectos.getSelectionModel().select(indice - 1);
         }
     }
@@ -112,8 +113,8 @@ public class ElegirProyectoController implements Initializable {
         int indice = tblProyectos.getSelectionModel()
                 .getSelectedIndex();
         if (indice >= 0 && indice < proyectos.size() - 1) {
-            Proyecto temp = proyectos.remove(indice);
-            proyectos.add(indice + 1, temp);
+            Proyecto proyectoMovido = proyectos.remove(indice);
+            proyectos.add(indice + 1, proyectoMovido);
             tblProyectos.getSelectionModel().select(indice + 1);
         }
     }
@@ -143,7 +144,7 @@ public class ElegirProyectoController implements Initializable {
         }
     }
 
-    /* ── Métodos privados ───────────────────────────────────── */
+    // Métodos privados
 
     /**
      * Configura las columnas de la tabla vinculándolas a los
@@ -151,8 +152,7 @@ public class ElegirProyectoController implements Initializable {
      */
     private void configurarColumnas() {
         colPrioridad.setCellValueFactory(
-                celda -> new javafx.beans.property
-                        .SimpleIntegerProperty(
+                celda -> new SimpleIntegerProperty(
                         proyectos.indexOf(celda.getValue()) + 1)
                         .asObject());
         colNombre.setCellValueFactory(

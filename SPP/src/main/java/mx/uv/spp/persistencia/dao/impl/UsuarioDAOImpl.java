@@ -55,32 +55,36 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         ResultadoAutenticacion resultado = new ResultadoAutenticacion();
         resultado.setTipo(tipo);
 
-        String sql = construirSqlAutenticar(tipo);
+        String sqlAutenticar = construirSqlAutenticar(tipo);
 
         try (Connection con =
                      ConexionBD.obtenerInstancia().obtenerConexion();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+             PreparedStatement psAutenticar =
+                     con.prepareStatement(sqlAutenticar)) {
 
-            ps.setString(1, identificador);
+            psAutenticar.setString(1, identificador);
 
-            try (ResultSet rs = ps.executeQuery()) {
-                if (!rs.next()) {
+            try (ResultSet rsUsuario = psAutenticar.executeQuery()) {
+                if (!rsUsuario.next()) {
                     resultado.setMensajeError(MENSAJE_CREDENCIALES);
                     return resultado;
                 }
 
-                resultado.setIdUsuario(rs.getInt("id_usuario"));
-                resultado.setEstado(rs.getString("estado"));
+                resultado.setIdUsuario(
+                        rsUsuario.getInt("id_usuario"));
+                resultado.setEstado(rsUsuario.getString("estado"));
                 resultado.setIntentosFallidos(
-                        rs.getInt("intentos_fallidos"));
-                java.sql.Timestamp ts =
-                        rs.getTimestamp("fecha_bloqueo");
+                        rsUsuario.getInt("intentos_fallidos"));
+                java.sql.Timestamp fechaBloqueoBD =
+                        rsUsuario.getTimestamp("fecha_bloqueo");
                 resultado.setFechaBloqueo(
-                        ts != null ? ts.toLocalDateTime() : null);
+                        fechaBloqueoBD != null
+                        ? fechaBloqueoBD.toLocalDateTime() : null);
                 resultado.setNombreCompleto(
-                        construirNombreCompleto(rs, tipo));
+                        construirNombreCompleto(rsUsuario, tipo));
 
-                String contrasenaBD = rs.getString("contrasenia");
+                String contrasenaBD =
+                        rsUsuario.getString("contrasenia");
                 String contrasenaBDDescifrada =
                         CifradoAES.descifrar(contrasenaBD);
                 resultado.setExitoso(
@@ -106,19 +110,21 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     public void incrementarIntentosFallidos(int idUsuario,
             TipoUsuario tipo) throws SQLException {
         String tabla = obtenerTabla(tipo);
-        String pk    = obtenerPkColumna(tipo);
-        String sql = "UPDATE " + tabla
+        String columnaPk = obtenerPkColumna(tipo);
+        String sqlIncrementarIntentos = "UPDATE " + tabla
                 + " SET intentos_fallidos = intentos_fallidos + 1,"
                 + " fecha_bloqueo = CASE"
                 + " WHEN intentos_fallidos + 1 >= ?"
                 + " THEN NOW() ELSE NULL END"
-                + " WHERE " + pk + " = ?";
+                + " WHERE " + columnaPk + " = ?";
         try (Connection con =
                      ConexionBD.obtenerInstancia().obtenerConexion();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, Constantes.MAX_INTENTOS_LOGIN);
-            ps.setInt(2, idUsuario);
-            ps.executeUpdate();
+             PreparedStatement psIncrementarIntentos =
+                     con.prepareStatement(sqlIncrementarIntentos)) {
+            psIncrementarIntentos.setInt(
+                    1, Constantes.MAX_INTENTOS_LOGIN);
+            psIncrementarIntentos.setInt(2, idUsuario);
+            psIncrementarIntentos.executeUpdate();
         }
     }
 
@@ -134,16 +140,17 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     public void reiniciarIntentos(int idUsuario,
             TipoUsuario tipo) throws SQLException {
         String tabla = obtenerTabla(tipo);
-        String pk    = obtenerPkColumna(tipo);
-        String sql = "UPDATE " + tabla
+        String columnaPk = obtenerPkColumna(tipo);
+        String sqlReiniciarIntentos = "UPDATE " + tabla
                 + " SET intentos_fallidos = 0,"
                 + " fecha_bloqueo = NULL"
-                + " WHERE " + pk + " = ?";
+                + " WHERE " + columnaPk + " = ?";
         try (Connection con =
                      ConexionBD.obtenerInstancia().obtenerConexion();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, idUsuario);
-            ps.executeUpdate();
+             PreparedStatement psReiniciarIntentos =
+                     con.prepareStatement(sqlReiniciarIntentos)) {
+            psReiniciarIntentos.setInt(1, idUsuario);
+            psReiniciarIntentos.executeUpdate();
         }
     }
 
@@ -160,22 +167,23 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             String contrasenaCifrada,
             TipoUsuario tipo) throws SQLException {
         String tabla = obtenerTabla(tipo);
-        String pk    = obtenerPkColumna(tipo);
+        String columnaPk = obtenerPkColumna(tipo);
 
-        String sql = "UPDATE " + tabla
+        String sqlActualizarContrasena = "UPDATE " + tabla
                 + " SET contrasenia = ?"
-                + " WHERE " + pk + " = ?";
+                + " WHERE " + columnaPk + " = ?";
 
         try (Connection con =
                      ConexionBD.obtenerInstancia().obtenerConexion();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, contrasenaCifrada);
-            ps.setInt(2, idUsuario);
-            ps.executeUpdate();
+             PreparedStatement psActualizarContrasena =
+                     con.prepareStatement(sqlActualizarContrasena)) {
+            psActualizarContrasena.setString(1, contrasenaCifrada);
+            psActualizarContrasena.setInt(2, idUsuario);
+            psActualizarContrasena.executeUpdate();
         }
     }
 
-    /* ── Métodos privados ───────────────────────────────────── */
+    // Métodos privados
 
     /**
      * Construye el SELECT adaptado a la tabla y columna identificadora
@@ -247,10 +255,13 @@ public class UsuarioDAOImpl implements UsuarioDAO {
      */
     private String obtenerTabla(TipoUsuario tipo) {
         switch (tipo) {
-            case ADMINISTRADOR: return "administrador";
-            case COORDINADOR:   return "profesor";
-            case PROFESOR:      return "profesor";
-            case ESTUDIANTE:    return "estudiante";
+            case ADMINISTRADOR:
+                return "administrador";
+            case COORDINADOR:
+            case PROFESOR:
+                return "profesor";
+            case ESTUDIANTE:
+                return "estudiante";
             default:
                 throw new IllegalArgumentException(
                         "TipoUsuario no mapeado: " + tipo);
@@ -266,10 +277,11 @@ public class UsuarioDAOImpl implements UsuarioDAO {
      */
     private String obtenerPkColumna(TipoUsuario tipo) {
         switch (tipo) {
-            case ADMINISTRADOR: return "id";
-            case COORDINADOR:   return "id";
-            case PROFESOR:      return "id";
-            case ESTUDIANTE:    return "id";
+            case ADMINISTRADOR:
+            case COORDINADOR:
+            case PROFESOR:
+            case ESTUDIANTE:
+                return "id";
             default:
                 throw new IllegalArgumentException(
                         "TipoUsuario no mapeado: " + tipo);
@@ -282,22 +294,22 @@ public class UsuarioDAOImpl implements UsuarioDAO {
      * Administrador solo tiene la columna {@code nombre} (proyectada
      * como alias).
      *
-     * @param rs   Fila actual del ResultSet.
+     * @param rsUsuario Fila actual del ResultSet.
      * @param tipo Rol del usuario.
      * @return Nombre completo en texto plano.
      * @throws SQLException si alguna columna no existe en el ResultSet.
      */
-    private String construirNombreCompleto(ResultSet rs,
+    private String construirNombreCompleto(ResultSet rsUsuario,
             TipoUsuario tipo) throws SQLException {
-        String nombre = rs.getString("nombre");
+        String nombre = rsUsuario.getString("nombre");
         if (nombre == null) {
             nombre = "";
         }
         if (tipo == TipoUsuario.ADMINISTRADOR) {
             return nombre;
         }
-        String apellidoP = rs.getString("primer_apellido");
-        String apellidoM = rs.getString("segundo_apellido");
+        String apellidoP = rsUsuario.getString("primer_apellido");
+        String apellidoM = rsUsuario.getString("segundo_apellido");
         StringBuilder sb = new StringBuilder(nombre);
         if (apellidoP != null && !apellidoP.isEmpty()) {
             sb.append(" ").append(apellidoP);

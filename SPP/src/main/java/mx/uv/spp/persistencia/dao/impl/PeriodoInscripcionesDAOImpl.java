@@ -38,16 +38,19 @@ public class PeriodoInscripcionesDAOImpl
     @Override
     public PeriodoInscripciones obtenerDelCicloActivo()
             throws SQLException {
-        String sql = "SELECT id, fecha_inicio, fecha_fin"
+        String sqlObtenerCicloActivo =
+                "SELECT id, fecha_inicio, fecha_fin"
                 + " FROM periodo_escolar"
                 + " WHERE estado = 'iniciado'"
                 + " LIMIT 1";
         Connection con = ConexionBD.obtenerInstancia()
                 .obtenerConexion();
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return mapearResultSet(rs);
+        try (PreparedStatement psObtenerCicloActivo =
+                con.prepareStatement(sqlObtenerCicloActivo)) {
+            try (ResultSet rsPeriodo =
+                    psObtenerCicloActivo.executeQuery()) {
+                if (rsPeriodo.next()) {
+                    return mapearResultSet(rsPeriodo);
                 }
             }
         }
@@ -59,15 +62,17 @@ public class PeriodoInscripcionesDAOImpl
      */
     @Override
     public boolean existeEnCicloActivo() throws SQLException {
-        String sql = "SELECT COUNT(*)"
+        String sqlExisteCicloActivo = "SELECT COUNT(*)"
                 + " FROM periodo_escolar"
                 + " WHERE estado = 'iniciado'";
         Connection con = ConexionBD.obtenerInstancia()
                 .obtenerConexion();
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1) > 0;
+        try (PreparedStatement psExisteCicloActivo =
+                con.prepareStatement(sqlExisteCicloActivo)) {
+            try (ResultSet rsConteo =
+                    psExisteCicloActivo.executeQuery()) {
+                if (rsConteo.next()) {
+                    return rsConteo.getInt(1) > 0;
                 }
             }
         }
@@ -92,24 +97,24 @@ public class PeriodoInscripcionesDAOImpl
      * del {@code ResultSet}. Las columnas {@code fecha_inicio} y
      * {@code fecha_fin} son NOT NULL en el esquema.
      *
-     * @param rs ResultSet posicionado en la fila a mapear.
+     * @param rsPeriodo ResultSet posicionado en la fila a mapear.
      * @return instancia con todos los campos poblados.
      * @throws SQLException si alguna columna no existe en el RS.
      */
-    private PeriodoInscripciones mapearResultSet(ResultSet rs)
+    private PeriodoInscripciones mapearResultSet(ResultSet rsPeriodo)
             throws SQLException {
-        PeriodoInscripciones pi = new PeriodoInscripciones();
-        pi.setIdPeriodoInscripciones(rs.getInt("id"));
-        pi.setIdCicloEscolar(rs.getInt("id"));
-        Date sqlInicio = rs.getDate("fecha_inicio");
-        if (sqlInicio != null) {
-            pi.setFechaInicio(sqlInicio.toLocalDate());
+        PeriodoInscripciones periodo = new PeriodoInscripciones();
+        periodo.setIdPeriodoInscripciones(rsPeriodo.getInt("id"));
+        periodo.setIdCicloEscolar(rsPeriodo.getInt("id"));
+        Date fechaInicio = rsPeriodo.getDate("fecha_inicio");
+        if (fechaInicio != null) {
+            periodo.setFechaInicio(fechaInicio.toLocalDate());
         }
-        Date sqlFin = rs.getDate("fecha_fin");
-        if (sqlFin != null) {
-            pi.setFechaCierre(sqlFin.toLocalDate());
+        Date fechaFin = rsPeriodo.getDate("fecha_fin");
+        if (fechaFin != null) {
+            periodo.setFechaCierre(fechaFin.toLocalDate());
         }
-        return pi;
+        return periodo;
     }
 
 }

@@ -48,16 +48,12 @@ import mx.uv.spp.util.SesionUsuario;
  */
 public class CalificacionOVController implements Initializable {
 
-    @FXML private Label                    lblEstado;
-    @FXML private TableView<FilaOV>        tblOV;
-    @FXML private TableColumn<FilaOV,
-            String>                        colEstudiante;
-    @FXML private TableColumn<FilaOV,
-            String>                        colTipo;
-    @FXML private TableColumn<FilaOV,
-            String>                        colArchivo;
-    @FXML private TableColumn<FilaOV,
-            Void>                          colAccion;
+    @FXML private Label lblEstado;
+    @FXML private TableView<FilaOV> tblOV;
+    @FXML private TableColumn<FilaOV, String> colEstudiante;
+    @FXML private TableColumn<FilaOV, String> colTipo;
+    @FXML private TableColumn<FilaOV, String> colArchivo;
+    @FXML private TableColumn<FilaOV, Void> colAccion;
 
     private final ObservableList<FilaOV> filas =
             FXCollections.observableArrayList();
@@ -65,9 +61,9 @@ public class CalificacionOVController implements Initializable {
 
     private static final String ESTILO_ERROR =
             "-fx-text-fill: #c0392b;";
-    private static final String ESTILO_INFO  =
+    private static final String ESTILO_INFO =
             "-fx-text-fill: #1C3A6E;";
-    private static final String ESTILO_OK    =
+    private static final String ESTILO_OK =
             "-fx-text-fill: #27ae60;";
     private static final String MENSAJE_EX01 =
             "No fue posible conectarse con la base de datos. "
@@ -90,7 +86,7 @@ public class CalificacionOVController implements Initializable {
         cargarFilas();
     }
 
-    /* ── Métodos privados ───────────────────────────────────── */
+    // Métodos privados
 
     /**
      * Configura las columnas de texto y la columna de acción con
@@ -98,17 +94,17 @@ public class CalificacionOVController implements Initializable {
      */
     private void configurarColumnas() {
         colEstudiante.setCellValueFactory(
-                c -> new SimpleStringProperty(
+                celda -> new SimpleStringProperty(
                         String.valueOf(
-                                c.getValue().idEstudiante)));
+                                celda.getValue().idEstudiante)));
         colTipo.setCellValueFactory(
-                c -> new SimpleStringProperty(
-                        c.getValue().nombreTipo));
+                celda -> new SimpleStringProperty(
+                        celda.getValue().nombreTipo));
         colArchivo.setCellValueFactory(
-                c -> new SimpleStringProperty(
-                        c.getValue().nombreArchivo));
+                celda -> new SimpleStringProperty(
+                        celda.getValue().nombreArchivo));
 
-        colAccion.setCellFactory(col -> new TableCell<>() {
+        colAccion.setCellFactory(columna -> new TableCell<>() {
             private final Button btnVer =
                     new Button("Ver documento");
             private final Button btnCalificar =
@@ -150,14 +146,14 @@ public class CalificacionOVController implements Initializable {
                     new DocumentoDAOImpl()
                     .obtenerOVSinCalificarPorProfesor(idProfesor);
             for (Documento doc : pendientes) {
-                FilaOV fila  = new FilaOV();
-                fila.idDocumento   = doc.getIdDocumento();
-                fila.idEstudiante  = doc.getIdInscripcion();
-                fila.nombreTipo    = doc.getIdTipoEvidencia()
+                FilaOV fila = new FilaOV();
+                fila.idDocumento = doc.getIdDocumento();
+                fila.idEstudiante = doc.getIdInscripcion();
+                fila.nombreTipo = doc.getIdTipoEvidencia()
                         == Constantes.TIPO_EVIDENCIA_EVALUACION_OV
                         ? "Evaluación OV 1"
                         : "Evaluación OV 2";
-                fila.rutaArchivo   =
+                fila.rutaArchivo =
                         doc.getRutaArchivo() != null
                         ? doc.getRutaArchivo() : "";
                 fila.nombreArchivo =
@@ -258,10 +254,10 @@ public class CalificacionOVController implements Initializable {
                 + (int) calificacion + " para este Estudiante?");
         confirmacion.setContentText(
                 "Esta acción no puede deshacerse.");
-        Optional<ButtonType> confirm =
+        Optional<ButtonType> respuestaConfirmacion =
                 confirmacion.showAndWait();
-        if (!confirm.isPresent()
-                || confirm.get() != ButtonType.OK) {
+        if (!respuestaConfirmacion.isPresent()
+                || respuestaConfirmacion.get() != ButtonType.OK) {
             return;
         }
 
@@ -294,17 +290,17 @@ public class CalificacionOVController implements Initializable {
         lblEstado.setText(mensaje);
     }
 
-    /* ── Clase interna de fila ──────────────────────────────── */
+    // Clase interna de fila
 
     /**
      * Datos de una fila de la tabla de evaluaciones OV pendientes.
      */
     static class FilaOV {
-        int    idDocumento;
-        int    idEstudiante;
-        String nombreTipo     = "";
-        String rutaArchivo    = "";
-        String nombreArchivo  = "";
+        int idDocumento;
+        int idEstudiante;
+        String nombreTipo = "";
+        String rutaArchivo = "";
+        String nombreArchivo = "";
     }
 
 }

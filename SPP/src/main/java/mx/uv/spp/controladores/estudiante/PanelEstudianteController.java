@@ -34,7 +34,7 @@ import mx.uv.spp.util.SesionUsuario;
 public class PanelEstudianteController implements Initializable {
 
     @FXML private StackPane contenedor;
-    @FXML private Label     lblBienvenida;
+    @FXML private Label lblBienvenida;
 
     private static final String VISTA_ELEGIR =
             "/mx/uv/spp/vistas/estudiante/elegir_proyecto.fxml";
@@ -60,7 +60,7 @@ public class PanelEstudianteController implements Initializable {
         }
     }
 
-    /* ── Manejadores de botones del menú ────────────────────── */
+    // Manejadores de botones del menú
 
     /**
      * Carga la sub-vista de Elegir Proyecto (CU-21).
@@ -94,8 +94,10 @@ public class PanelEstudianteController implements Initializable {
     private void onBtnAutoevaluacion() {
         int idInscripcion = SesionUsuario.getIdInscripcion();
         try {
-            AutoevaluacionDAOImpl autoDAO = new AutoevaluacionDAOImpl();
-            if (autoDAO.existePorInscripcion(idInscripcion)) {
+            AutoevaluacionDAOImpl autoevaluacionDAO =
+                    new AutoevaluacionDAOImpl();
+            if (autoevaluacionDAO.existePorInscripcion(
+                    idInscripcion)) {
                 Alert aviso = new Alert(Alert.AlertType.INFORMATION);
                 aviso.setTitle("Autoevaluación");
                 aviso.setHeaderText("Ya entregaste tu autoevaluación.");
@@ -122,7 +124,7 @@ public class PanelEstudianteController implements Initializable {
         Navegador.irALogin();
     }
 
-    /* ── Carga de sub-vistas ────────────────────────────────── */
+    // Carga de sub-vistas
 
     /**
      * Carga el FXML indicado como contenido central del panel.

@@ -42,17 +42,20 @@ public class SeleccionProyectoDAOImpl implements SeleccionProyectoDAO {
     @Override
     public boolean existeSeleccionPorInscripcion(int idInscripcion)
             throws SQLException {
-        String sql = "SELECT COUNT(*) FROM lista_prioridades lp"
+        String sqlExisteSeleccion =
+                "SELECT COUNT(*) FROM lista_prioridades lp"
                 + " JOIN inscripcion i"
                 + " ON i.estudiante_id = lp.estudiante_id"
                 + " WHERE i.id = ?";
         Connection con = ConexionBD.obtenerInstancia()
                 .obtenerConexion();
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, idInscripcion);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1) > 0;
+        try (PreparedStatement psExisteSeleccion =
+                con.prepareStatement(sqlExisteSeleccion)) {
+            psExisteSeleccion.setInt(1, idInscripcion);
+            try (ResultSet rsConteo =
+                    psExisteSeleccion.executeQuery()) {
+                if (rsConteo.next()) {
+                    return rsConteo.getInt(1) > 0;
                 }
             }
         }
@@ -74,14 +77,14 @@ public class SeleccionProyectoDAOImpl implements SeleccionProyectoDAO {
         }
 
         int idInscripcion = selecciones.get(0).getIdInscripcion();
-        int estudianteId  = obtenerEstudianteId(idInscripcion);
+        int estudianteId = obtenerEstudianteId(idInscripcion);
         if (estudianteId == 0) {
             throw new SQLException(
                     "No se encontró estudiante_id para inscripción "
                     + idInscripcion);
         }
 
-        String sql = "INSERT INTO lista_prioridades"
+        String sqlInsertarPrioridad = "INSERT INTO lista_prioridades"
                 + " (estudiante_id, proyecto_id, posicion)"
                 + " VALUES (?, ?, ?)";
         Connection con = ConexionBD.obtenerInstancia()
@@ -89,12 +92,14 @@ public class SeleccionProyectoDAOImpl implements SeleccionProyectoDAO {
         try {
             con.setAutoCommit(false);
             for (SeleccionProyecto sel : selecciones) {
-                try (PreparedStatement ps =
-                        con.prepareStatement(sql)) {
-                    ps.setInt(1, estudianteId);
-                    ps.setInt(2, sel.getIdProyecto());
-                    ps.setInt(3, sel.getPrioridad());
-                    ps.executeUpdate();
+                try (PreparedStatement psInsertarPrioridad =
+                        con.prepareStatement(sqlInsertarPrioridad)) {
+                    psInsertarPrioridad.setInt(1, estudianteId);
+                    psInsertarPrioridad.setInt(
+                            2, sel.getIdProyecto());
+                    psInsertarPrioridad.setInt(
+                            3, sel.getPrioridad());
+                    psInsertarPrioridad.executeUpdate();
                 }
             }
             con.commit();
@@ -127,7 +132,8 @@ public class SeleccionProyectoDAOImpl implements SeleccionProyectoDAO {
     @Override
     public List<Proyecto> obtenerProyectosDisponibles()
             throws SQLException {
-        String sql = "SELECT id, nombre, descripcion_general,"
+        String sqlObtenerDisponibles =
+                "SELECT id, nombre, descripcion_general,"
                 + " metodologia, cupo_maximo, cupo_disponible,"
                 + " estado"
                 + " FROM proyecto"
@@ -136,12 +142,14 @@ public class SeleccionProyectoDAOImpl implements SeleccionProyectoDAO {
         List<Proyecto> lista = new ArrayList<>();
         Connection con = ConexionBD.obtenerInstancia()
                 .obtenerConexion();
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1,
+        try (PreparedStatement psObtenerDisponibles =
+                con.prepareStatement(sqlObtenerDisponibles)) {
+            psObtenerDisponibles.setString(1,
                     Constantes.ESTADO_PROYECTO_DISPONIBLE);
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    lista.add(mapearResultSet(rs));
+            try (ResultSet rsProyectos =
+                    psObtenerDisponibles.executeQuery()) {
+                while (rsProyectos.next()) {
+                    lista.add(mapearResultSet(rsProyectos));
                 }
             }
         }
@@ -158,15 +166,18 @@ public class SeleccionProyectoDAOImpl implements SeleccionProyectoDAO {
      */
     private int obtenerEstudianteId(int idInscripcion)
             throws SQLException {
-        String sql = "SELECT estudiante_id FROM inscripcion"
+        String sqlObtenerEstudianteId =
+                "SELECT estudiante_id FROM inscripcion"
                 + " WHERE id = ?";
         Connection con = ConexionBD.obtenerInstancia()
                 .obtenerConexion();
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, idInscripcion);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt("estudiante_id");
+        try (PreparedStatement psObtenerEstudianteId =
+                con.prepareStatement(sqlObtenerEstudianteId)) {
+            psObtenerEstudianteId.setInt(1, idInscripcion);
+            try (ResultSet rsInscripcion =
+                    psObtenerEstudianteId.executeQuery()) {
+                if (rsInscripcion.next()) {
+                    return rsInscripcion.getInt("estudiante_id");
                 }
             }
         }
@@ -177,21 +188,23 @@ public class SeleccionProyectoDAOImpl implements SeleccionProyectoDAO {
      * Construye un {@link Proyecto} desde la fila actual del
      * {@code ResultSet} usando las columnas de spp_db.
      *
-     * @param rs ResultSet posicionado en la fila a mapear.
+     * @param rsProyecto ResultSet posicionado en la fila a mapear.
      * @return instancia de {@link Proyecto} con los campos disponibles.
      * @throws SQLException si alguna columna no existe en el RS.
      */
-    private Proyecto mapearResultSet(ResultSet rs)
+    private Proyecto mapearResultSet(ResultSet rsProyecto)
             throws SQLException {
-        Proyecto p = new Proyecto();
-        p.setIdProyecto(rs.getInt("id"));
-        p.setNombreProyecto(rs.getString("nombre"));
-        p.setDescripcion(rs.getString("descripcion_general"));
-        p.setMetodologia(rs.getString("metodologia"));
-        p.setCupoMaximo(rs.getInt("cupo_maximo"));
-        p.setCupoDisponible(rs.getInt("cupo_disponible"));
-        p.setEstado(rs.getString("estado"));
-        return p;
+        Proyecto proyecto = new Proyecto();
+        proyecto.setIdProyecto(rsProyecto.getInt("id"));
+        proyecto.setNombreProyecto(rsProyecto.getString("nombre"));
+        proyecto.setDescripcion(
+                rsProyecto.getString("descripcion_general"));
+        proyecto.setMetodologia(rsProyecto.getString("metodologia"));
+        proyecto.setCupoMaximo(rsProyecto.getInt("cupo_maximo"));
+        proyecto.setCupoDisponible(
+                rsProyecto.getInt("cupo_disponible"));
+        proyecto.setEstado(rsProyecto.getString("estado"));
+        return proyecto;
     }
 
 }

@@ -21,10 +21,10 @@ import mx.uv.spp.modelo.TipoUsuario;
  */
 public final class SesionUsuario {
 
-    private static int        idUsuario;
-    private static String     nombreCompleto = "";
+    private static int idUsuario;
+    private static String nombreCompleto = "";
     private static TipoUsuario tipo;
-    private static int        idInscripcion;
+    private static int idInscripcion;
 
     private SesionUsuario() {
     }
@@ -40,11 +40,11 @@ public final class SesionUsuario {
      */
     public static void inicializar(int idUsuario,
             String nombreCompleto, TipoUsuario tipo) {
-        SesionUsuario.idUsuario      = idUsuario;
+        SesionUsuario.idUsuario = idUsuario;
         SesionUsuario.nombreCompleto =
                 nombreCompleto != null ? nombreCompleto : "";
-        SesionUsuario.tipo           = tipo;
-        SesionUsuario.idInscripcion  = 0;
+        SesionUsuario.tipo = tipo;
+        SesionUsuario.idInscripcion = 0;
     }
 
     /**
@@ -105,10 +105,10 @@ public final class SesionUsuario {
      * anterior persistan si se inicia otra sesión en la misma ejecución.
      */
     public static void limpiar() {
-        idUsuario      = 0;
+        idUsuario = 0;
         nombreCompleto = "";
-        tipo           = null;
-        idInscripcion  = 0;
+        tipo = null;
+        idInscripcion = 0;
     }
 
 }

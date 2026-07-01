@@ -38,8 +38,8 @@ import mx.uv.spp.util.SesionUsuario;
  */
 public class AutoevaluacionController implements Initializable {
 
-    @FXML private Label   lblEstado;
-    @FXML private Label   lblInstrucciones;
+    @FXML private Label lblEstado;
+    @FXML private Label lblInstrucciones;
     @FXML private Spinner<Integer> spnA1;
     @FXML private Spinner<Integer> spnA2;
     @FXML private Spinner<Integer> spnA3;
@@ -50,15 +50,15 @@ public class AutoevaluacionController implements Initializable {
     @FXML private Spinner<Integer> spnA8;
     @FXML private Spinner<Integer> spnA9;
     @FXML private Spinner<Integer> spnA10;
-    @FXML private Button  btnEnviar;
+    @FXML private Button btnEnviar;
 
     private EstudianteServicio estudianteServicio;
 
     private static final String ESTILO_ERROR =
             "-fx-text-fill: #c0392b;";
-    private static final String ESTILO_OK    =
+    private static final String ESTILO_OK =
             "-fx-text-fill: #27ae60;";
-    private static final String ESTILO_INFO  =
+    private static final String ESTILO_INFO =
             "-fx-text-fill: #1C3A6E;";
 
     /**
@@ -80,7 +80,7 @@ public class AutoevaluacionController implements Initializable {
         verificarEntregaPrevia();
     }
 
-    /* ── Manejador de evento ────────────────────────────────── */
+    // Manejador de evento
 
     /**
      * Solicita confirmación y envía las respuestas de la
@@ -94,13 +94,14 @@ public class AutoevaluacionController implements Initializable {
         alerta.setContentText(
                 "Una vez enviada, no podrás modificar tu "
                 + "autoevaluación. ¿Deseas continuar?");
-        Optional<ButtonType> resp = alerta.showAndWait();
-        if (resp.isPresent() && resp.get() == ButtonType.OK) {
+        Optional<ButtonType> respuesta = alerta.showAndWait();
+        if (respuesta.isPresent()
+                && respuesta.get() == ButtonType.OK) {
             enviarAutoevaluacion();
         }
     }
 
-    /* ── Métodos privados ───────────────────────────────────── */
+    // Métodos privados
 
     /**
      * Configura cada {@link Spinner} con valores del 1 al 5 y

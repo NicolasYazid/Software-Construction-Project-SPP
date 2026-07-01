@@ -46,27 +46,23 @@ import mx.uv.spp.util.Validador;
  */
 public class DocumentosInicialesController implements Initializable {
 
-    @FXML private Label                        lblEstado;
-    @FXML private TableView<FilaDocumento>     tblDocumentos;
-    @FXML private TableColumn<FilaDocumento,
-            String>                            colDocumento;
-    @FXML private TableColumn<FilaDocumento,
-            String>                            colEstado;
-    @FXML private TableColumn<FilaDocumento,
-            String>                            colArchivo;
-    @FXML private TableColumn<FilaDocumento,
-            Void>                              colAccion;
+    @FXML private Label lblEstado;
+    @FXML private TableView<FilaDocumento> tblDocumentos;
+    @FXML private TableColumn<FilaDocumento, String> colDocumento;
+    @FXML private TableColumn<FilaDocumento, String> colEstado;
+    @FXML private TableColumn<FilaDocumento, String> colArchivo;
+    @FXML private TableColumn<FilaDocumento, Void> colAccion;
 
     private final ObservableList<FilaDocumento> filas =
             FXCollections.observableArrayList();
     private EstudianteServicio estudianteServicio;
-    private DocumentoDAOImpl   documentoDAOImpl;
+    private DocumentoDAOImpl documentoDAOImpl;
 
     private static final String ESTILO_ERROR =
             "-fx-text-fill: #c0392b;";
-    private static final String ESTILO_INFO  =
+    private static final String ESTILO_INFO =
             "-fx-text-fill: #1C3A6E;";
-    private static final String ESTILO_OK    =
+    private static final String ESTILO_OK =
             "-fx-text-fill: #27ae60;";
 
     /**
@@ -90,7 +86,7 @@ public class DocumentosInicialesController implements Initializable {
         cargarFilas();
     }
 
-    /* ── Métodos privados ───────────────────────────────────── */
+    // Métodos privados
 
     /**
      * Configura las columnas de texto y la columna de acción con
@@ -98,13 +94,16 @@ public class DocumentosInicialesController implements Initializable {
      */
     private void configurarColumnas() {
         colDocumento.setCellValueFactory(
-                c -> new SimpleStringProperty(c.getValue().nombre));
+                celda -> new SimpleStringProperty(
+                        celda.getValue().nombre));
         colEstado.setCellValueFactory(
-                c -> new SimpleStringProperty(c.getValue().estado));
+                celda -> new SimpleStringProperty(
+                        celda.getValue().estado));
         colArchivo.setCellValueFactory(
-                c -> new SimpleStringProperty(c.getValue().archivo));
+                celda -> new SimpleStringProperty(
+                        celda.getValue().archivo));
 
-        colAccion.setCellFactory(col -> new TableCell<>() {
+        colAccion.setCellFactory(columna -> new TableCell<>() {
             private final Button btnSubir =
                     new Button("Subir PDF");
 
@@ -126,8 +125,7 @@ public class DocumentosInicialesController implements Initializable {
                 FilaDocumento fila = getTableView()
                         .getItems().get(getIndex());
                 if (fila.idTipo
-                        == Constantes
-                           .TIPO_EVIDENCIA_OFICIO_ASIGNACION) {
+                        == Constantes.TIPO_EVIDENCIA_OFICIO_ASIGNACION) {
                     setGraphic(null);
                 } else {
                     setGraphic(btnSubir);
@@ -168,15 +166,15 @@ public class DocumentosInicialesController implements Initializable {
                         .obtenerPorInscripcionYTipoUnico(
                                 idInscripcion, tipos[i]);
                 FilaDocumento fila = new FilaDocumento();
-                fila.nombre    = nombres[i];
-                fila.idTipo    = tipos[i];
+                fila.nombre = nombres[i];
+                fila.idTipo = tipos[i];
                 if (doc != null) {
-                    fila.estado   = obtenerNombreEstado(
+                    fila.estado = obtenerNombreEstado(
                             doc.getIdEstadoDocumento());
-                    fila.archivo  = doc.getNombreArchivo() != null
+                    fila.archivo = doc.getNombreArchivo() != null
                             ? doc.getNombreArchivo() : "";
                 } else {
-                    fila.estado  = "Pendiente";
+                    fila.estado = "Pendiente";
                     fila.archivo = "";
                 }
                 filas.add(fila);
@@ -287,16 +285,16 @@ public class DocumentosInicialesController implements Initializable {
         lblEstado.setText(mensaje);
     }
 
-    /* ── Clase interna de fila de la tabla ──────────────────── */
+    // Clase interna de fila de la tabla
 
     /**
      * Datos de una fila de la tabla de documentos iniciales.
      * Cada fila representa un tipo de documento requerido.
      */
     static class FilaDocumento {
-        String nombre  = "";
-        int    idTipo;
-        String estado  = "Pendiente";
+        String nombre = "";
+        int idTipo;
+        String estado = "Pendiente";
         String archivo = "";
     }
 

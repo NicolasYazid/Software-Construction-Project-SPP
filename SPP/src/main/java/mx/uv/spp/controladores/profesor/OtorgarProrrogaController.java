@@ -31,17 +31,17 @@ import mx.uv.spp.persistencia.dao.impl.MensajeGrupoDAOImpl;
  */
 public class OtorgarProrrogaController implements Initializable {
 
-    @FXML private Label      lblEstado;
-    @FXML private TextField  txtIdDocumento;
+    @FXML private Label lblEstado;
+    @FXML private TextField txtIdDocumento;
     @FXML private DatePicker dtpFechaProrroga;
 
     private ProfesorServicio profesorServicio;
 
     private static final String ESTILO_ERROR =
             "-fx-text-fill: #c0392b;";
-    private static final String ESTILO_INFO  =
+    private static final String ESTILO_INFO =
             "-fx-text-fill: #1C3A6E;";
-    private static final String ESTILO_OK    =
+    private static final String ESTILO_OK =
             "-fx-text-fill: #27ae60;";
     private static final String MENSAJE_EX01 =
             "No fue posible conectarse con la base de datos. "
@@ -64,7 +64,7 @@ public class OtorgarProrrogaController implements Initializable {
                 + "nueva fecha límite de entrega.");
     }
 
-    /* ── Manejador de evento ─────────────────────────────────── */
+    // Manejador de evento
 
     /**
      * Valida los campos del formulario y registra la prórroga para
@@ -72,10 +72,10 @@ public class OtorgarProrrogaController implements Initializable {
      */
     @FXML
     private void onBtnOtorgar() {
-        String txtId     = txtIdDocumento.getText().trim();
+        String textoIdDocumento = txtIdDocumento.getText().trim();
         LocalDate nuevaFecha = dtpFechaProrroga.getValue();
 
-        if (txtId.isEmpty()) {
+        if (textoIdDocumento.isEmpty()) {
             mostrarMensaje(ESTILO_ERROR,
                     "El ID del documento es obligatorio.");
             return;
@@ -87,7 +87,7 @@ public class OtorgarProrrogaController implements Initializable {
         }
         int idDocumento;
         try {
-            idDocumento = Integer.parseInt(txtId);
+            idDocumento = Integer.parseInt(textoIdDocumento);
         } catch (NumberFormatException e) {
             mostrarMensaje(ESTILO_ERROR,
                     "El ID del documento debe ser un "
@@ -111,7 +111,7 @@ public class OtorgarProrrogaController implements Initializable {
         }
     }
 
-    /* ── Método privado de apoyo ─────────────────────────────── */
+    // Método privado de apoyo
 
     /**
      * Actualiza el texto y el estilo del label de estado.

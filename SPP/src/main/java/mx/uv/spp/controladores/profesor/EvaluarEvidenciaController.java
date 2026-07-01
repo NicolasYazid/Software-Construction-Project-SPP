@@ -47,16 +47,12 @@ import mx.uv.spp.util.SesionUsuario;
  */
 public class EvaluarEvidenciaController implements Initializable {
 
-    @FXML private Label                       lblEstado;
-    @FXML private TableView<FilaEvidencia>    tblEvidencias;
-    @FXML private TableColumn<FilaEvidencia,
-            String>                           colInscripcion;
-    @FXML private TableColumn<FilaEvidencia,
-            String>                           colTipo;
-    @FXML private TableColumn<FilaEvidencia,
-            String>                           colArchivo;
-    @FXML private TableColumn<FilaEvidencia,
-            Void>                             colAccion;
+    @FXML private Label lblEstado;
+    @FXML private TableView<FilaEvidencia> tblEvidencias;
+    @FXML private TableColumn<FilaEvidencia, String> colInscripcion;
+    @FXML private TableColumn<FilaEvidencia, String> colTipo;
+    @FXML private TableColumn<FilaEvidencia, String> colArchivo;
+    @FXML private TableColumn<FilaEvidencia, Void> colAccion;
 
     private final ObservableList<FilaEvidencia> filas =
             FXCollections.observableArrayList();
@@ -64,9 +60,9 @@ public class EvaluarEvidenciaController implements Initializable {
 
     private static final String ESTILO_ERROR =
             "-fx-text-fill: #c0392b;";
-    private static final String ESTILO_INFO  =
+    private static final String ESTILO_INFO =
             "-fx-text-fill: #1C3A6E;";
-    private static final String ESTILO_OK    =
+    private static final String ESTILO_OK =
             "-fx-text-fill: #27ae60;";
     private static final String MENSAJE_EX01 =
             "No fue posible conectarse con la base de datos. "
@@ -89,7 +85,7 @@ public class EvaluarEvidenciaController implements Initializable {
         cargarFilas();
     }
 
-    /* ── Métodos privados ───────────────────────────────────── */
+    // Métodos privados
 
     /**
      * Configura las columnas de texto y la columna de acción con
@@ -97,17 +93,17 @@ public class EvaluarEvidenciaController implements Initializable {
      */
     private void configurarColumnas() {
         colInscripcion.setCellValueFactory(
-                c -> new SimpleStringProperty(
+                celda -> new SimpleStringProperty(
                         String.valueOf(
-                                c.getValue().idInscripcion)));
+                                celda.getValue().idInscripcion)));
         colTipo.setCellValueFactory(
-                c -> new SimpleStringProperty(
-                        c.getValue().nombreTipo));
+                celda -> new SimpleStringProperty(
+                        celda.getValue().nombreTipo));
         colArchivo.setCellValueFactory(
-                c -> new SimpleStringProperty(
-                        c.getValue().nombreArchivo));
+                celda -> new SimpleStringProperty(
+                        celda.getValue().nombreArchivo));
 
-        colAccion.setCellFactory(col -> new TableCell<>() {
+        colAccion.setCellFactory(columna -> new TableCell<>() {
             private final Button btnVer =
                     new Button("Ver");
             private final Button btnCalificar =
@@ -188,7 +184,7 @@ public class EvaluarEvidenciaController implements Initializable {
                 || fila.rutaArchivo.isEmpty()) {
             mostrarMensaje(ESTILO_ERROR,
                     "No hay archivo adjunto para esta evidencia.");
-            return; //awas con los returns que no dicen que retornan!!
+            return;
         }
         File archivo = new File(fila.rutaArchivo);
         if (!archivo.exists()) {
@@ -252,10 +248,10 @@ public class EvaluarEvidenciaController implements Initializable {
                 + (int) calificacion + "?");
         confirmacion.setContentText(
                 "Esta acción no puede deshacerse.");
-        Optional<ButtonType> confirm =
+        Optional<ButtonType> respuestaConfirmacion =
                 confirmacion.showAndWait();
-        if (!confirm.isPresent()
-                || confirm.get() != ButtonType.OK) {
+        if (!respuestaConfirmacion.isPresent()
+                || respuestaConfirmacion.get() != ButtonType.OK) {
             return;
         }
 
@@ -320,17 +316,17 @@ public class EvaluarEvidenciaController implements Initializable {
         lblEstado.setText(mensaje);
     }
 
-    /* ── Clase interna de fila ──────────────────────────────── */
+    // Clase interna de fila
 
     /**
      * Datos de una fila de la tabla de evidencias pendientes.
      */
     static class FilaEvidencia {
-        int    idDocumento;
-        int    idInscripcion;
-        String nombreTipo     = "";
-        String rutaArchivo    = "";
-        String nombreArchivo  = "";
+        int idDocumento;
+        int idInscripcion;
+        String nombreTipo = "";
+        String rutaArchivo = "";
+        String nombreArchivo = "";
     }
 
 }

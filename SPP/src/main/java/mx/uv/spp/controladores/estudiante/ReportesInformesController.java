@@ -47,27 +47,23 @@ import mx.uv.spp.util.Validador;
  */
 public class ReportesInformesController implements Initializable {
 
-    @FXML private Label                    lblEstado;
+    @FXML private Label lblEstado;
     @FXML private TableView<FilaEvidencia> tblEvidencias;
-    @FXML private TableColumn<FilaEvidencia,
-            String>                        colEvidencia;
-    @FXML private TableColumn<FilaEvidencia,
-            String>                        colEstado;
-    @FXML private TableColumn<FilaEvidencia,
-            String>                        colArchivo;
-    @FXML private TableColumn<FilaEvidencia,
-            Void>                          colAccion;
+    @FXML private TableColumn<FilaEvidencia, String> colEvidencia;
+    @FXML private TableColumn<FilaEvidencia, String> colEstado;
+    @FXML private TableColumn<FilaEvidencia, String> colArchivo;
+    @FXML private TableColumn<FilaEvidencia, Void> colAccion;
 
     private final ObservableList<FilaEvidencia> filas =
             FXCollections.observableArrayList();
     private EstudianteServicio estudianteServicio;
-    private DocumentoDAOImpl   documentoDAOImpl;
+    private DocumentoDAOImpl documentoDAOImpl;
 
     private static final String ESTILO_ERROR =
             "-fx-text-fill: #c0392b;";
-    private static final String ESTILO_INFO  =
+    private static final String ESTILO_INFO =
             "-fx-text-fill: #1C3A6E;";
-    private static final String ESTILO_OK    =
+    private static final String ESTILO_OK =
             "-fx-text-fill: #27ae60;";
 
     /**
@@ -91,7 +87,7 @@ public class ReportesInformesController implements Initializable {
         cargarFilas();
     }
 
-    /* ── Métodos privados ───────────────────────────────────── */
+    // Métodos privados
 
     /**
      * Configura columnas de texto y la columna de acción con
@@ -99,13 +95,16 @@ public class ReportesInformesController implements Initializable {
      */
     private void configurarColumnas() {
         colEvidencia.setCellValueFactory(
-                c -> new SimpleStringProperty(c.getValue().nombre));
+                celda -> new SimpleStringProperty(
+                        celda.getValue().nombre));
         colEstado.setCellValueFactory(
-                c -> new SimpleStringProperty(c.getValue().estado));
+                celda -> new SimpleStringProperty(
+                        celda.getValue().estado));
         colArchivo.setCellValueFactory(
-                c -> new SimpleStringProperty(c.getValue().archivo));
+                celda -> new SimpleStringProperty(
+                        celda.getValue().archivo));
 
-        colAccion.setCellFactory(col -> new TableCell<>() {
+        colAccion.setCellFactory(columna -> new TableCell<>() {
             private final Button btnSubir = new Button("Subir");
 
             {
@@ -167,15 +166,15 @@ public class ReportesInformesController implements Initializable {
                         .obtenerPorInscripcionYTipoUnico(
                                 idInscripcion, tipos[i]);
                 FilaEvidencia fila = new FilaEvidencia();
-                fila.nombre  = nombres[i];
-                fila.idTipo  = tipos[i];
+                fila.nombre = nombres[i];
+                fila.idTipo = tipos[i];
                 if (doc != null) {
-                    fila.estado  = obtenerNombreEstado(
+                    fila.estado = obtenerNombreEstado(
                             doc.getIdEstadoDocumento());
                     fila.archivo = doc.getNombreArchivo() != null
                             ? doc.getNombreArchivo() : "";
                 } else {
-                    fila.estado  = "Pendiente";
+                    fila.estado = "Pendiente";
                     fila.archivo = "";
                 }
                 filas.add(fila);
@@ -312,15 +311,15 @@ public class ReportesInformesController implements Initializable {
         lblEstado.setText(mensaje);
     }
 
-    /* ── Clase interna de fila ──────────────────────────────── */
+    // Clase interna de fila
 
     /**
      * Datos de una fila de la tabla de evidencias del Estudiante.
      */
     static class FilaEvidencia {
-        String nombre  = "";
-        int    idTipo;
-        String estado  = "Pendiente";
+        String nombre = "";
+        int idTipo;
+        String estado = "Pendiente";
         String archivo = "";
     }
 

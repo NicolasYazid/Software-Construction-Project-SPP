@@ -39,13 +39,14 @@ public class EstudianteInscritoDAOImpl
             throws SQLException {
         try (Connection con =
                      ConexionBD.obtenerInstancia().obtenerConexion();
-             PreparedStatement ps =
+             PreparedStatement psIdInscripcion =
                      con.prepareStatement(SQL_ID_INSCRIPCION)) {
 
-            ps.setInt(1, idEstudiante);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt("id");
+            psIdInscripcion.setInt(1, idEstudiante);
+            try (ResultSet rsInscripcion =
+                    psIdInscripcion.executeQuery()) {
+                if (rsInscripcion.next()) {
+                    return rsInscripcion.getInt("id");
                 }
             }
         }

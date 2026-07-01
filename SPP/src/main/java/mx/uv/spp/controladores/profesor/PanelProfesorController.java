@@ -31,7 +31,7 @@ import mx.uv.spp.util.SesionUsuario;
 public class PanelProfesorController implements Initializable {
 
     @FXML private StackPane contenedor;
-    @FXML private Label     lblBienvenida;
+    @FXML private Label lblBienvenida;
 
     private static final String VISTA_EVIDENCIAS =
             "/mx/uv/spp/vistas/profesor/evaluar_evidencia.fxml";
@@ -57,7 +57,7 @@ public class PanelProfesorController implements Initializable {
         }
     }
 
-    /* ── Manejadores de botones del menú ────────────────────── */
+    // Manejadores de botones del menú
 
     /**
      * Carga la sub-vista de Evidencias por Evaluar (CU-29).
@@ -100,7 +100,7 @@ public class PanelProfesorController implements Initializable {
         Navegador.irALogin();
     }
 
-    /* ── Carga de sub-vistas ────────────────────────────────── */
+    // Carga de sub-vistas
 
     /**
      * Carga el FXML indicado como contenido central del panel.

@@ -37,48 +37,48 @@ import mx.uv.spp.util.SesionUsuario;
  */
 public class LoginController implements Initializable {
 
-    /* ── Controles inyectados desde FXML ─────────────────────── */
+    // Controles inyectados desde FXML
 
     @FXML private ComboBox<String> cmbTipo;
-    @FXML private Label            lblIdentificador;
-    @FXML private TextField        txtIdentificador;
-    @FXML private PasswordField    pwdContrasena;
-    @FXML private Button           btnIniciarSesion;
-    @FXML private Label            lblMensaje;
+    @FXML private Label lblIdentificador;
+    @FXML private TextField txtIdentificador;
+    @FXML private PasswordField pwdContrasena;
+    @FXML private Button btnIniciarSesion;
+    @FXML private Label lblMensaje;
 
-    /* ── Servicio de negocio ─────────────────────────────────── */
+    // Servicio de negocio
 
     private LoginServicio loginServicio;
 
-    /* ── Constantes de etiquetas de UI ──────────────────────── */
+    // Constantes de etiquetas de UI
 
     private static final String ETIQUETA_ADMINISTRADOR =
             "Administrador";
-    private static final String ETIQUETA_COORDINADOR   =
+    private static final String ETIQUETA_COORDINADOR =
             "Coordinador";
-    private static final String ETIQUETA_PROFESOR      =
+    private static final String ETIQUETA_PROFESOR =
             "Profesor(a)";
-    private static final String ETIQUETA_ESTUDIANTE    =
+    private static final String ETIQUETA_ESTUDIANTE =
             "Estudiante";
 
-    private static final String LABEL_CORREO     =
+    private static final String LABEL_CORREO =
             "Correo electrónico:";
-    private static final String LABEL_MATRICULA  =
+    private static final String LABEL_MATRICULA =
             "Matrícula:";
-    private static final String LABEL_USUARIO    =
+    private static final String LABEL_USUARIO =
             "Usuario:";
-    private static final String PROMPT_CORREO    =
+    private static final String PROMPT_CORREO =
             "Ingrese su correo electrónico";
     private static final String PROMPT_MATRICULA =
             "Ingrese su matrícula (ej. zS21013417)";
-    private static final String PROMPT_USUARIO   =
+    private static final String PROMPT_USUARIO =
             "Ingrese su usuario";
 
     private static final String ESTILO_OCULTO =
             "lbl-mensaje-oculto";
-    private static final String ESTILO_ERROR  =
+    private static final String ESTILO_ERROR =
             "lbl-mensaje-error";
-    private static final String ESTILO_INFO   =
+    private static final String ESTILO_INFO =
             "lbl-mensaje-info";
 
     /**
@@ -116,7 +116,7 @@ public class LoginController implements Initializable {
     @FXML
     private void onBtnIniciarSesion() {
         String identificador = txtIdentificador.getText();
-        String contrasena    = pwdContrasena.getText();
+        String contrasena = pwdContrasena.getText();
 
         if (!validarCamposUI(identificador, contrasena)) {
             return;
@@ -153,7 +153,7 @@ public class LoginController implements Initializable {
         }
     }
 
-    /* ── Métodos privados de apoyo ──────────────────────────── */
+    // Métodos privados de apoyo
 
     /**
      * Valida que los campos de la UI no estén vacíos antes de

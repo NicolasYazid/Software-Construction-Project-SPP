@@ -44,7 +44,7 @@ public class AutoevaluacionDAOImpl implements AutoevaluacionDAO {
     @Override
     public boolean existePorInscripcion(int idInscripcion)
             throws SQLException {
-        String sql = "SELECT COUNT(*)"
+        String sqlExisteAutoevaluacion = "SELECT COUNT(*)"
                 + " FROM respuesta_autoevaluacion ra"
                 + " JOIN entrega e"
                 + " ON e.id = ra.entrega_id"
@@ -54,12 +54,15 @@ public class AutoevaluacionDAOImpl implements AutoevaluacionDAO {
                 + " AND e.entregable_id = ?";
         Connection con = ConexionBD.obtenerInstancia()
                 .obtenerConexion();
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, idInscripcion);
-            ps.setInt(2, Constantes.TIPO_EVIDENCIA_AUTOEVALUACION);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1) > 0;
+        try (PreparedStatement psExisteAutoevaluacion =
+                con.prepareStatement(sqlExisteAutoevaluacion)) {
+            psExisteAutoevaluacion.setInt(1, idInscripcion);
+            psExisteAutoevaluacion.setInt(
+                    2, Constantes.TIPO_EVIDENCIA_AUTOEVALUACION);
+            try (ResultSet rsConteo =
+                    psExisteAutoevaluacion.executeQuery()) {
+                if (rsConteo.next()) {
+                    return rsConteo.getInt(1) > 0;
                 }
             }
         }
@@ -102,22 +105,22 @@ public class AutoevaluacionDAOImpl implements AutoevaluacionDAO {
             con.setAutoCommit(false);
 
             for (int i = 0; i < valores.length; i++) {
-                try (PreparedStatement ps =
+                try (PreparedStatement psRespuesta =
                         con.prepareStatement(sqlRespuesta)) {
-                    ps.setInt(1, entregaId);
-                    ps.setInt(2, i + 1);
-                    ps.setInt(3, valores[i]);
-                    ps.executeUpdate();
+                    psRespuesta.setInt(1, entregaId);
+                    psRespuesta.setInt(2, i + 1);
+                    psRespuesta.setInt(3, valores[i]);
+                    psRespuesta.executeUpdate();
                 }
             }
 
-            String sqlEstado = "UPDATE entrega"
+            String sqlActualizarEstado = "UPDATE entrega"
                     + " SET estado = 'entregada'"
                     + " WHERE id = ?";
-            try (PreparedStatement ps =
-                    con.prepareStatement(sqlEstado)) {
-                ps.setInt(1, entregaId);
-                ps.executeUpdate();
+            try (PreparedStatement psActualizarEstado =
+                    con.prepareStatement(sqlActualizarEstado)) {
+                psActualizarEstado.setInt(1, entregaId);
+                psActualizarEstado.executeUpdate();
             }
 
             con.commit();

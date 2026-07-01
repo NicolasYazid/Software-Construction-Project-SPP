@@ -37,7 +37,7 @@ public final class Navegador {
             "/mx/uv/spp/vistas/administrador/PanelAdministrador.fxml";
 
     private static final int ANCHO_PANEL = 1100;
-    private static final int ALTO_PANEL  = 700;
+    private static final int ALTO_PANEL = 700;
 
     private static Stage escenario;
 
