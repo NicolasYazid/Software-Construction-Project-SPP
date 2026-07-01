@@ -17,13 +17,14 @@ import java.util.List;
 import mx.uv.spp.modelo.Profesor;
 import mx.uv.spp.persistencia.ConexionBD;
 import mx.uv.spp.persistencia.dao.ProfesorDAO;
+import mx.uv.spp.util.CifradoAES;
 import mx.uv.spp.util.Constantes;
 
 /**
  * Implementación JDBC de {@link ProfesorDAO} para spp_db.
  * Accede a la tabla {@code profesor} con {@code PreparedStatement}.
- * Las contraseñas se almacenan en texto plano, igual que el resto
- * de la capa de persistencia migrada a spp_db.
+ * Las contraseñas se cifran con AES-128-CBC (SEG-04) antes de
+ * persistirse; ver {@link CifradoAES}.
  *
  * @author Nicolás Yazid Cruz Hernández
  * @author Isaac Adriano Vázquez Torres
@@ -97,7 +98,7 @@ public class ProfesorDAOImpl implements ProfesorDAO {
             }
 
             ps.setString(5, profesor.getCorreo());
-            ps.setString(6, profesor.getContrasena());
+            ps.setString(6, CifradoAES.cifrar(profesor.getContrasena()));
             ps.setString(7, Constantes.ESTADO_ACTIVO);
             ps.executeUpdate();
         }

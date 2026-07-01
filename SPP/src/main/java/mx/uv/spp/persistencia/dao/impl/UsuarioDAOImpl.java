@@ -15,11 +15,13 @@ import mx.uv.spp.modelo.ResultadoAutenticacion;
 import mx.uv.spp.modelo.TipoUsuario;
 import mx.uv.spp.persistencia.ConexionBD;
 import mx.uv.spp.persistencia.dao.UsuarioDAO;
+import mx.uv.spp.util.CifradoAES;
 import mx.uv.spp.util.Constantes;
 
 /**
  * Implementación JDBC de {@link UsuarioDAO} para la base de datos
- * spp_db. Las contraseñas se almacenan en texto plano (sin AES).
+ * spp_db. Las contraseñas se cifran con AES-128-CBC (SEG-04) antes
+ * de compararse o persistirse; ver {@link CifradoAES}.
  * El rol Coordinador se identifica por la columna {@code coordinador=TRUE}
  * en la tabla {@code profesor}. No existen columnas
  * {@code intentos_fallidos} ni {@code fecha_bloqueo} en spp_db;
@@ -35,8 +37,9 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             "Credenciales incorrectas.";
 
     /**
-     * Busca al usuario en su tabla según el tipo y compara la
-     * contraseña en texto plano con la almacenada en la BD.
+     * Busca al usuario en su tabla según el tipo, descifra la
+     * contraseña almacenada con AES-128-CBC y la compara contra la
+     * ingresada en texto plano.
      *
      * @param identificador Correo, matrícula o usuario en texto plano.
      * @param contrasena    Contraseña en texto plano.
@@ -68,14 +71,20 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
                 resultado.setIdUsuario(rs.getInt("id_usuario"));
                 resultado.setEstado(rs.getString("estado"));
-                resultado.setIntentosFallidos(0);
-                resultado.setFechaBloqueo(null);
+                resultado.setIntentosFallidos(
+                        rs.getInt("intentos_fallidos"));
+                java.sql.Timestamp ts =
+                        rs.getTimestamp("fecha_bloqueo");
+                resultado.setFechaBloqueo(
+                        ts != null ? ts.toLocalDateTime() : null);
                 resultado.setNombreCompleto(
                         construirNombreCompleto(rs, tipo));
 
                 String contrasenaBD = rs.getString("contrasenia");
+                String contrasenaBDDescifrada =
+                        CifradoAES.descifrar(contrasenaBD);
                 resultado.setExitoso(
-                        contrasena.equals(contrasenaBD));
+                        contrasena.equals(contrasenaBDDescifrada));
 
                 if (!resultado.isExitoso()) {
                     resultado.setMensajeError(MENSAJE_CREDENCIALES);
@@ -86,30 +95,56 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     }
 
     /**
-     * No hace nada: spp_db no tiene columna {@code intentos_fallidos}.
-     * El control de intentos se maneja en memoria en LoginServicio.
+     * Incrementa {@code intentos_fallidos} en 1 y registra
+     * {@code fecha_bloqueo} cuando se alcanza el máximo de intentos.
      *
-     * @param idUsuario PK del usuario (no usado).
-     * @param tipo      Rol del usuario (no usado).
-     * @throws SQLException nunca lanzado en esta implementación.
+     * @param idUsuario PK del usuario en su tabla.
+     * @param tipo      Rol del usuario (determina la tabla y PK).
+     * @throws SQLException si ocurre un error de acceso a la BD.
      */
     @Override
     public void incrementarIntentosFallidos(int idUsuario,
             TipoUsuario tipo) throws SQLException {
-        // spp_db no tiene columna intentos_fallidos; sin acción.
+        String tabla = obtenerTabla(tipo);
+        String pk    = obtenerPkColumna(tipo);
+        String sql = "UPDATE " + tabla
+                + " SET intentos_fallidos = intentos_fallidos + 1,"
+                + " fecha_bloqueo = CASE"
+                + " WHEN intentos_fallidos + 1 >= ?"
+                + " THEN NOW() ELSE NULL END"
+                + " WHERE " + pk + " = ?";
+        try (Connection con =
+                     ConexionBD.obtenerInstancia().obtenerConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, Constantes.MAX_INTENTOS_LOGIN);
+            ps.setInt(2, idUsuario);
+            ps.executeUpdate();
+        }
     }
 
     /**
-     * No hace nada: spp_db no tiene columna {@code intentos_fallidos}.
+     * Reinicia {@code intentos_fallidos} a 0 y limpia
+     * {@code fecha_bloqueo} tras un login exitoso o bloqueo expirado.
      *
-     * @param idUsuario PK del usuario (no usado).
-     * @param tipo      Rol del usuario (no usado).
-     * @throws SQLException nunca lanzado en esta implementación.
+     * @param idUsuario PK del usuario en su tabla.
+     * @param tipo      Rol del usuario (determina la tabla y PK).
+     * @throws SQLException si ocurre un error de acceso a la BD.
      */
     @Override
     public void reiniciarIntentos(int idUsuario,
             TipoUsuario tipo) throws SQLException {
-        // spp_db no tiene columna intentos_fallidos; sin acción.
+        String tabla = obtenerTabla(tipo);
+        String pk    = obtenerPkColumna(tipo);
+        String sql = "UPDATE " + tabla
+                + " SET intentos_fallidos = 0,"
+                + " fecha_bloqueo = NULL"
+                + " WHERE " + pk + " = ?";
+        try (Connection con =
+                     ConexionBD.obtenerInstancia().obtenerConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idUsuario);
+            ps.executeUpdate();
+        }
     }
 
     /**
@@ -160,7 +195,9 @@ public class UsuarioDAOImpl implements UsuarioDAO {
                         + " NULL AS primer_apellido,"
                         + " NULL AS segundo_apellido,"
                         + " contrasenia,"
-                        + " 'activo' AS estado"
+                        + " 'activo' AS estado,"
+                        + " intentos_fallidos,"
+                        + " fecha_bloqueo"
                         + " FROM administrador"
                         + " WHERE usuario = ?";
             case COORDINADOR:
@@ -168,7 +205,9 @@ public class UsuarioDAOImpl implements UsuarioDAO {
                         + " nombre,"
                         + " apellido_paterno AS primer_apellido,"
                         + " apellido_materno AS segundo_apellido,"
-                        + " contrasenia, estado"
+                        + " contrasenia, estado,"
+                        + " intentos_fallidos,"
+                        + " fecha_bloqueo"
                         + " FROM profesor"
                         + " WHERE correo_institucional = ?"
                         + " AND coordinador = TRUE";
@@ -177,7 +216,9 @@ public class UsuarioDAOImpl implements UsuarioDAO {
                         + " nombre,"
                         + " apellido_paterno AS primer_apellido,"
                         + " apellido_materno AS segundo_apellido,"
-                        + " contrasenia, estado"
+                        + " contrasenia, estado,"
+                        + " intentos_fallidos,"
+                        + " fecha_bloqueo"
                         + " FROM profesor"
                         + " WHERE correo_institucional = ?"
                         + " AND coordinador = FALSE";
@@ -186,7 +227,9 @@ public class UsuarioDAOImpl implements UsuarioDAO {
                         + " nombre,"
                         + " apellido_paterno AS primer_apellido,"
                         + " apellido_materno AS segundo_apellido,"
-                        + " contrasenia, estado"
+                        + " contrasenia, estado,"
+                        + " intentos_fallidos,"
+                        + " fecha_bloqueo"
                         + " FROM estudiante"
                         + " WHERE matricula = ?";
             default:

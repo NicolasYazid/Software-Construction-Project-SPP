@@ -106,6 +106,7 @@ public class LoginServicio {
             if (LocalDateTime.now().isBefore(desbloqueo)) {
                 long restantes = ChronoUnit.MINUTES.between(
                         LocalDateTime.now(), desbloqueo) + 1;
+                resultado.setExitoso(false);
                 resultado.setMensajeError(
                         "Cuenta bloqueada. Intente de nuevo en "
                         + restantes + " minuto(s).");
