@@ -35,6 +35,25 @@
             <version>5.10.0</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- JUnit 4 para las pruebas de GUI con TestFX -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Motor vintage: permite que Surefire (que usa el motor de
+             JUnit 5) descubra y ejecute también las pruebas escritas
+             en JUnit 4 (org.junit.Test) -->
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <version>5.10.0</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
