@@ -46,18 +46,18 @@ import mx.uv.spp.persistencia.dao.impl.ProfesorDAOImpl;
  */
 public class PanelTransferirRolController implements Initializable {
 
-    @FXML private TableView<Profesor>           tblProfesores;
+    @FXML private TableView<Profesor> tblProfesores;
     @FXML private TableColumn<Profesor, String> colNumeroPersonal;
     @FXML private TableColumn<Profesor, String> colNombre;
     @FXML private TableColumn<Profesor, String> colCorreo;
-    @FXML private Button                        btnTransferirRol;
-    @FXML private Label                         lblMensaje;
+    @FXML private Button btnTransferirRol;
+    @FXML private Label lblMensaje;
 
     private static final String RUTA_FXML =
             "/mx/uv/spp/vistas/administrador/PanelTransferirRol.fxml";
     private static final String TITULO_VENTANA = "SPP — Transferir rol";
-    private static final int    ANCHO_DIALOGO  = 760;
-    private static final int    ALTO_DIALOGO   = 480;
+    private static final int ANCHO_DIALOGO = 760;
+    private static final int ALTO_DIALOGO = 480;
 
     private static final String MENSAJE_ERROR_CONEXION_BD =
             "Error: no fue posible conectarse con la base de datos, "
@@ -82,16 +82,16 @@ public class PanelTransferirRolController implements Initializable {
      * Abre la ventana emergente como diálogo modal bloqueante.
      * Debe llamarse desde el hilo de la aplicación JavaFX.
      *
-     * @param propietario       Ventana padre sobre la que se bloquea
-     *                          el foco mientras el diálogo está
-     *                          abierto; no nula.
+     * @param propietario Ventana padre sobre la que se bloquea
+     * el foco mientras el diálogo está
+     * abierto; no nula.
      * @param coordinadorActual Coordinador vigente obtenido en el
-     *                          paso 2 del FN (CU-Admin.-03); nulo si
-     *                          ningún Profesor posee el rol
-     *                          actualmente. Se reutiliza tal cual,
-     *                          sin volver a consultar la BD.
+     * paso 2 del FN (CU-Admin.-03); nulo si
+     * ningún Profesor posee el rol
+     * actualmente. Se reutiliza tal cual,
+     * sin volver a consultar la BD.
      * @return {@code true} si el rol de Coordinador fue transferido
-     *         exitosamente durante esta apertura del diálogo.
+     * exitosamente durante esta apertura del diálogo.
      */
     public static boolean mostrar(Window propietario,
             Profesor coordinadorActual) {
@@ -137,7 +137,7 @@ public class PanelTransferirRolController implements Initializable {
      * candidatos desde la BD.
      *
      * @param ubicacion URL del FXML (no usado).
-     * @param recursos  Paquete de i18n (no usado).
+     * @param recursos Paquete de i18n (no usado).
      */
     @Override
     public void initialize(URL ubicacion, ResourceBundle recursos) {

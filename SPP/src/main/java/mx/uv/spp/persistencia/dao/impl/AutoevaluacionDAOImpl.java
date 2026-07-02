@@ -21,10 +21,10 @@ import mx.uv.spp.util.Constantes;
  * En spp_db no existe tabla {@code autoevaluacion} con columnas
  * {@code afirmacion_1..10}. En su lugar se usan:
  * <ul>
- *   <li>{@code entrega} — fila para el Estudiante con
- *       {@code entregable_id = TIPO_EVIDENCIA_AUTOEVALUACION}.</li>
- *   <li>{@code respuesta_autoevaluacion} — una fila por afirmación
- *       (10 filas en total).</li>
+ * <li>{@code entrega} — fila para el Estudiante con
+ * {@code entregable_id = TIPO_EVIDENCIA_AUTOEVALUACION}.</li>
+ * <li>{@code respuesta_autoevaluacion} — una fila por afirmación
+ * (10 filas en total).</li>
  * </ul>
  * El campo {@code idDocumento} del POJO {@link Autoevaluacion}
  * corresponde al {@code id} de la fila en {@code entrega}.

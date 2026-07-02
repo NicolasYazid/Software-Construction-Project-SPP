@@ -38,11 +38,11 @@ import mx.uv.spp.util.Validador;
  */
 public class PanelAltaProfesoresController implements Initializable {
 
-    @FXML private TextField     txtNumeroPersonal;
-    @FXML private TextField     txtNombre;
-    @FXML private TextField     txtApellidoPaterno;
-    @FXML private TextField     txtApellidoMaterno;
-    @FXML private TextField     txtCorreo;
+    @FXML private TextField txtNumeroPersonal;
+    @FXML private TextField txtNombre;
+    @FXML private TextField txtApellidoPaterno;
+    @FXML private TextField txtApellidoMaterno;
+    @FXML private TextField txtCorreo;
     @FXML private PasswordField pwdContrasena;
 
     private static final String VISTA_PANEL_ADMIN =
@@ -67,7 +67,7 @@ public class PanelAltaProfesoresController implements Initializable {
      * Administrador con su DAO JDBC. El formulario comienza vacío.
      *
      * @param ubicacion URL del FXML (no usado).
-     * @param recursos  Paquete de i18n (no usado).
+     * @param recursos Paquete de i18n (no usado).
      */
     @Override
     public void initialize(URL ubicacion, ResourceBundle recursos) {
@@ -155,12 +155,12 @@ public class PanelAltaProfesoresController implements Initializable {
      */
     @FXML
     private void onBtnRegistrar() {
-        String numeroPersonal     = txtNumeroPersonal.getText().trim();
-        String nombre          = txtNombre.getText().trim();
+        String numeroPersonal = txtNumeroPersonal.getText().trim();
+        String nombre = txtNombre.getText().trim();
         String apellidoPaterno = txtApellidoPaterno.getText().trim();
         String apellidoMaterno = txtApellidoMaterno.getText().trim();
-        String correo          = txtCorreo.getText().trim();
-        String contrasena      = pwdContrasena.getText();
+        String correo = txtCorreo.getText().trim();
+        String contrasena = pwdContrasena.getText();
 
         // Paso 3 / FA-02: ningún campo vacío, excepto apellido materno.
         if (numeroPersonal.isEmpty() || nombre.isEmpty()
@@ -311,8 +311,8 @@ public class PanelAltaProfesoresController implements Initializable {
      * Muestra una ventana emergente con el tipo, título y mensaje
      * indicados, y espera a que el Administrador la cierre.
      *
-     * @param tipo    Tipo de alerta (advertencia, error o información).
-     * @param titulo  Título de la ventana.
+     * @param tipo Tipo de alerta (advertencia, error o información).
+     * @param titulo Título de la ventana.
      * @param mensaje Cuerpo del mensaje a mostrar.
      */
     private void mostrarAlerta(AlertType tipo, String titulo,

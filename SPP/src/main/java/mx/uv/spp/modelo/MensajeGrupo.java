@@ -20,13 +20,13 @@ import java.time.LocalDateTime;
  */
 public class MensajeGrupo {
 
-    private int           idMensajeGrupo;
-    private int           idGrupo;
-    private int           idProfesor;
-    private String        asunto;
-    private String        texto;
-    private String        rutaArchivo;
-    private String        nombreArchivo;
+    private int idMensajeGrupo;
+    private int idGrupo;
+    private int idProfesor;
+    private String asunto;
+    private String texto;
+    private String rutaArchivo;
+    private String nombreArchivo;
     private LocalDateTime fechaPublicacion;
 
     /**
@@ -40,31 +40,31 @@ public class MensajeGrupo {
      * Constructor completo para inicializar un MensajeGrupo con
      * todos sus datos.
      *
-     * @param idMensajeGrupo   Identificador del registro en la BD.
-     * @param idGrupo          FK hacia {@code grupo}; identifica el
-     *                         grupo receptor completo.
-     * @param idProfesor       FK hacia {@code profesor}; autor del mensaje.
-     * @param asunto           Asunto del mensaje; puede ser {@code null}.
-     * @param texto            Cuerpo del mensaje; puede ser {@code null}
-     *                         si el mensaje solo contiene un archivo adjunto.
-     * @param rutaArchivo      Ruta local del PDF adjunto; {@code null} si
-     *                         no hay adjunto.
-     * @param nombreArchivo    Nombre del archivo adjunto para mostrar en la
-     *                         UI; {@code null} si no hay adjunto.
+     * @param idMensajeGrupo Identificador del registro en la BD.
+     * @param idGrupo FK hacia {@code grupo}; identifica el
+     * grupo receptor completo.
+     * @param idProfesor FK hacia {@code profesor}; autor del mensaje.
+     * @param asunto Asunto del mensaje; puede ser {@code null}.
+     * @param texto Cuerpo del mensaje; puede ser {@code null}
+     * si el mensaje solo contiene un archivo adjunto.
+     * @param rutaArchivo Ruta local del PDF adjunto; {@code null} si
+     * no hay adjunto.
+     * @param nombreArchivo Nombre del archivo adjunto para mostrar en la
+     * UI; {@code null} si no hay adjunto.
      * @param fechaPublicacion Fecha y hora en que el Profesor publicó el
-     *                         mensaje; no puede ser {@code null}.
+     * mensaje; no puede ser {@code null}.
      */
     public MensajeGrupo(int idMensajeGrupo, int idGrupo,
             int idProfesor, String asunto, String texto,
             String rutaArchivo, String nombreArchivo,
             LocalDateTime fechaPublicacion) {
-        this.idMensajeGrupo   = idMensajeGrupo;
-        this.idGrupo          = idGrupo;
-        this.idProfesor       = idProfesor;
-        this.asunto           = asunto;
-        this.texto            = texto;
-        this.rutaArchivo      = rutaArchivo;
-        this.nombreArchivo    = nombreArchivo;
+        this.idMensajeGrupo = idMensajeGrupo;
+        this.idGrupo = idGrupo;
+        this.idProfesor = idProfesor;
+        this.asunto = asunto;
+        this.texto = texto;
+        this.rutaArchivo = rutaArchivo;
+        this.nombreArchivo = nombreArchivo;
         this.fechaPublicacion = fechaPublicacion;
     }
 

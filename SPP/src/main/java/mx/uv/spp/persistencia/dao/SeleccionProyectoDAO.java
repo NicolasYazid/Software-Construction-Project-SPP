@@ -31,7 +31,7 @@ public interface SeleccionProyectoDAO {
      *
      * @param idInscripcion FK de {@code estudiante_inscrito}.
      * @return {@code true} si existe al menos una fila para la
-     *         inscripción en {@code seleccion_proyecto}.
+     * inscripción en {@code seleccion_proyecto}.
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
     boolean existeSeleccionPorInscripcion(int idInscripcion)
@@ -43,9 +43,9 @@ public interface SeleccionProyectoDAO {
      * de todos los inserts del lote.
      *
      * @param selecciones Lista completa de selecciones ordenadas
-     *                    por prioridad; no debe ser vacía.
+     * por prioridad; no debe ser vacía.
      * @throws SQLException si ocurre un error en la BD o en el
-     *         rollback tras un fallo parcial.
+     * rollback tras un fallo parcial.
      */
     void insertarLista(List<SeleccionProyecto> selecciones)
             throws SQLException;

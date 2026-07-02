@@ -47,10 +47,10 @@ public interface ProfesorDAO {
      * Inserta un nuevo Profesor en estado activo.
      *
      * @param profesor Datos del nuevo Profesor; no nulo. El campo
-     *                 {@code id} es ignorado (autogenerado por la BD).
+     * {@code id} es ignorado (autogenerado por la BD).
      * @throws SQLException si ocurre un error de acceso a la BD, por
-     *         ejemplo una violación de unicidad no detectada antes
-     *         de la inserción.
+     * ejemplo una violación de unicidad no detectada antes
+     * de la inserción.
      */
     void registrar(Profesor profesor) throws SQLException;
 
@@ -80,7 +80,7 @@ public interface ProfesorDAO {
      * Coordinador (columna {@code coordinador = TRUE}).
      *
      * @return el Profesor Coordinador vigente, o {@code null} si
-     *         ninguno posee el rol actualmente.
+     * ninguno posee el rol actualmente.
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
     Profesor obtenerCoordinadorActual() throws SQLException;
@@ -91,13 +91,13 @@ public interface ProfesorDAO {
      * hay) y lo activa para el nuevo, o ninguna de las dos
      * actualizaciones se aplica si alguna falla (CU-Admin.-03, paso 8).
      *
-     * @param idNuevoCoordinador     PK del Profesor que recibirá el
-     *                               rol; no puede ser 0.
-     * @param idCoordinadorAnterior  PK del Profesor que actualmente
-     *                               posee el rol; {@code null} si
-     *                               ninguno lo posee.
+     * @param idNuevoCoordinador PK del Profesor que recibirá el
+     * rol; no puede ser 0.
+     * @param idCoordinadorAnterior PK del Profesor que actualmente
+     * posee el rol; {@code null} si
+     * ninguno lo posee.
      * @throws SQLException si ocurre un error de acceso a la BD; en
-     *         ese caso ningún cambio queda aplicado (rollback).
+     * ese caso ningún cambio queda aplicado (rollback).
      */
     void transferirRolCoordinador(int idNuevoCoordinador,
             Integer idCoordinadorAnterior) throws SQLException;

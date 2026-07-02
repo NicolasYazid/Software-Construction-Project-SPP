@@ -18,11 +18,11 @@ import java.time.LocalDateTime;
  *
  * <p>Flujo de lectura esperado en el controlador:</p>
  * <pre>
- *   if (resultado.isExitoso()) {
- *       // navegar a pantalla principal
- *   } else {
- *       // mostrar resultado.getMensajeError()
- *   }
+ * if (resultado.isExitoso()) {
+ * // navegar a pantalla principal
+ * } else {
+ * // mostrar resultado.getMensajeError()
+ * }
  * </pre>
  *
  * @author Nicolás Yazid Cruz Hernández
@@ -30,13 +30,13 @@ import java.time.LocalDateTime;
  */
 public class ResultadoAutenticacion {
 
-    private boolean       exitoso;
-    private String        mensajeError;
-    private TipoUsuario   tipo;
-    private int           idUsuario;
-    private String        nombreCompleto;
-    private String        estado;
-    private int           intentosFallidos;
+    private boolean exitoso;
+    private String mensajeError;
+    private TipoUsuario tipo;
+    private int idUsuario;
+    private String nombreCompleto;
+    private String estado;
+    private int intentosFallidos;
     private LocalDateTime fechaBloqueo;
 
     /**
@@ -171,7 +171,7 @@ public class ResultadoAutenticacion {
      * Establece el contador de intentos fallidos leído de la BD.
      *
      * @param intentosFallidos Valor actual de la columna
-     *                         {@code intentos_fallidos}.
+     * {@code intentos_fallidos}.
      */
     public void setIntentosFallidos(int intentosFallidos) {
         this.intentosFallidos = intentosFallidos;
@@ -190,7 +190,7 @@ public class ResultadoAutenticacion {
      * Establece el momento del bloqueo leído de la BD.
      *
      * @param fechaBloqueo Valor de la columna {@code fecha_bloqueo},
-     *                     o {@code null} si la cuenta no está bloqueada.
+     * o {@code null} si la cuenta no está bloqueada.
      */
     public void setFechaBloqueo(LocalDateTime fechaBloqueo) {
         this.fechaBloqueo = fechaBloqueo;

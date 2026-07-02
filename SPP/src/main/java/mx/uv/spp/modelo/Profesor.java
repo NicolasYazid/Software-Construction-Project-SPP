@@ -35,19 +35,19 @@ public class Profesor extends Academico {
      * Constructor completo para inicializar un Profesor con todos
      * sus datos, incluido el turno que lo distingue de un Coordinador.
      *
-     * @param id                 Identificador del registro en la BD.
-     * @param numeroPersonal     Número de personal UV.
-     * @param nombre             Nombre(s) cifrado con AES-128.
-     * @param apellidoPaterno    Apellido paterno cifrado.
-     * @param apellidoMaterno    Apellido materno cifrado; null si no aplica.
-     * @param correo             Correo cifrado; identificador de login.
-     * @param contrasena         Contraseña cifrada con AES-128.
-     * @param estado             Activo o No Activo.
-     * @param fechaRegistro      Fecha de creación de la cuenta.
-     * @param tiempoServicio     Años de servicio en la institución.
-     * @param intentosFallidos   Intentos de login fallidos consecutivos.
-     * @param fechaBloqueo       Momento del bloqueo; null si no bloqueado.
-     * @param turno              Turno de trabajo: Matutino o Vespertino.
+     * @param id Identificador del registro en la BD.
+     * @param numeroPersonal Número de personal UV.
+     * @param nombre Nombre(s) cifrado con AES-128.
+     * @param apellidoPaterno Apellido paterno cifrado.
+     * @param apellidoMaterno Apellido materno cifrado; null si no aplica.
+     * @param correo Correo cifrado; identificador de login.
+     * @param contrasena Contraseña cifrada con AES-128.
+     * @param estado Activo o No Activo.
+     * @param fechaRegistro Fecha de creación de la cuenta.
+     * @param tiempoServicio Años de servicio en la institución.
+     * @param intentosFallidos Intentos de login fallidos consecutivos.
+     * @param fechaBloqueo Momento del bloqueo; null si no bloqueado.
+     * @param turno Turno de trabajo: Matutino o Vespertino.
      */
     public Profesor(int id, String numeroPersonal,
             String nombre, String apellidoPaterno,

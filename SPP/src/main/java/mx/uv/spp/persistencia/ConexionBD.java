@@ -40,7 +40,7 @@ public final class ConexionBD {
      * ya que sin base de datos el sistema no puede operar.
      *
      * @throws RuntimeException si el archivo de configuración no se
-     *         encuentra en el classpath o le faltan propiedades requeridas.
+     * encuentra en el classpath o le faltan propiedades requeridas.
      */
     private ConexionBD() {
         try {
@@ -72,7 +72,7 @@ public final class ConexionBD {
      *
      * @return objeto {@link Connection} listo para ejecutar sentencias SQL.
      * @throws SQLException si el driver no puede establecer la conexión
-     *         con los parámetros provistos en el archivo de configuración.
+     * con los parámetros provistos en el archivo de configuración.
      */
     public Connection obtenerConexion() throws SQLException {
         if (conexion == null || conexion.isClosed()) {
@@ -104,7 +104,7 @@ public final class ConexionBD {
      * ubicado en la raíz del classpath.
      *
      * @throws IOException si el archivo no se encuentra o no puede leerse,
-     *         o si le falta alguna de las tres propiedades requeridas.
+     * o si le falta alguna de las tres propiedades requeridas.
      */
     private void cargarPropiedades() throws IOException {
         Properties propiedades = new Properties();
@@ -120,8 +120,8 @@ public final class ConexionBD {
             propiedades.load(flujo);
         }
 
-        url        = propiedades.getProperty("bd.url");
-        usuario    = propiedades.getProperty("bd.usuario");
+        url = propiedades.getProperty("bd.url");
+        usuario = propiedades.getProperty("bd.usuario");
         contrasena = propiedades.getProperty("bd.contrasena");
 
         if (url == null || usuario == null || contrasena == null) {

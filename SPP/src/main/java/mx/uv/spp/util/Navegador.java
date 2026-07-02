@@ -116,7 +116,7 @@ public final class Navegador {
      * un Alert de error sin interrumpir la ejecución.
      *
      * @param rutaFxml Ruta absoluta del FXML en el classpath.
-     * @param titulo   Título a mostrar en la barra de la ventana.
+     * @param titulo Título a mostrar en la barra de la ventana.
      */
     private static void cargarVista(String rutaFxml,
             String titulo) {

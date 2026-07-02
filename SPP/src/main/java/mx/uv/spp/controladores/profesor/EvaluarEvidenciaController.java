@@ -73,7 +73,7 @@ public class EvaluarEvidenciaController implements Initializable {
      * las columnas de la tabla y carga las evidencias pendientes.
      *
      * @param ubicacion URL del FXML (no usado).
-     * @param recursos  Paquete de i18n (no usado).
+     * @param recursos Paquete de i18n (no usado).
      */
     @Override
     public void initialize(URL ubicacion, ResourceBundle recursos) {
@@ -145,14 +145,14 @@ public class EvaluarEvidenciaController implements Initializable {
                             idProfesor);
             for (Documento doc : pendientes) {
                 FilaEvidencia fila = new FilaEvidencia();
-                fila.idDocumento    = doc.getIdDocumento();
-                fila.idEstudiante   = doc.getIdEstudiante();
-                fila.nombreTipo     =
+                fila.idDocumento = doc.getIdDocumento();
+                fila.idEstudiante = doc.getIdEstudiante();
+                fila.nombreTipo =
                         obtenerNombreTipo(doc.getIdTipoEvidencia());
-                fila.rutaArchivo    =
+                fila.rutaArchivo =
                         doc.getRutaArchivo() != null
                         ? doc.getRutaArchivo() : "";
-                fila.nombreArchivo  =
+                fila.nombreArchivo =
                         doc.getNombreArchivo() != null
                         ? doc.getNombreArchivo() : "";
                 filas.add(fila);
@@ -308,7 +308,7 @@ public class EvaluarEvidenciaController implements Initializable {
     /**
      * Actualiza el texto y el estilo del label de estado.
      *
-     * @param estilo  Estilo CSS en línea.
+     * @param estilo Estilo CSS en línea.
      * @param mensaje Texto a mostrar.
      */
     private void mostrarMensaje(String estilo, String mensaje) {

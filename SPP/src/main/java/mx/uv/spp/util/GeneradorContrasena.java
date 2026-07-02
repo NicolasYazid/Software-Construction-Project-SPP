@@ -23,7 +23,7 @@ public final class GeneradorContrasena {
 
     private static final String MAYUSCULAS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final String MINUSCULAS = "abcdefghijklmnopqrstuvwxyz";
-    private static final String DIGITOS    = "0123456789";
+    private static final String DIGITOS = "0123456789";
 
     private static final String TODOS =
             MAYUSCULAS + MINUSCULAS + DIGITOS;
@@ -44,7 +44,7 @@ public final class GeneradorContrasena {
      * obligatorias no sean predecibles.
      *
      * @return contraseña aleatoria de
-     *         {@value #LONGITUD_CONTRASENA_GENERADA} caracteres.
+     * {@value #LONGITUD_CONTRASENA_GENERADA} caracteres.
      */
     public static String generarContrasena() {
         char[] contrasena = new char[LONGITUD_CONTRASENA_GENERADA];
@@ -79,7 +79,7 @@ public final class GeneradorContrasena {
         }
         for (int i = arreglo.length - 1; i > 0; i--) {
             int j = ALEATORIO.nextInt(i + 1);
-            char temp  = arreglo[i];
+            char temp = arreglo[i];
             arreglo[i] = arreglo[j];
             arreglo[j] = temp;
         }

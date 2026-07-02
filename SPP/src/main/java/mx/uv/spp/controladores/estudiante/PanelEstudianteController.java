@@ -50,7 +50,7 @@ public class PanelEstudianteController implements Initializable {
      * autenticado en la etiqueta de bienvenida.
      *
      * @param ubicacion URL del FXML (no usado).
-     * @param recursos  Paquete de i18n (no usado).
+     * @param recursos Paquete de i18n (no usado).
      */
     @Override
     public void initialize(URL ubicacion, ResourceBundle recursos) {

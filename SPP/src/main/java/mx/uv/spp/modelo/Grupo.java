@@ -18,9 +18,9 @@ package mx.uv.spp.modelo;
  */
 public class Grupo {
 
-    private int    idGrupo;
-    private int    idCicloEscolar;
-    private int    idProfesor;
+    private int idGrupo;
+    private int idCicloEscolar;
+    private int idProfesor;
     private String nombre;
     private String nrc;
 
@@ -35,22 +35,22 @@ public class Grupo {
      * Constructor completo para inicializar un Grupo con todos
      * sus datos.
      *
-     * @param idGrupo        Identificador del registro en la BD.
+     * @param idGrupo Identificador del registro en la BD.
      * @param idCicloEscolar FK hacia {@code ciclo_escolar};
-     *                       ciclo al que pertenece el grupo.
-     * @param idProfesor     FK hacia {@code profesor};
-     *                       Profesor Asesor responsable del grupo.
-     * @param nombre         Nombre descriptivo del grupo (p.ej. "Grupo A").
-     * @param nrc            Número de Registro de Curso asignado por la UV;
-     *                       único dentro del ciclo escolar.
+     * ciclo al que pertenece el grupo.
+     * @param idProfesor FK hacia {@code profesor};
+     * Profesor Asesor responsable del grupo.
+     * @param nombre Nombre descriptivo del grupo (p.ej. "Grupo A").
+     * @param nrc Número de Registro de Curso asignado por la UV;
+     * único dentro del ciclo escolar.
      */
     public Grupo(int idGrupo, int idCicloEscolar,
             int idProfesor, String nombre, String nrc) {
-        this.idGrupo        = idGrupo;
+        this.idGrupo = idGrupo;
         this.idCicloEscolar = idCicloEscolar;
-        this.idProfesor     = idProfesor;
-        this.nombre         = nombre;
-        this.nrc            = nrc;
+        this.idProfesor = idProfesor;
+        this.nombre = nombre;
+        this.nrc = nrc;
     }
 
     /**

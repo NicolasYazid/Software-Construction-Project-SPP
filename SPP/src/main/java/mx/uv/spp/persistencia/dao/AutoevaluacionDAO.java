@@ -28,8 +28,8 @@ public interface AutoevaluacionDAO {
      *
      * @param idInscripcion FK de {@code estudiante_inscrito}.
      * @return {@code true} si existe una fila en {@code autoevaluacion}
-     *         para el documento de tipo Autoevaluacion de esa
-     *         inscripción.
+     * para el documento de tipo Autoevaluacion de esa
+     * inscripción.
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
     boolean existePorInscripcion(int idInscripcion)
@@ -41,8 +41,8 @@ public interface AutoevaluacionDAO {
      * corresponder a un registro ya existente en {@code documento}.
      *
      * @param autoevaluacion Datos de la autoevaluación, con
-     *                       {@code puntuacionTotal} y
-     *                       {@code calificacion} ya calculados.
+     * {@code puntuacionTotal} y
+     * {@code calificacion} ya calculados.
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
     void insertar(Autoevaluacion autoevaluacion) throws SQLException;

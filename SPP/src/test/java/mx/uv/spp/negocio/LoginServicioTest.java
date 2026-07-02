@@ -30,14 +30,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  *
  * <p>Casos cubiertos:
  * <ul>
- *   <li>Validación de entradas vacías</li>
- *   <li>Usuario no encontrado (idUsuario = 0)</li>
- *   <li>Cuenta inactiva</li>
- *   <li>Bloqueo vigente (SEG-01)</li>
- *   <li>Bloqueo expirado: reinicio de contadores</li>
- *   <li>Credenciales incorrectas: incremento de intentos</li>
- *   <li>Tercer intento fallido: mensaje de bloqueo</li>
- *   <li>Login exitoso: reinicio de intentos</li>
+ * <li>Validación de entradas vacías</li>
+ * <li>Usuario no encontrado (idUsuario = 0)</li>
+ * <li>Cuenta inactiva</li>
+ * <li>Bloqueo vigente (SEG-01)</li>
+ * <li>Bloqueo expirado: reinicio de contadores</li>
+ * <li>Credenciales incorrectas: incremento de intentos</li>
+ * <li>Tercer intento fallido: mensaje de bloqueo</li>
+ * <li>Login exitoso: reinicio de intentos</li>
  * </ul>
  *
  * @author Nicolás Yazid Cruz Hernández
@@ -45,18 +45,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class LoginServicioTest {
 
-    private static final String CORREO_PRUEBA   = "test@fei.uv.mx";
-    private static final String PASS_PRUEBA     = "ContrasenaTest2026";
-    private static final int    ID_USUARIO      = 7;
+    private static final String CORREO_PRUEBA = "test@fei.uv.mx";
+    private static final String PASS_PRUEBA = "ContrasenaTest2026";
+    private static final int ID_USUARIO = 7;
     private static final TipoUsuario TIPO_PRUEBA =
             TipoUsuario.COORDINADOR;
 
     private UsuarioDAOStub daoStub;
-    private LoginServicio  loginServicio;
+    private LoginServicio loginServicio;
 
     @BeforeEach
     void inicializar() {
-        daoStub      = new UsuarioDAOStub();
+        daoStub = new UsuarioDAOStub();
         loginServicio = new LoginServicio(daoStub);
     }
 
@@ -339,7 +339,7 @@ class LoginServicioTest {
 
         ResultadoAutenticacion respuesta;
         boolean seIncrementoIntentos = false;
-        boolean seReinicioIntentos   = false;
+        boolean seReinicioIntentos = false;
 
         @Override
         public ResultadoAutenticacion autenticar(

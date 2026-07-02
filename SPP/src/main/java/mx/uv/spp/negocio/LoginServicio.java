@@ -37,7 +37,7 @@ public class LoginServicio {
      * Construye el servicio con el DAO de usuario inyectado.
      *
      * @param usuarioDAO Implementación de acceso a datos de usuarios;
-     *                   no puede ser nulo.
+     * no puede ser nulo.
      * @throws IllegalArgumentException si {@code usuarioDAO} es nulo.
      */
     public LoginServicio(UsuarioDAO usuarioDAO) {
@@ -53,23 +53,23 @@ public class LoginServicio {
      *
      * <p>Flujo completo:
      * <ol>
-     *   <li>Valida que los campos no estén vacíos.</li>
-     *   <li>Consulta al DAO; si el identificador no existe retorna
-     *       un error genérico (sin revelar qué campo falló).</li>
-     *   <li>Verifica que la cuenta esté {@code Activo}.</li>
-     *   <li>Comprueba si existe un bloqueo vigente (SEG-01); si el
-     *       periodo de 10 min expiró, reinicia los contadores.</li>
-     *   <li>Si las credenciales son incorrectas, incrementa intentos
-     *       y, al llegar a 3, notifica el bloqueo.</li>
-     *   <li>Si son correctas, reinicia contadores y retorna éxito.</li>
+     * <li>Valida que los campos no estén vacíos.</li>
+     * <li>Consulta al DAO; si el identificador no existe retorna
+     * un error genérico (sin revelar qué campo falló).</li>
+     * <li>Verifica que la cuenta esté {@code Activo}.</li>
+     * <li>Comprueba si existe un bloqueo vigente (SEG-01); si el
+     * periodo de 10 min expiró, reinicia los contadores.</li>
+     * <li>Si las credenciales son incorrectas, incrementa intentos
+     * y, al llegar a 3, notifica el bloqueo.</li>
+     * <li>Si son correctas, reinicia contadores y retorna éxito.</li>
      * </ol>
      *
      * @param identificador Correo (ADMIN/COORDINADOR/PROFESOR) o
-     *                      matrícula (ESTUDIANTE) en texto plano.
-     * @param contrasena    Contraseña en texto plano ingresada por el usuario.
-     * @param tipo          Rol seleccionado en la pantalla de login.
+     * matrícula (ESTUDIANTE) en texto plano.
+     * @param contrasena Contraseña en texto plano ingresada por el usuario.
+     * @param tipo Rol seleccionado en la pantalla de login.
      * @return {@link ResultadoAutenticacion} nunca nulo; consultar
-     *         {@code isExitoso()} y {@code getMensajeError()}.
+     * {@code isExitoso()} y {@code getMensajeError()}.
      * @throws IllegalArgumentException si algún campo de entrada está vacío.
      * @throws SQLException si ocurre un error de acceso a la base de datos.
      */

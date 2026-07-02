@@ -34,9 +34,9 @@ public final class SesionUsuario {
      * autenticado. Debe llamarse inmediatamente después de un
      * login exitoso y antes de navegar al panel principal.
      *
-     * @param idUsuario      Clave primaria en la tabla del tipo.
+     * @param idUsuario Clave primaria en la tabla del tipo.
      * @param nombreCompleto Nombre descifrado para mostrar en la UI.
-     * @param tipo           Rol del usuario autenticado.
+     * @param tipo Rol del usuario autenticado.
      */
     public static void inicializar(int idUsuario,
             String nombreCompleto, TipoUsuario tipo) {
@@ -60,7 +60,7 @@ public final class SesionUsuario {
      * Retorna el nombre completo descifrado del usuario.
      *
      * @return nombre para mostrar en encabezados; cadena vacía si no
-     *         hay sesión activa.
+     * hay sesión activa.
      */
     public static String getNombreCompleto() {
         return nombreCompleto;
@@ -70,7 +70,7 @@ public final class SesionUsuario {
      * Retorna el rol del usuario autenticado.
      *
      * @return {@link TipoUsuario} del usuario activo, o {@code null}
-     *         si no hay sesión.
+     * si no hay sesión.
      */
     public static TipoUsuario getTipo() {
         return tipo;
@@ -82,7 +82,7 @@ public final class SesionUsuario {
      * después de que {@link #setIdInscripcion(int)} fue invocado.
      *
      * @return id_inscripcion en la tabla {@code estudiante_inscrito};
-     *         {@code 0} si no aplica o aún no se ha establecido.
+     * {@code 0} si no aplica o aún no se ha establecido.
      */
     public static int getIdInscripcion() {
         return idInscripcion;

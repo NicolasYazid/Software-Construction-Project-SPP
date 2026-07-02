@@ -29,13 +29,13 @@ import mx.uv.spp.util.Constantes;
  */
 public class ProfesorServicio {
 
-    private final DocumentoDAO    documentoDAO;
+    private final DocumentoDAO documentoDAO;
     private final MensajeGrupoDAO mensajeGrupoDAO;
 
     /**
      * Construye el servicio con los DAOs inyectados.
      *
-     * @param documentoDAO    DAO de documentos y evidencias; no nulo.
+     * @param documentoDAO DAO de documentos y evidencias; no nulo.
      * @param mensajeGrupoDAO DAO de mensajes de grupo; no nulo.
      * @throws IllegalArgumentException si algún parámetro es nulo.
      */
@@ -50,7 +50,7 @@ public class ProfesorServicio {
             throw new IllegalArgumentException(
                     "El DAO de mensajes no puede ser nulo.");
         }
-        this.documentoDAO    = documentoDAO;
+        this.documentoDAO = documentoDAO;
         this.mensajeGrupoDAO = mensajeGrupoDAO;
     }
 
@@ -60,7 +60,7 @@ public class ProfesorServicio {
      *
      * @param idProfesor FK del Profesor en tabla {@code profesor}.
      * @return lista de Documentos pendientes de calificación;
-     *         nunca nula, puede estar vacía.
+     * nunca nula, puede estar vacía.
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
     public List<Documento> obtenerEvidenciasPendientes(
@@ -75,10 +75,10 @@ public class ProfesorServicio {
      * calificación sea un número entre 1 y 10 inclusive (acepta
      * decimales). Actualiza el estado del Documento a evaluado.
      *
-     * @param idDocumento  Clave primaria del documento en la BD.
+     * @param idDocumento Clave primaria del documento en la BD.
      * @param calificacion Valor numérico a registrar.
      * @throws IllegalArgumentException si {@code calificacion < 1}
-     *         o {@code calificacion > 10}.
+     * o {@code calificacion > 10}.
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
     public void calificarEvidencia(
@@ -99,12 +99,12 @@ public class ProfesorServicio {
      * inscripción y actualiza su calificación.
      *
      * @param idInscripcion FK de {@code estudiante_inscrito}.
-     * @param calificacion  Valor numérico a registrar.
+     * @param calificacion Valor numérico a registrar.
      * @throws IllegalArgumentException si {@code calificacion < 1}
-     *         o {@code calificacion > 10}.
+     * o {@code calificacion > 10}.
      * @throws IllegalStateException si no existe Documento de tipo
-     *         EvaluacionOV para esa inscripción, o si ya tiene una
-     *         calificación registrada.
+     * EvaluacionOV para esa inscripción, o si ya tiene una
+     * calificación registrada.
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
     public void registrarCalificacionOV(
@@ -140,11 +140,11 @@ public class ProfesorServicio {
      * no tenga ya una prórroga activa.
      *
      * @param idDocumento Clave primaria del documento en la BD.
-     * @param nuevaFecha  Nueva fecha límite extendida.
+     * @param nuevaFecha Nueva fecha límite extendida.
      * @throws IllegalArgumentException si {@code nuevaFecha} es nula
-     *         o no es posterior a la fecha actual.
+     * o no es posterior a la fecha actual.
      * @throws IllegalStateException si la Evidencia ya tiene una
-     *         prórroga activa vigente.
+     * prórroga activa vigente.
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
     public void otorgarProrroga(
@@ -181,17 +181,17 @@ public class ProfesorServicio {
      * que texto y rutaArchivo no sean ambos nulos o vacíos al mismo
      * tiempo (al menos uno debe tener contenido).
      *
-     * @param idGrupo       FK de {@code grupo}; identifica el grupo
-     *                      receptor completo.
-     * @param idProfesor    FK del Profesor en tabla {@code profesor}.
-     * @param asunto        Asunto del mensaje; puede ser nulo.
-     * @param texto         Cuerpo del mensaje; puede ser nulo si hay
-     *                      archivo adjunto.
-     * @param rutaArchivo   Ruta local del PDF adjunto; puede ser nula
-     *                      si hay texto.
+     * @param idGrupo FK de {@code grupo}; identifica el grupo
+     * receptor completo.
+     * @param idProfesor FK del Profesor en tabla {@code profesor}.
+     * @param asunto Asunto del mensaje; puede ser nulo.
+     * @param texto Cuerpo del mensaje; puede ser nulo si hay
+     * archivo adjunto.
+     * @param rutaArchivo Ruta local del PDF adjunto; puede ser nula
+     * si hay texto.
      * @param nombreArchivo Nombre del archivo adjunto; puede ser nulo.
      * @throws IllegalArgumentException si tanto {@code texto} como
-     *         {@code rutaArchivo} están vacíos o nulos.
+     * {@code rutaArchivo} están vacíos o nulos.
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
     public void publicarMensaje(
@@ -228,7 +228,7 @@ public class ProfesorServicio {
      *
      * @param calificacion Valor a validar.
      * @throws IllegalArgumentException si está fuera del rango o
-     *         no es un número entero.
+     * no es un número entero.
      */
     private void validarRangoCalificacion(double calificacion) {
         if (calificacion % 1.0 != 0.0

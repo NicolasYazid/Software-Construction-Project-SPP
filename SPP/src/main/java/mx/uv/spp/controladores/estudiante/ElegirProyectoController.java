@@ -62,9 +62,9 @@ public class ElegirProyectoController implements Initializable {
 
     private static final String ESTILO_ERROR =
             "-fx-text-fill: #c0392b;";
-    private static final String ESTILO_INFO  =
+    private static final String ESTILO_INFO =
             "-fx-text-fill: #1C3A6E;";
-    private static final String ESTILO_OK    =
+    private static final String ESTILO_OK =
             "-fx-text-fill: #27ae60;";
 
     /**
@@ -72,7 +72,7 @@ public class ElegirProyectoController implements Initializable {
      * crea el servicio y carga los proyectos disponibles.
      *
      * @param ubicacion URL del FXML (no usado).
-     * @param recursos  Paquete de i18n (no usado).
+     * @param recursos Paquete de i18n (no usado).
      */
     @Override
     public void initialize(URL ubicacion, ResourceBundle recursos) {
@@ -238,7 +238,7 @@ public class ElegirProyectoController implements Initializable {
     /**
      * Actualiza el texto y el estilo del label de estado.
      *
-     * @param estilo  Estilo CSS en línea a aplicar.
+     * @param estilo Estilo CSS en línea a aplicar.
      * @param mensaje Texto a mostrar al usuario.
      */
     private void mostrarMensaje(String estilo, String mensaje) {

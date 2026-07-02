@@ -34,7 +34,7 @@ public final class CifradoAES {
     private static final int LONGITUD_CLAVE_BYTES =
             Constantes.BITS_CLAVE_AES / 8;
 
-    private static SecretKeySpec   claveSecreta;
+    private static SecretKeySpec claveSecreta;
     private static IvParameterSpec vectorInicializacion;
 
     private CifradoAES() {
@@ -48,7 +48,7 @@ public final class CifradoAES {
      * @return cadena en Base64 que representa el texto cifrado.
      * @throws IllegalArgumentException si {@code texto} es nulo o vacío.
      * @throws RuntimeException si ocurre un error del motor criptográfico,
-     *         lo que indica una configuración incorrecta del entorno.
+     * lo que indica una configuración incorrecta del entorno.
      */
     public static String cifrar(String texto) {
         if (texto == null || texto.isEmpty()) {
@@ -75,12 +75,12 @@ public final class CifradoAES {
      * Se usa para leer de la BD y comparar con entradas del usuario.
      *
      * @param textoCifrado Cadena Base64 proveniente de la base de datos;
-     *                     no puede ser nula ni vacía.
+     * no puede ser nula ni vacía.
      * @return texto plano original antes del cifrado.
      * @throws IllegalArgumentException si {@code textoCifrado} es nulo,
-     *         vacío o no es un Base64 válido.
+     * vacío o no es un Base64 válido.
      * @throws RuntimeException si los datos están corruptos o la clave
-     *         no corresponde a la usada al cifrar.
+     * no corresponde a la usada al cifrar.
      */
     public static String descifrar(String textoCifrado) {
         if (textoCifrado == null || textoCifrado.isEmpty()) {
@@ -114,8 +114,8 @@ public final class CifradoAES {
      * Si ya están inicializados, retorna sin hacer nada.
      *
      * @throws RuntimeException si el archivo de propiedades no existe,
-     *         si faltan las claves requeridas, o si su longitud no es
-     *         exactamente {@value #LONGITUD_CLAVE_BYTES} caracteres.
+     * si faltan las claves requeridas, o si su longitud no es
+     * exactamente {@value #LONGITUD_CLAVE_BYTES} caracteres.
      */
     private static synchronized void inicializarClavesSiNecesario() {
         if (claveSecreta != null) {
@@ -123,7 +123,7 @@ public final class CifradoAES {
         }
         Properties propiedades = cargarPropiedades();
         String clave = propiedades.getProperty("bd.clave_cifrado");
-        String iv    = propiedades.getProperty("bd.iv_cifrado");
+        String iv = propiedades.getProperty("bd.iv_cifrado");
 
         if (clave == null || iv == null) {
             throw new RuntimeException(
@@ -137,8 +137,8 @@ public final class CifradoAES {
                     + LONGITUD_CLAVE_BYTES + " caracteres UTF-8.");
         }
         byte[] bytesClave = clave.getBytes(StandardCharsets.UTF_8);
-        byte[] bytesIv    = iv.getBytes(StandardCharsets.UTF_8);
-        claveSecreta         = new SecretKeySpec(bytesClave,
+        byte[] bytesIv = iv.getBytes(StandardCharsets.UTF_8);
+        claveSecreta = new SecretKeySpec(bytesClave,
                 Constantes.ALGORITMO_CIFRADO);
         vectorInicializacion = new IvParameterSpec(bytesIv);
     }
@@ -148,7 +148,7 @@ public final class CifradoAES {
      *
      * @return objeto {@link Properties} con el contenido del archivo.
      * @throws RuntimeException si el archivo no se encuentra o no
-     *         puede leerse, ya que sin él la capa de cifrado no opera.
+     * puede leerse, ya que sin él la capa de cifrado no opera.
      */
     private static Properties cargarPropiedades() {
         Properties propiedades = new Properties();

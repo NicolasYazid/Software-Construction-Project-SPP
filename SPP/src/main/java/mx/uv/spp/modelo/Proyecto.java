@@ -18,19 +18,19 @@ package mx.uv.spp.modelo;
  */
 public class Proyecto {
 
-    private int    idProyecto;
-    private int    idOrganizacion;
-    private int    idResponsable;
+    private int idProyecto;
+    private int idOrganizacion;
+    private int idResponsable;
     private String nombreProyecto;
     private String descripcion;
     private String actividades;
     private String metodologia;
-    private int    duracionMeses;
+    private int duracionMeses;
     private String horarioLaboral;
     private String recursos;
     private String responsabilidades;
-    private int    cupoMaximo;
-    private int    cupoDisponible;
+    private int cupoMaximo;
+    private int cupoDisponible;
     private String estado;
 
     /**
@@ -44,20 +44,20 @@ public class Proyecto {
      * Constructor completo para inicializar un Proyecto con todos
      * sus datos.
      *
-     * @param idProyecto        Identificador del registro en la BD.
-     * @param idOrganizacion    FK hacia {@link OrganizacionVinculada}.
-     * @param idResponsable     FK hacia responsable del proyecto.
-     * @param nombreProyecto    Nombre descriptivo del proyecto.
-     * @param descripcion       Descripción general del proyecto.
-     * @param actividades       Actividades que realizará el Estudiante.
-     * @param metodologia       Metodología de trabajo.
-     * @param duracionMeses     Duración en meses.
-     * @param horarioLaboral    Horario en la OV.
-     * @param recursos          Recursos provistos por la OV.
+     * @param idProyecto Identificador del registro en la BD.
+     * @param idOrganizacion FK hacia {@link OrganizacionVinculada}.
+     * @param idResponsable FK hacia responsable del proyecto.
+     * @param nombreProyecto Nombre descriptivo del proyecto.
+     * @param descripcion Descripción general del proyecto.
+     * @param actividades Actividades que realizará el Estudiante.
+     * @param metodologia Metodología de trabajo.
+     * @param duracionMeses Duración en meses.
+     * @param horarioLaboral Horario en la OV.
+     * @param recursos Recursos provistos por la OV.
      * @param responsabilidades Responsabilidades adicionales.
-     * @param cupoMaximo        Número máximo de Estudiantes.
-     * @param cupoDisponible    Cupos restantes.
-     * @param estado            Disponible o No Activo.
+     * @param cupoMaximo Número máximo de Estudiantes.
+     * @param cupoDisponible Cupos restantes.
+     * @param estado Disponible o No Activo.
      */
     public Proyecto(int idProyecto, int idOrganizacion,
             int idResponsable, String nombreProyecto,
@@ -66,20 +66,20 @@ public class Proyecto {
             String horarioLaboral, String recursos,
             String responsabilidades, int cupoMaximo,
             int cupoDisponible, String estado) {
-        this.idProyecto        = idProyecto;
-        this.idOrganizacion    = idOrganizacion;
-        this.idResponsable     = idResponsable;
-        this.nombreProyecto    = nombreProyecto;
-        this.descripcion       = descripcion;
-        this.actividades       = actividades;
-        this.metodologia       = metodologia;
-        this.duracionMeses     = duracionMeses;
-        this.horarioLaboral    = horarioLaboral;
-        this.recursos          = recursos;
+        this.idProyecto = idProyecto;
+        this.idOrganizacion = idOrganizacion;
+        this.idResponsable = idResponsable;
+        this.nombreProyecto = nombreProyecto;
+        this.descripcion = descripcion;
+        this.actividades = actividades;
+        this.metodologia = metodologia;
+        this.duracionMeses = duracionMeses;
+        this.horarioLaboral = horarioLaboral;
+        this.recursos = recursos;
         this.responsabilidades = responsabilidades;
-        this.cupoMaximo        = cupoMaximo;
-        this.cupoDisponible    = cupoDisponible;
-        this.estado            = estado;
+        this.cupoMaximo = cupoMaximo;
+        this.cupoDisponible = cupoDisponible;
+        this.estado = estado;
     }
 
     public int getIdProyecto() { return idProyecto; }

@@ -33,10 +33,10 @@ import mx.uv.spp.util.SesionUsuario;
  */
 public class PanelSeccionCoordinadorController implements Initializable {
 
-    @FXML private Label  lblNombre;
-    @FXML private Label  lblNumeroPersonal;
-    @FXML private Label  lblCorreo;
-    @FXML private Label  lblMensaje;
+    @FXML private Label lblNombre;
+    @FXML private Label lblNumeroPersonal;
+    @FXML private Label lblCorreo;
+    @FXML private Label lblMensaje;
     @FXML private Button btnCambiarCoordinador;
 
     private static final String VISTA_PANEL_ADMIN =
@@ -61,7 +61,7 @@ public class PanelSeccionCoordinadorController implements Initializable {
      * Inicializa la vista cargando los datos del Coordinador activo.
      *
      * @param ubicacion URL del FXML (no usado).
-     * @param recursos  Paquete de i18n (no usado).
+     * @param recursos Paquete de i18n (no usado).
      */
     @Override
     public void initialize(URL ubicacion, ResourceBundle recursos) {

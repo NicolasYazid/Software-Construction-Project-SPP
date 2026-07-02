@@ -36,19 +36,19 @@ public interface UsuarioDAO {
      *
      * <p>Identificador esperado según tipo:
      * <ul>
-     *   <li>ADMINISTRADOR, COORDINADOR, PROFESOR → correo electrónico</li>
-     *   <li>ESTUDIANTE → matrícula UV (ej. {@code zS21013417})</li>
+     * <li>ADMINISTRADOR, COORDINADOR, PROFESOR → correo electrónico</li>
+     * <li>ESTUDIANTE → matrícula UV (ej. {@code zS21013417})</li>
      * </ul>
      *
      * @param identificador Correo o matrícula ingresado en la pantalla
-     *                      de login, en texto plano.
-     * @param contrasena    Contraseña en texto plano; se cifra para
-     *                      comparar con el valor almacenado.
-     * @param tipo          Rol seleccionado por el usuario en la UI;
-     *                      determina la tabla destino.
+     * de login, en texto plano.
+     * @param contrasena Contraseña en texto plano; se cifra para
+     * comparar con el valor almacenado.
+     * @param tipo Rol seleccionado por el usuario en la UI;
+     * determina la tabla destino.
      * @return {@link ResultadoAutenticacion} con {@code idUsuario = 0}
-     *         si el identificador no existe, o con todos los campos
-     *         poblados si el usuario fue encontrado.
+     * si el identificador no existe, o con todos los campos
+     * poblados si el usuario fue encontrado.
      * @throws SQLException si ocurre un error de acceso a la base de datos.
      */
     ResultadoAutenticacion autenticar(String identificador,
@@ -64,7 +64,7 @@ public interface UsuarioDAO {
      * ({@code idUsuario > 0}) pero las credenciales son incorrectas.
      *
      * @param idUsuario Clave primaria en la tabla del tipo indicado.
-     * @param tipo      Determina en qué tabla aplicar la actualización.
+     * @param tipo Determina en qué tabla aplicar la actualización.
      * @throws SQLException si ocurre un error de acceso a la base de datos.
      */
     void incrementarIntentosFallidos(int idUsuario,
@@ -76,7 +76,7 @@ public interface UsuarioDAO {
      * exitoso o cuando el bloqueo temporal ha expirado.
      *
      * @param idUsuario Clave primaria en la tabla del tipo indicado.
-     * @param tipo      Determina en qué tabla aplicar el reinicio.
+     * @param tipo Determina en qué tabla aplicar el reinicio.
      * @throws SQLException si ocurre un error de acceso a la base de datos.
      */
     void reiniciarIntentos(int idUsuario,
@@ -88,9 +88,9 @@ public interface UsuarioDAO {
      * <p>La contraseña debe llegar ya cifrada con AES-128 desde la
      * capa de negocio; el DAO no realiza cifrado.
      *
-     * @param idUsuario         Clave primaria en la tabla del tipo.
+     * @param idUsuario Clave primaria en la tabla del tipo.
      * @param contrasenaCifrada Contraseña nueva ya cifrada con AES-128.
-     * @param tipo              Determina en qué tabla actualizar.
+     * @param tipo Determina en qué tabla actualizar.
      * @throws SQLException si ocurre un error de acceso a la base de datos.
      */
     void actualizarContrasena(int idUsuario, String contrasenaCifrada,

@@ -19,19 +19,19 @@ package mx.uv.spp.modelo;
  */
 public class Autoevaluacion {
 
-    private int    idAutoevaluacion;
-    private int    idDocumento;
-    private int    afirmacion1;
-    private int    afirmacion2;
-    private int    afirmacion3;
-    private int    afirmacion4;
-    private int    afirmacion5;
-    private int    afirmacion6;
-    private int    afirmacion7;
-    private int    afirmacion8;
-    private int    afirmacion9;
-    private int    afirmacion10;
-    private int    puntuacionTotal;
+    private int idAutoevaluacion;
+    private int idDocumento;
+    private int afirmacion1;
+    private int afirmacion2;
+    private int afirmacion3;
+    private int afirmacion4;
+    private int afirmacion5;
+    private int afirmacion6;
+    private int afirmacion7;
+    private int afirmacion8;
+    private int afirmacion9;
+    private int afirmacion10;
+    private int puntuacionTotal;
     private double calificacion;
 
     /**
@@ -46,30 +46,30 @@ public class Autoevaluacion {
      * todos sus datos.
      *
      * @param idAutoevaluacion Identificador del registro en la BD.
-     * @param idDocumento      FK hacia el documento de tipo Autoevaluacion.
-     * @param afirmacion1      Escala 1–5: "Mi participación en la OV fue
-     *                         productiva."
-     * @param afirmacion2      Escala 1–5: "Logré la aplicación de conocimientos
-     *                         teórico-prácticos."
-     * @param afirmacion3      Escala 1–5: "Me sentí seguro al realizar las
-     *                         actividades."
-     * @param afirmacion4      Escala 1–5: "Las actividades despertaron mi
-     *                         interés."
-     * @param afirmacion5      Escala 1–5: "La OV me proporcionó información y
-     *                         facilidades adecuadas."
-     * @param afirmacion6      Escala 1–5: "La OV me dio a conocer las reglas
-     *                         internas."
-     * @param afirmacion7      Escala 1–5: "El Responsable del Proyecto me
-     *                         orientó correctamente."
-     * @param afirmacion8      Escala 1–5: "El Responsable realizó seguimiento
-     *                         efectivo."
-     * @param afirmacion9      Escala 1–5: "El proyecto es congruente con la
-     *                         formación de mi carrera."
-     * @param afirmacion10     Escala 1–5: "Considero que las prácticas son
-     *                         importantes para mi formación."
-     * @param puntuacionTotal  Suma de afirmacion1 a afirmacion10. Rango: 10–50.
-     * @param calificacion     Resultado de (puntuacionTotal / 50.0) * 10.
-     *                         Rango: 2.0–10.0.
+     * @param idDocumento FK hacia el documento de tipo Autoevaluacion.
+     * @param afirmacion1 Escala 1–5: "Mi participación en la OV fue
+     * productiva."
+     * @param afirmacion2 Escala 1–5: "Logré la aplicación de conocimientos
+     * teórico-prácticos."
+     * @param afirmacion3 Escala 1–5: "Me sentí seguro al realizar las
+     * actividades."
+     * @param afirmacion4 Escala 1–5: "Las actividades despertaron mi
+     * interés."
+     * @param afirmacion5 Escala 1–5: "La OV me proporcionó información y
+     * facilidades adecuadas."
+     * @param afirmacion6 Escala 1–5: "La OV me dio a conocer las reglas
+     * internas."
+     * @param afirmacion7 Escala 1–5: "El Responsable del Proyecto me
+     * orientó correctamente."
+     * @param afirmacion8 Escala 1–5: "El Responsable realizó seguimiento
+     * efectivo."
+     * @param afirmacion9 Escala 1–5: "El proyecto es congruente con la
+     * formación de mi carrera."
+     * @param afirmacion10 Escala 1–5: "Considero que las prácticas son
+     * importantes para mi formación."
+     * @param puntuacionTotal Suma de afirmacion1 a afirmacion10. Rango: 10–50.
+     * @param calificacion Resultado de (puntuacionTotal / 50.0) * 10.
+     * Rango: 2.0–10.0.
      */
     public Autoevaluacion(int idAutoevaluacion, int idDocumento,
             int afirmacion1, int afirmacion2, int afirmacion3,
@@ -77,19 +77,19 @@ public class Autoevaluacion {
             int afirmacion7, int afirmacion8, int afirmacion9,
             int afirmacion10, int puntuacionTotal, double calificacion) {
         this.idAutoevaluacion = idAutoevaluacion;
-        this.idDocumento      = idDocumento;
-        this.afirmacion1      = afirmacion1;
-        this.afirmacion2      = afirmacion2;
-        this.afirmacion3      = afirmacion3;
-        this.afirmacion4      = afirmacion4;
-        this.afirmacion5      = afirmacion5;
-        this.afirmacion6      = afirmacion6;
-        this.afirmacion7      = afirmacion7;
-        this.afirmacion8      = afirmacion8;
-        this.afirmacion9      = afirmacion9;
-        this.afirmacion10     = afirmacion10;
-        this.puntuacionTotal  = puntuacionTotal;
-        this.calificacion     = calificacion;
+        this.idDocumento = idDocumento;
+        this.afirmacion1 = afirmacion1;
+        this.afirmacion2 = afirmacion2;
+        this.afirmacion3 = afirmacion3;
+        this.afirmacion4 = afirmacion4;
+        this.afirmacion5 = afirmacion5;
+        this.afirmacion6 = afirmacion6;
+        this.afirmacion7 = afirmacion7;
+        this.afirmacion8 = afirmacion8;
+        this.afirmacion9 = afirmacion9;
+        this.afirmacion10 = afirmacion10;
+        this.puntuacionTotal = puntuacionTotal;
+        this.calificacion = calificacion;
     }
 
     /**
@@ -340,7 +340,7 @@ public class Autoevaluacion {
      * Establece la calificación de la autoevaluación.
      *
      * @param calificacion Resultado de (puntuacionTotal / 50.0) * 10;
-     *                     rango 2.0–10.0.
+     * rango 2.0–10.0.
      */
     public void setCalificacion(double calificacion) {
         this.calificacion = calificacion;

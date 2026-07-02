@@ -26,9 +26,9 @@ public interface EstudianteInscritoDAO {
      * si el Estudiante no tiene inscripción activa.
      *
      * @param idEstudiante Clave primaria en la tabla
-     *                     {@code estudiante}.
+     * {@code estudiante}.
      * @return {@code id_inscripcion} del periodo activo, o
-     *         {@code 0} si no existe.
+     * {@code 0} si no existe.
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
     int obtenerIdInscripcionActivo(int idEstudiante)

@@ -87,8 +87,8 @@ public class LoginController implements Initializable {
      * el listener que actualiza la etiqueta del identificador cuando
      * el usuario cambia de rol.
      *
-     * @param ubicacion  URL del FXML cargado (no se usa directamente).
-     * @param recursos   Paquete de internacionalización (no aplicado aún).
+     * @param ubicacion URL del FXML cargado (no se usa directamente).
+     * @param recursos Paquete de internacionalización (no aplicado aún).
      */
     @Override
     public void initialize(URL ubicacion, ResourceBundle recursos) {
@@ -161,7 +161,7 @@ public class LoginController implements Initializable {
      * y posiciona el foco en el campo incorrecto.
      *
      * @param identificador Texto del campo de identificador.
-     * @param contrasena    Texto del campo de contraseña.
+     * @param contrasena Texto del campo de contraseña.
      * @return {@code true} si ambos campos tienen contenido válido.
      */
     private boolean validarCamposUI(String identificador,
@@ -196,7 +196,7 @@ public class LoginController implements Initializable {
      * {@link TipoUsuario} que espera la capa de negocio.
      *
      * @return {@link TipoUsuario} correspondiente, o
-     *         {@code ESTUDIANTE} como valor por defecto.
+     * {@code ESTUDIANTE} como valor por defecto.
      */
     private TipoUsuario obtenerTipoSeleccionado() {
         String seleccion = cmbTipo.getValue();
@@ -239,7 +239,7 @@ public class LoginController implements Initializable {
     /**
      * Cambia el estilo y el texto de la etiqueta de mensajes.
      *
-     * @param estilo  Clase CSS a aplicar (error, info u oculto).
+     * @param estilo Clase CSS a aplicar (error, info u oculto).
      * @param mensaje Texto a mostrar al usuario.
      */
     private void mostrarMensaje(String estilo, String mensaje) {

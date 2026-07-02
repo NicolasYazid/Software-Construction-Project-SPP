@@ -17,7 +17,7 @@ package mx.uv.spp.modelo;
  */
 public class OrganizacionVinculada {
 
-    private int    idOrganizacion;
+    private int idOrganizacion;
     private String nombreEmpresa;
     private String sector;
     private String ciudad;
@@ -36,24 +36,24 @@ public class OrganizacionVinculada {
      * Constructor completo para inicializar una Organización Vinculada.
      *
      * @param idOrganizacion Identificador del registro en la BD.
-     * @param nombreEmpresa  Nombre legal o comercial de la organización.
-     * @param sector         Sector al que pertenece: Tecnología,
-     *                       Investigación, Salud, etc.
-     * @param ciudad         Ciudad donde opera la organización.
-     * @param direccion      Dirección completa de la organización.
-     * @param telefono       Teléfono de contacto; null si no disponible.
-     * @param estado         Activo o No Activo.
+     * @param nombreEmpresa Nombre legal o comercial de la organización.
+     * @param sector Sector al que pertenece: Tecnología,
+     * Investigación, Salud, etc.
+     * @param ciudad Ciudad donde opera la organización.
+     * @param direccion Dirección completa de la organización.
+     * @param telefono Teléfono de contacto; null si no disponible.
+     * @param estado Activo o No Activo.
      */
     public OrganizacionVinculada(int idOrganizacion, String nombreEmpresa,
             String sector, String ciudad, String direccion,
             String telefono, String estado) {
         this.idOrganizacion = idOrganizacion;
-        this.nombreEmpresa  = nombreEmpresa;
-        this.sector         = sector;
-        this.ciudad         = ciudad;
-        this.direccion      = direccion;
-        this.telefono       = telefono;
-        this.estado         = estado;
+        this.nombreEmpresa = nombreEmpresa;
+        this.sector = sector;
+        this.ciudad = ciudad;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.estado = estado;
     }
 
     public int getIdOrganizacion() { return idOrganizacion; }

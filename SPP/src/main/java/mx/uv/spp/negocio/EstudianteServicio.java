@@ -36,16 +36,16 @@ import mx.uv.spp.util.Constantes;
 public class EstudianteServicio {
 
     private final PeriodoInscripcionesDAO periodoDAO;
-    private final SeleccionProyectoDAO    seleccionDAO;
-    private final DocumentoDAO            documentoDAO;
-    private final AutoevaluacionDAO       autoevaluacionDAO;
+    private final SeleccionProyectoDAO seleccionDAO;
+    private final DocumentoDAO documentoDAO;
+    private final AutoevaluacionDAO autoevaluacionDAO;
 
     /**
      * Construye el servicio con los DAOs inyectados.
      *
-     * @param periodoDAO        DAO de periodos de inscripción; no nulo.
-     * @param seleccionDAO      DAO de selección de proyectos; no nulo.
-     * @param documentoDAO      DAO de documentos y evidencias; no nulo.
+     * @param periodoDAO DAO de periodos de inscripción; no nulo.
+     * @param seleccionDAO DAO de selección de proyectos; no nulo.
+     * @param documentoDAO DAO de documentos y evidencias; no nulo.
      * @param autoevaluacionDAO DAO de autoevaluaciones; no nulo.
      * @throws IllegalArgumentException si algún parámetro es nulo.
      */
@@ -70,9 +70,9 @@ public class EstudianteServicio {
             throw new IllegalArgumentException(
                     "El DAO de autoevaluación no puede ser nulo.");
         }
-        this.periodoDAO        = periodoDAO;
-        this.seleccionDAO      = seleccionDAO;
-        this.documentoDAO      = documentoDAO;
+        this.periodoDAO = periodoDAO;
+        this.seleccionDAO = seleccionDAO;
+        this.documentoDAO = documentoDAO;
         this.autoevaluacionDAO = autoevaluacionDAO;
     }
 
@@ -84,8 +84,8 @@ public class EstudianteServicio {
      * @param idInscripcion FK de {@code estudiante_inscrito}.
      * @return lista de proyectos disponibles; nunca nula.
      * @throws IllegalStateException si no hay PeriodoDeInscripciones
-     *         activo, si la fecha actual está fuera de su vigencia,
-     *         o si el Estudiante ya registró su lista.
+     * activo, si la fecha actual está fuera de su vigencia,
+     * o si el Estudiante ya registró su lista.
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
     public List<Proyecto> obtenerProyectosParaOrdenar(
@@ -122,12 +122,12 @@ public class EstudianteServicio {
      * coincida con el total de Proyectos disponibles.
      *
      * @param idInscripcion FK de {@code estudiante_inscrito}.
-     * @param selecciones   Lista ordenada de selecciones; el campo
-     *                      {@code prioridad} debe ser único por
-     *                      elemento y mayor que cero.
+     * @param selecciones Lista ordenada de selecciones; el campo
+     * {@code prioridad} debe ser único por
+     * elemento y mayor que cero.
      * @throws IllegalArgumentException si la lista es inválida.
      * @throws IllegalStateException si el Estudiante ya registró
-     *         su lista anteriormente.
+     * su lista anteriormente.
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
     public void registrarPrioridades(
@@ -168,13 +168,13 @@ public class EstudianteServicio {
      * reemplaza (actualiza). Si no existe, inserta una nueva.
      * Valida que la ruta no sea nula ni vacía.
      *
-     * @param idInscripcion   FK de {@code estudiante_inscrito}.
+     * @param idInscripcion FK de {@code estudiante_inscrito}.
      * @param idTipoEvidencia FK de {@code tipo_evidencia}.
-     * @param rutaArchivo     Ruta local del PDF seleccionado;
-     *                        no puede ser nula ni vacía.
-     * @param nombreArchivo   Nombre del archivo PDF.
+     * @param rutaArchivo Ruta local del PDF seleccionado;
+     * no puede ser nula ni vacía.
+     * @param nombreArchivo Nombre del archivo PDF.
      * @throws IllegalArgumentException si {@code rutaArchivo} es
-     *         nula o vacía.
+     * nula o vacía.
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
     public void entregarDocumento(
@@ -225,13 +225,13 @@ public class EstudianteServicio {
      * Valida que cada afirmacion esté entre 1 y 5 inclusive.
      *
      * @param idInscripcion FK de {@code estudiante_inscrito}.
-     * @param respuestas    Array de 10 enteros, uno por afirmación.
-     *                      Cada valor debe estar en [1, 5].
+     * @param respuestas Array de 10 enteros, uno por afirmación.
+     * Cada valor debe estar en [1, 5].
      * @throws IllegalStateException si el Estudiante ya entregó
-     *         su Autoevaluacion en el periodo activo.
+     * su Autoevaluacion en el periodo activo.
      * @throws IllegalArgumentException si {@code respuestas} tiene
-     *         longitud distinta de 10, o si algún valor está fuera
-     *         del rango [1, 5].
+     * longitud distinta de 10, o si algún valor está fuera
+     * del rango [1, 5].
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
     public void entregarAutoevaluacion(
@@ -301,10 +301,10 @@ public class EstudianteServicio {
                 * Constantes.CALIFICACION_ESCALA_MAXIMA;
         Autoevaluacion auto = new Autoevaluacion(
                 0, idDocumento,
-                respuestas[0],  respuestas[1],  respuestas[2],
-                respuestas[3],  respuestas[4],  respuestas[5],
-                respuestas[6],  respuestas[7],  respuestas[8],
-                respuestas[9],  puntuacionTotal, calificacion);
+                respuestas[0], respuestas[1], respuestas[2],
+                respuestas[3], respuestas[4], respuestas[5],
+                respuestas[6], respuestas[7], respuestas[8],
+                respuestas[9], puntuacionTotal, calificacion);
         autoevaluacionDAO.insertar(auto);
     }
 
@@ -314,12 +314,12 @@ public class EstudianteServicio {
      *
      * @param selecciones Lista de selecciones a verificar.
      * @throws IllegalArgumentException si hay prioridades o proyectos
-     *         duplicados, o si alguna prioridad es menor que 1.
+     * duplicados, o si alguna prioridad es menor que 1.
      */
     private void validarUnicidadPrioridades(
             List<SeleccionProyecto> selecciones) {
         Set<Integer> prioridades = new HashSet<>();
-        Set<Integer> proyectos   = new HashSet<>();
+        Set<Integer> proyectos = new HashSet<>();
         for (SeleccionProyecto sel : selecciones) {
             if (sel.getPrioridad() < 1) {
                 throw new IllegalArgumentException(

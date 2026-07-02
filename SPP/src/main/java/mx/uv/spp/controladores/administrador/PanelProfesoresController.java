@@ -36,7 +36,7 @@ import mx.uv.spp.util.SesionUsuario;
  */
 public class PanelProfesoresController implements Initializable {
 
-    @FXML private TableView<Profesor>           tblProfesores;
+    @FXML private TableView<Profesor> tblProfesores;
     @FXML private TableColumn<Profesor, String> colNumeroPersonal;
     @FXML private TableColumn<Profesor, String> colNombre;
     @FXML private TableColumn<Profesor, String> colCorreo;
@@ -60,7 +60,7 @@ public class PanelProfesoresController implements Initializable {
      * registrados desde la BD.
      *
      * @param ubicacion URL del FXML (no usado).
-     * @param recursos  Paquete de i18n (no usado).
+     * @param recursos Paquete de i18n (no usado).
      */
     @Override
     public void initialize(URL ubicacion, ResourceBundle recursos) {

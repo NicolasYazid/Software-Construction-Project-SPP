@@ -18,8 +18,8 @@ package mx.uv.spp.modelo;
  */
 public class ResponsableDeProyecto {
 
-    private int    idResponsable;
-    private int    idOrganizacion;
+    private int idResponsable;
+    private int idOrganizacion;
     private String nombreEncargado;
     private String cargoEncargado;
     private String emailEncargado;
@@ -34,20 +34,20 @@ public class ResponsableDeProyecto {
     /**
      * Constructor completo para inicializar un ResponsableDeProyecto.
      *
-     * @param idResponsable  Identificador del registro en la BD.
+     * @param idResponsable Identificador del registro en la BD.
      * @param idOrganizacion FK hacia la OV a la que pertenece.
      * @param nombreEncargado Nombre completo del encargado en la OV.
-     * @param cargoEncargado  Cargo o puesto del encargado en la OV.
-     * @param emailEncargado  Correo electrónico de contacto del encargado.
+     * @param cargoEncargado Cargo o puesto del encargado en la OV.
+     * @param emailEncargado Correo electrónico de contacto del encargado.
      */
     public ResponsableDeProyecto(int idResponsable, int idOrganizacion,
             String nombreEncargado, String cargoEncargado,
             String emailEncargado) {
-        this.idResponsable   = idResponsable;
-        this.idOrganizacion  = idOrganizacion;
+        this.idResponsable = idResponsable;
+        this.idOrganizacion = idOrganizacion;
         this.nombreEncargado = nombreEncargado;
-        this.cargoEncargado  = cargoEncargado;
-        this.emailEncargado  = emailEncargado;
+        this.cargoEncargado = cargoEncargado;
+        this.emailEncargado = emailEncargado;
     }
 
     /**

@@ -20,8 +20,8 @@ import java.time.LocalDate;
  */
 public class PeriodoInscripciones {
 
-    private int       idPeriodoInscripciones;
-    private int       idCicloEscolar;
+    private int idPeriodoInscripciones;
+    private int idCicloEscolar;
     private LocalDate fechaInicio;
     private LocalDate fechaCierre;
 
@@ -37,20 +37,20 @@ public class PeriodoInscripciones {
      * con todos sus datos.
      *
      * @param idPeriodoInscripciones Identificador del registro en la BD.
-     * @param idCicloEscolar         FK hacia el ciclo escolar al que
-     *                               pertenece este periodo.
-     * @param fechaInicio            Fecha a partir de la cual los
-     *                               Estudiantes pueden inscribirse.
-     * @param fechaCierre            Fecha límite de inscripción; debe ser
-     *                               posterior a {@code fechaInicio}.
+     * @param idCicloEscolar FK hacia el ciclo escolar al que
+     * pertenece este periodo.
+     * @param fechaInicio Fecha a partir de la cual los
+     * Estudiantes pueden inscribirse.
+     * @param fechaCierre Fecha límite de inscripción; debe ser
+     * posterior a {@code fechaInicio}.
      */
     public PeriodoInscripciones(int idPeriodoInscripciones,
             int idCicloEscolar, LocalDate fechaInicio,
             LocalDate fechaCierre) {
         this.idPeriodoInscripciones = idPeriodoInscripciones;
-        this.idCicloEscolar         = idCicloEscolar;
-        this.fechaInicio            = fechaInicio;
-        this.fechaCierre            = fechaCierre;
+        this.idCicloEscolar = idCicloEscolar;
+        this.fechaInicio = fechaInicio;
+        this.fechaCierre = fechaCierre;
     }
 
     /**

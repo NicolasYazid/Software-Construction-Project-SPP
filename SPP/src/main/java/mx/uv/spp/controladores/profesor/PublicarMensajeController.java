@@ -67,7 +67,7 @@ public class PublicarMensajeController implements Initializable {
      * configura el ComboBox de grupos y carga los grupos del Profesor.
      *
      * @param ubicacion URL del FXML (no usado).
-     * @param recursos  Paquete de i18n (no usado).
+     * @param recursos Paquete de i18n (no usado).
      */
     @Override
     public void initialize(URL ubicacion, ResourceBundle recursos) {
@@ -201,7 +201,7 @@ public class PublicarMensajeController implements Initializable {
     /**
      * Actualiza el texto y el estilo del label de estado.
      *
-     * @param estilo  Estilo CSS en línea.
+     * @param estilo Estilo CSS en línea.
      * @param mensaje Texto a mostrar.
      */
     private void mostrarMensaje(String estilo, String mensaje) {

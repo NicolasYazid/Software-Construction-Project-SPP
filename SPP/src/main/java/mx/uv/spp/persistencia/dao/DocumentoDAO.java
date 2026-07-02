@@ -38,7 +38,7 @@ public interface DocumentoDAO {
      * Recupera todos los documentos de un tipo específico para
      * una inscripción dada.
      *
-     * @param idInscripcion  FK de {@code estudiante_inscrito}.
+     * @param idInscripcion FK de {@code estudiante_inscrito}.
      * @param idTipoEvidencia FK de {@code tipo_evidencia}.
      * @return lista (posiblemente vacía) de documentos encontrados.
      * @throws SQLException si ocurre un error de acceso a la BD.
@@ -51,7 +51,7 @@ public interface DocumentoDAO {
      * Recupera el único documento de un tipo para una inscripción.
      * Retorna {@code null} si no existe ningún registro.
      *
-     * @param idInscripcion   FK de {@code estudiante_inscrito}.
+     * @param idInscripcion FK de {@code estudiante_inscrito}.
      * @param idTipoEvidencia FK de {@code tipo_evidencia}.
      * @return el documento encontrado, o {@code null}.
      * @throws SQLException si ocurre un error de acceso a la BD.
@@ -64,7 +64,7 @@ public interface DocumentoDAO {
      * Inserta un nuevo documento y retorna el id generado por la BD.
      *
      * @param documento Datos del documento a insertar; su campo
-     *                  {@code idDocumento} es ignorado.
+     * {@code idDocumento} es ignorado.
      * @return identificador auto-generado del registro insertado.
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
@@ -77,7 +77,7 @@ public interface DocumentoDAO {
      * un archivo (la re-entrega sobrescribe, sección 8).
      *
      * @param documento Documento con {@code idDocumento} válido
-     *                  y los campos de entrega ya poblados.
+     * y los campos de entrega ya poblados.
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
     void actualizarEntrega(Documento documento) throws SQLException;
@@ -86,8 +86,8 @@ public interface DocumentoDAO {
      * Actualiza {@code calificacion} e {@code id_estado_documento}
      * de un documento. Invocado por el Profesor al evaluar.
      *
-     * @param idDocumento       Clave primaria del documento.
-     * @param calificacion      Valor numérico en rango 0.0–10.0.
+     * @param idDocumento Clave primaria del documento.
+     * @param calificacion Valor numérico en rango 0.0–10.0.
      * @param idEstadoDocumento Nuevo estado (p. ej. Aprobado).
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
@@ -98,7 +98,7 @@ public interface DocumentoDAO {
     /**
      * Actualiza la {@code fecha_prorroga} de un documento existente.
      *
-     * @param idDocumento  Clave primaria del documento.
+     * @param idDocumento Clave primaria del documento.
      * @param fechaProrroga Nueva fecha límite extendida.
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
@@ -113,7 +113,7 @@ public interface DocumentoDAO {
      *
      * @param idProfesor Clave primaria en la tabla {@code profesor}.
      * @return lista (posiblemente vacía) de documentos pendientes
-     *         de evaluación.
+     * de evaluación.
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
     List<Documento> obtenerEntregadosSinCalificarPorProfesor(

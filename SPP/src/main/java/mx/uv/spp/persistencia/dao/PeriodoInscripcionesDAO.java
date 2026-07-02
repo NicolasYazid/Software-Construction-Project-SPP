@@ -26,7 +26,7 @@ public interface PeriodoInscripcionesDAO {
      * ha sido establecido.
      *
      * @return el {@link PeriodoInscripciones} del ciclo activo, o
-     *         {@code null} si no existe.
+     * {@code null} si no existe.
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
     PeriodoInscripciones obtenerDelCicloActivo() throws SQLException;
@@ -36,7 +36,7 @@ public interface PeriodoInscripcionesDAO {
      * inscripciones registrado.
      *
      * @return {@code true} si existe al menos una fila en
-     *         {@code periodo_inscripciones} para el ciclo activo.
+     * {@code periodo_inscripciones} para el ciclo activo.
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
     boolean existeEnCicloActivo() throws SQLException;
@@ -46,7 +46,7 @@ public interface PeriodoInscripcionesDAO {
      * solo si {@code existeEnCicloActivo()} retorna {@code false}.
      *
      * @param periodo Datos del periodo a insertar; su campo
-     *                {@code idPeriodoInscripciones} es ignorado.
+     * {@code idPeriodoInscripciones} es ignorado.
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
     void insertar(PeriodoInscripciones periodo) throws SQLException;

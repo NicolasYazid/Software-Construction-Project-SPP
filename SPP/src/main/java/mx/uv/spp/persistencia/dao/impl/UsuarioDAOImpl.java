@@ -42,10 +42,10 @@ public class UsuarioDAOImpl implements UsuarioDAO {
      * ingresada en texto plano.
      *
      * @param identificador Correo, matrícula o usuario en texto plano.
-     * @param contrasena    Contraseña en texto plano.
-     * @param tipo          Rol del usuario.
+     * @param contrasena Contraseña en texto plano.
+     * @param tipo Rol del usuario.
      * @return Resultado nunca nulo; {@code idUsuario == 0} indica
-     *         que el identificador no existe en la BD.
+     * que el identificador no existe en la BD.
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
     @Override
@@ -103,7 +103,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
      * {@code fecha_bloqueo} cuando se alcanza el máximo de intentos.
      *
      * @param idUsuario PK del usuario en su tabla.
-     * @param tipo      Rol del usuario (determina la tabla y PK).
+     * @param tipo Rol del usuario (determina la tabla y PK).
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
     @Override
@@ -133,7 +133,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
      * {@code fecha_bloqueo} tras un login exitoso o bloqueo expirado.
      *
      * @param idUsuario PK del usuario en su tabla.
-     * @param tipo      Rol del usuario (determina la tabla y PK).
+     * @param tipo Rol del usuario (determina la tabla y PK).
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
     @Override
@@ -157,9 +157,9 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     /**
      * Actualiza la contraseña del usuario en su tabla.
      *
-     * @param idUsuario         PK del usuario en su tabla.
+     * @param idUsuario PK del usuario en su tabla.
      * @param contrasenaCifrada Nuevo valor de contraseña.
-     * @param tipo              Rol del usuario (determina la tabla).
+     * @param tipo Rol del usuario (determina la tabla).
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
     @Override

@@ -21,18 +21,18 @@ import java.time.LocalDateTime;
  */
 public class Estudiante {
 
-    private int           idEstudiante;
-    private String        matricula;
-    private String        nombre;
-    private String        apellidoPaterno;
-    private String        apellidoMaterno;
-    private String        correo;
-    private String        contrasena;
-    private String        idioma;
-    private String        lenguaIndigena;
-    private int           semestre;
-    private String        estado;
-    private int           intentosFallidos;
+    private int idEstudiante;
+    private String matricula;
+    private String nombre;
+    private String apellidoPaterno;
+    private String apellidoMaterno;
+    private String correo;
+    private String contrasena;
+    private String idioma;
+    private String lenguaIndigena;
+    private int semestre;
+    private String estado;
+    private int intentosFallidos;
     private LocalDateTime fechaBloqueo;
 
     /**
@@ -46,23 +46,23 @@ public class Estudiante {
      * Constructor completo para inicializar un Estudiante con
      * todos sus datos.
      *
-     * @param idEstudiante       Identificador del registro en la BD.
-     * @param matricula          Matrícula cifrada con AES-128; identificador
-     *                           único de login del estudiante (SEG-04).
-     * @param nombre             Nombre(s) cifrado con AES-128.
-     * @param apellidoPaterno    Apellido paterno cifrado con AES-128.
-     * @param apellidoMaterno    Apellido materno cifrado; null si no aplica.
-     * @param correo             Correo electrónico cifrado (no se usa para
-     *                           login, pero es dato de contacto).
-     * @param contrasena         Contraseña cifrada con AES-128 (SEG-04).
-     * @param idioma             Idioma adicional que habla el estudiante;
-     *                           null si no aplica.
-     * @param lenguaIndigena     Lengua indígena del estudiante; null si no aplica.
-     * @param semestre           Semestre cursado al momento de la inscripción.
-     * @param estado             Activo o No Activo.
-     * @param intentosFallidos   Intentos de login fallidos consecutivos;
-     *                           al llegar a 3 la cuenta se bloquea (SEG-01).
-     * @param fechaBloqueo       Momento del bloqueo; null si no bloqueado.
+     * @param idEstudiante Identificador del registro en la BD.
+     * @param matricula Matrícula cifrada con AES-128; identificador
+     * único de login del estudiante (SEG-04).
+     * @param nombre Nombre(s) cifrado con AES-128.
+     * @param apellidoPaterno Apellido paterno cifrado con AES-128.
+     * @param apellidoMaterno Apellido materno cifrado; null si no aplica.
+     * @param correo Correo electrónico cifrado (no se usa para
+     * login, pero es dato de contacto).
+     * @param contrasena Contraseña cifrada con AES-128 (SEG-04).
+     * @param idioma Idioma adicional que habla el estudiante;
+     * null si no aplica.
+     * @param lenguaIndigena Lengua indígena del estudiante; null si no aplica.
+     * @param semestre Semestre cursado al momento de la inscripción.
+     * @param estado Activo o No Activo.
+     * @param intentosFallidos Intentos de login fallidos consecutivos;
+     * al llegar a 3 la cuenta se bloquea (SEG-01).
+     * @param fechaBloqueo Momento del bloqueo; null si no bloqueado.
      */
     public Estudiante(int idEstudiante, String matricula,
             String nombre, String apellidoPaterno,
@@ -70,19 +70,19 @@ public class Estudiante {
             String contrasena, String idioma,
             String lenguaIndigena, int semestre, String estado,
             int intentosFallidos, LocalDateTime fechaBloqueo) {
-        this.idEstudiante    = idEstudiante;
-        this.matricula       = matricula;
-        this.nombre          = nombre;
+        this.idEstudiante = idEstudiante;
+        this.matricula = matricula;
+        this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
-        this.correo          = correo;
-        this.contrasena      = contrasena;
-        this.idioma          = idioma;
-        this.lenguaIndigena  = lenguaIndigena;
-        this.semestre        = semestre;
-        this.estado          = estado;
+        this.correo = correo;
+        this.contrasena = contrasena;
+        this.idioma = idioma;
+        this.lenguaIndigena = lenguaIndigena;
+        this.semestre = semestre;
+        this.estado = estado;
         this.intentosFallidos = intentosFallidos;
-        this.fechaBloqueo    = fechaBloqueo;
+        this.fechaBloqueo = fechaBloqueo;
     }
 
     /**

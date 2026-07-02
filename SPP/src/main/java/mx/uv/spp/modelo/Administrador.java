@@ -22,12 +22,12 @@ import java.time.LocalDateTime;
  */
 public class Administrador {
 
-    private int           idAdministrador;
-    private String        nombre;
-    private String        correo;
-    private String        contrasena;
-    private LocalDate     fechaRegistro;
-    private int           intentosFallidos;
+    private int idAdministrador;
+    private String nombre;
+    private String correo;
+    private String contrasena;
+    private LocalDate fechaRegistro;
+    private int intentosFallidos;
     private LocalDateTime fechaBloqueo;
 
     /**
@@ -41,26 +41,26 @@ public class Administrador {
      * Constructor completo para inicializar un Administrador con
      * todos sus datos.
      *
-     * @param idAdministrador    Identificador del registro en la BD.
-     * @param nombre             Nombre cifrado con AES-128 (SEG-04).
-     * @param correo             Correo cifrado; identificador de login.
-     * @param contrasena         Contraseña cifrada con AES-128 (SEG-04).
-     * @param fechaRegistro      Fecha de creación de la cuenta.
-     * @param intentosFallidos   Intentos fallidos consecutivos; al llegar
-     *                           a 3 la cuenta se bloquea (SEG-01).
-     * @param fechaBloqueo       Momento del bloqueo; null si no bloqueado.
+     * @param idAdministrador Identificador del registro en la BD.
+     * @param nombre Nombre cifrado con AES-128 (SEG-04).
+     * @param correo Correo cifrado; identificador de login.
+     * @param contrasena Contraseña cifrada con AES-128 (SEG-04).
+     * @param fechaRegistro Fecha de creación de la cuenta.
+     * @param intentosFallidos Intentos fallidos consecutivos; al llegar
+     * a 3 la cuenta se bloquea (SEG-01).
+     * @param fechaBloqueo Momento del bloqueo; null si no bloqueado.
      */
     public Administrador(int idAdministrador, String nombre,
             String correo, String contrasena,
             LocalDate fechaRegistro, int intentosFallidos,
             LocalDateTime fechaBloqueo) {
-        this.idAdministrador  = idAdministrador;
-        this.nombre           = nombre;
-        this.correo           = correo;
-        this.contrasena       = contrasena;
-        this.fechaRegistro    = fechaRegistro;
+        this.idAdministrador = idAdministrador;
+        this.nombre = nombre;
+        this.correo = correo;
+        this.contrasena = contrasena;
+        this.fechaRegistro = fechaRegistro;
         this.intentosFallidos = intentosFallidos;
-        this.fechaBloqueo     = fechaBloqueo;
+        this.fechaBloqueo = fechaBloqueo;
     }
 
     /**

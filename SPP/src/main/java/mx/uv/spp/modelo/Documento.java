@@ -25,18 +25,18 @@ import java.time.LocalDateTime;
  */
 public class Documento {
 
-    private int           idDocumento;
-    private int           idInscripcion;
-    private int           idEstudiante;
-    private int           idTipoEvidencia;
-    private int           idEstadoDocumento;
-    private String        rutaArchivo;
-    private String        nombreArchivo;
+    private int idDocumento;
+    private int idInscripcion;
+    private int idEstudiante;
+    private int idTipoEvidencia;
+    private int idEstadoDocumento;
+    private String rutaArchivo;
+    private String nombreArchivo;
     private LocalDateTime fechaEntrega;
-    private LocalDate     fechaLimite;
-    private LocalDate     fechaProrroga;
-    private String        observaciones;
-    private double        calificacion;
+    private LocalDate fechaLimite;
+    private LocalDate fechaProrroga;
+    private String observaciones;
+    private double calificacion;
 
     /**
      * Constructor sin argumentos requerido para instanciación
@@ -49,29 +49,29 @@ public class Documento {
      * Constructor completo para inicializar un Documento con todos
      * sus datos.
      *
-     * @param idDocumento       Identificador del registro en la BD.
-     * @param idInscripcion     FK hacia {@code estudiante_inscrito};
-     *                          identifica al Estudiante propietario.
-     * @param idTipoEvidencia   FK hacia {@code tipo_evidencia}; discrimina
-     *                          el subtipo de documento (DocumentoInicial
-     *                          o Evidencia, sección 6).
+     * @param idDocumento Identificador del registro en la BD.
+     * @param idInscripcion FK hacia {@code estudiante_inscrito};
+     * identifica al Estudiante propietario.
+     * @param idTipoEvidencia FK hacia {@code tipo_evidencia}; discrimina
+     * el subtipo de documento (DocumentoInicial
+     * o Evidencia, sección 6).
      * @param idEstadoDocumento FK hacia {@code estado_documento}:
-     *                          Pendiente, Entregado, Aprobado, Rechazado
-     *                          o ConProrroga.
-     * @param rutaArchivo       Ruta local del archivo entregado;
-     *                          {@code null} si aún no se ha entregado.
-     * @param nombreArchivo     Nombre del archivo para la UI;
-     *                          {@code null} si no aplica.
-     * @param fechaEntrega      Momento de la entrega del Estudiante;
-     *                          {@code null} si aún no fue entregado.
-     * @param fechaLimite       Fecha límite de entrega original;
-     *                          {@code null} si no fue establecida.
-     * @param fechaProrroga     Fecha límite extendida por el Coordinador
-     *                          o Profesor; {@code null} si no hubo prórroga.
-     * @param observaciones     Comentarios del Profesor al evaluar;
-     *                          {@code null} si no aplica.
-     * @param calificacion      Calificación asignada por el Profesor;
-     *                          usar -1.0 para indicar sin calificación.
+     * Pendiente, Entregado, Aprobado, Rechazado
+     * o ConProrroga.
+     * @param rutaArchivo Ruta local del archivo entregado;
+     * {@code null} si aún no se ha entregado.
+     * @param nombreArchivo Nombre del archivo para la UI;
+     * {@code null} si no aplica.
+     * @param fechaEntrega Momento de la entrega del Estudiante;
+     * {@code null} si aún no fue entregado.
+     * @param fechaLimite Fecha límite de entrega original;
+     * {@code null} si no fue establecida.
+     * @param fechaProrroga Fecha límite extendida por el Coordinador
+     * o Profesor; {@code null} si no hubo prórroga.
+     * @param observaciones Comentarios del Profesor al evaluar;
+     * {@code null} si no aplica.
+     * @param calificacion Calificación asignada por el Profesor;
+     * usar -1.0 para indicar sin calificación.
      */
     public Documento(int idDocumento, int idInscripcion,
             int idTipoEvidencia, int idEstadoDocumento,
@@ -79,17 +79,17 @@ public class Documento {
             LocalDateTime fechaEntrega, LocalDate fechaLimite,
             LocalDate fechaProrroga, String observaciones,
             double calificacion) {
-        this.idDocumento       = idDocumento;
-        this.idInscripcion     = idInscripcion;
-        this.idTipoEvidencia   = idTipoEvidencia;
+        this.idDocumento = idDocumento;
+        this.idInscripcion = idInscripcion;
+        this.idTipoEvidencia = idTipoEvidencia;
         this.idEstadoDocumento = idEstadoDocumento;
-        this.rutaArchivo       = rutaArchivo;
-        this.nombreArchivo     = nombreArchivo;
-        this.fechaEntrega      = fechaEntrega;
-        this.fechaLimite       = fechaLimite;
-        this.fechaProrroga     = fechaProrroga;
-        this.observaciones     = observaciones;
-        this.calificacion      = calificacion;
+        this.rutaArchivo = rutaArchivo;
+        this.nombreArchivo = nombreArchivo;
+        this.fechaEntrega = fechaEntrega;
+        this.fechaLimite = fechaLimite;
+        this.fechaProrroga = fechaProrroga;
+        this.observaciones = observaciones;
+        this.calificacion = calificacion;
     }
 
     /**
@@ -183,8 +183,8 @@ public class Documento {
      * Establece el estado actual del documento.
      *
      * @param idEstadoDocumento FK hacia {@code estado_documento}:
-     *                          Pendiente, Entregado, Aprobado, Rechazado
-     *                          o ConProrroga.
+     * Pendiente, Entregado, Aprobado, Rechazado
+     * o ConProrroga.
      */
     public void setIdEstadoDocumento(int idEstadoDocumento) {
         this.idEstadoDocumento = idEstadoDocumento;
@@ -318,7 +318,7 @@ public class Documento {
      * Establece la calificación del documento.
      *
      * @param calificacion Calificación en rango 0.0–10.0; usar -1.0
-     *                     para indicar que aún no ha sido calificado.
+     * para indicar que aún no ha sido calificado.
      */
     public void setCalificacion(double calificacion) {
         this.calificacion = calificacion;

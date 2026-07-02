@@ -20,17 +20,17 @@ import java.time.LocalDateTime;
  */
 public abstract class Academico {
 
-    private int           id;
-    private String        numeroPersonal;
-    private String        nombre;
-    private String        apellidoPaterno;
-    private String        apellidoMaterno;
-    private String        correo;
-    private String        contrasena;
-    private String        estado;
-    private LocalDate     fechaRegistro;
-    private int           tiempoServicio;
-    private int           intentosFallidos;
+    private int id;
+    private String numeroPersonal;
+    private String nombre;
+    private String apellidoPaterno;
+    private String apellidoMaterno;
+    private String correo;
+    private String contrasena;
+    private String estado;
+    private LocalDate fechaRegistro;
+    private int tiempoServicio;
+    private int intentosFallidos;
     private LocalDateTime fechaBloqueo;
 
     /**
@@ -44,20 +44,20 @@ public abstract class Academico {
      * Constructor completo para inicializar un académico con todos
      * sus datos.
      *
-     * @param id                 Identificador del registro en la BD.
-     * @param numeroPersonal     Número de personal UV del académico.
-     * @param nombre             Nombre(s) almacenado cifrado AES-128.
-     * @param apellidoPaterno    Apellido paterno, cifrado con AES-128.
-     * @param apellidoMaterno    Apellido materno cifrado; null si no aplica.
-     * @param correo             Correo cifrado; identificador de login
-     *                           para actores académicos (sec. 4).
-     * @param contrasena         Contraseña cifrada con AES-128 (SEG-04).
-     * @param estado             Estado: Activo o No Activo.
-     * @param fechaRegistro      Fecha de creación de la cuenta.
-     * @param tiempoServicio     Años de servicio en la institución.
-     * @param intentosFallidos   Intentos de login fallidos consecutivos;
-     *                           al llegar a 3 se bloquea la cuenta (SEG-01).
-     * @param fechaBloqueo       Momento del bloqueo; null si no está bloqueado.
+     * @param id Identificador del registro en la BD.
+     * @param numeroPersonal Número de personal UV del académico.
+     * @param nombre Nombre(s) almacenado cifrado AES-128.
+     * @param apellidoPaterno Apellido paterno, cifrado con AES-128.
+     * @param apellidoMaterno Apellido materno cifrado; null si no aplica.
+     * @param correo Correo cifrado; identificador de login
+     * para actores académicos (sec. 4).
+     * @param contrasena Contraseña cifrada con AES-128 (SEG-04).
+     * @param estado Estado: Activo o No Activo.
+     * @param fechaRegistro Fecha de creación de la cuenta.
+     * @param tiempoServicio Años de servicio en la institución.
+     * @param intentosFallidos Intentos de login fallidos consecutivos;
+     * al llegar a 3 se bloquea la cuenta (SEG-01).
+     * @param fechaBloqueo Momento del bloqueo; null si no está bloqueado.
      */
     protected Academico(int id, String numeroPersonal,
             String nombre, String apellidoPaterno,
@@ -65,18 +65,18 @@ public abstract class Academico {
             String contrasena, String estado,
             LocalDate fechaRegistro, int tiempoServicio,
             int intentosFallidos, LocalDateTime fechaBloqueo) {
-        this.id              = id;
-        this.numeroPersonal  = numeroPersonal;
-        this.nombre          = nombre;
+        this.id = id;
+        this.numeroPersonal = numeroPersonal;
+        this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
-        this.correo          = correo;
-        this.contrasena      = contrasena;
-        this.estado          = estado;
-        this.fechaRegistro   = fechaRegistro;
-        this.tiempoServicio  = tiempoServicio;
+        this.correo = correo;
+        this.contrasena = contrasena;
+        this.estado = estado;
+        this.fechaRegistro = fechaRegistro;
+        this.tiempoServicio = tiempoServicio;
         this.intentosFallidos = intentosFallidos;
-        this.fechaBloqueo    = fechaBloqueo;
+        this.fechaBloqueo = fechaBloqueo;
     }
 
     /**

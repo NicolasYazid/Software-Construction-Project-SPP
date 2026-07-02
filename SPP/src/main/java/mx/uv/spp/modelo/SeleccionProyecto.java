@@ -21,10 +21,10 @@ import java.time.LocalDateTime;
  */
 public class SeleccionProyecto {
 
-    private int           idSeleccion;
-    private int           idInscripcion;
-    private int           idProyecto;
-    private int           prioridad;
+    private int idSeleccion;
+    private int idInscripcion;
+    private int idProyecto;
+    private int prioridad;
     private LocalDateTime fechaSeleccion;
 
     /**
@@ -38,22 +38,22 @@ public class SeleccionProyecto {
      * Constructor completo para inicializar una SeleccionProyecto
      * con todos sus datos.
      *
-     * @param idSeleccion   Identificador del registro en la BD.
+     * @param idSeleccion Identificador del registro en la BD.
      * @param idInscripcion FK hacia {@code estudiante_inscrito};
-     *                      identifica al Estudiante que seleccionó.
-     * @param idProyecto    FK hacia {@code proyecto}; proyecto elegido.
-     * @param prioridad     Número de prioridad asignado (1 = mayor
-     *                      preferencia). Único por inscripción.
+     * identifica al Estudiante que seleccionó.
+     * @param idProyecto FK hacia {@code proyecto}; proyecto elegido.
+     * @param prioridad Número de prioridad asignado (1 = mayor
+     * preferencia). Único por inscripción.
      * @param fechaSeleccion Fecha y hora en que el Estudiante confirmó
-     *                       la selección; no puede ser {@code null}.
+     * la selección; no puede ser {@code null}.
      */
     public SeleccionProyecto(int idSeleccion, int idInscripcion,
             int idProyecto, int prioridad,
             LocalDateTime fechaSeleccion) {
-        this.idSeleccion    = idSeleccion;
-        this.idInscripcion  = idInscripcion;
-        this.idProyecto     = idProyecto;
-        this.prioridad      = prioridad;
+        this.idSeleccion = idSeleccion;
+        this.idInscripcion = idInscripcion;
+        this.idProyecto = idProyecto;
+        this.prioridad = prioridad;
         this.fechaSeleccion = fechaSeleccion;
     }
 
@@ -144,7 +144,7 @@ public class SeleccionProyecto {
      * Establece la fecha y hora de confirmación de la selección.
      *
      * @param fechaSeleccion Momento en que el Estudiante confirmó su
-     *                       lista de prioridades (irreversible, RN-11).
+     * lista de prioridades (irreversible, RN-11).
      */
     public void setFechaSeleccion(LocalDateTime fechaSeleccion) {
         this.fechaSeleccion = fechaSeleccion;

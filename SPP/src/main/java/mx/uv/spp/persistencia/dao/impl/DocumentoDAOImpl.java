@@ -424,8 +424,8 @@ public class DocumentoDAOImpl implements DocumentoDAO {
      * Establece un parámetro {@code TIMESTAMP}, o {@code NULL}.
      *
      * @param sentencia PreparedStatement destino.
-     * @param indice    Posición del parámetro (1-based).
-     * @param valor     Valor {@link LocalDateTime} o {@code null}.
+     * @param indice Posición del parámetro (1-based).
+     * @param valor Valor {@link LocalDateTime} o {@code null}.
      * @throws SQLException si ocurre un error al establecer el param.
      */
     private void establecerTimestamp(PreparedStatement sentencia,
@@ -442,8 +442,8 @@ public class DocumentoDAOImpl implements DocumentoDAO {
      * (centinela -1.0), inserta {@code NULL}.
      *
      * @param sentencia PreparedStatement destino.
-     * @param indice    Posición del parámetro (1-based).
-     * @param valor     Calificación real ≥ 0.0, o -1.0 para NULL.
+     * @param indice Posición del parámetro (1-based).
+     * @param valor Calificación real ≥ 0.0, o -1.0 para NULL.
      * @throws SQLException si ocurre un error al establecer el param.
      */
     private void establecerCalificacion(PreparedStatement sentencia,

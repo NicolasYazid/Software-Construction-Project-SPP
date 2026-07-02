@@ -30,8 +30,8 @@ public class App extends Application {
             "Sistema de Prácticas Profesionales — SPP";
     private static final String FXML_LOGIN =
             "/mx/uv/spp/vistas/login.fxml";
-    private static final int ANCHO_INICIAL  = 960;
-    private static final int ALTO_INICIAL   = 600;
+    private static final int ANCHO_INICIAL = 960;
+    private static final int ALTO_INICIAL = 600;
 
     private static Scene escena;
 
@@ -59,9 +59,9 @@ public class App extends Application {
      * del FXML destino.
      *
      * @param rutaFxml Ruta absoluta del FXML en el classpath,
-     *                 comenzando con {@code /mx/uv/spp/vistas/...}.
+     * comenzando con {@code /mx/uv/spp/vistas/...}.
      * @throws IOException si el archivo FXML no se encuentra o
-     *         no puede parsearse.
+     * no puede parsearse.
      */
     public static void cambiarVista(String rutaFxml)
             throws IOException {
@@ -74,7 +74,7 @@ public class App extends Application {
      * @param rutaFxml Ruta absoluta desde la raíz del classpath.
      * @return nodo raíz listo para usarse como Scene root.
      * @throws IOException si el recurso no existe o tiene errores
-     *         de sintaxis FXML.
+     * de sintaxis FXML.
      */
     private static Parent cargarFXML(String rutaFxml)
             throws IOException {

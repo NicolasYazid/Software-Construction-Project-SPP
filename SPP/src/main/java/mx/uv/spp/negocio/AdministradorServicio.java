@@ -49,21 +49,21 @@ public class AdministradorServicio {
      * no exista ya un Profesor (activo o inactivo) con el mismo
      * número de personal o correo institucional (FA-06).
      *
-     * @param numeroPersonal      Número de personal; exactamente
-     *                            {@value Constantes#LONGITUD_NUMERO_PERSONAL}
-     *                            dígitos.
-     * @param nombre              Nombre(s); solo letras.
-     * @param apellidoPaterno     Apellido paterno; solo letras.
-     * @param apellidoMaterno     Apellido materno; opcional, puede
-     *                            ser nulo o vacío.
+     * @param numeroPersonal Número de personal; exactamente
+     * {@value Constantes#LONGITUD_NUMERO_PERSONAL}
+     * dígitos.
+     * @param nombre Nombre(s); solo letras.
+     * @param apellidoPaterno Apellido paterno; solo letras.
+     * @param apellidoMaterno Apellido materno; opcional, puede
+     * ser nulo o vacío.
      * @param correoInstitucional Correo con dominio
-     *                            {@value Constantes#DOMINIO_CORREO_PROFESOR}.
-     * @param contrasena          Contraseña en texto plano; debe
-     *                            cumplir SEG-03.
+     * {@value Constantes#DOMINIO_CORREO_PROFESOR}.
+     * @param contrasena Contraseña en texto plano; debe
+     * cumplir SEG-03.
      * @throws IllegalArgumentException si algún campo obligatorio
-     *         está vacío o no cumple su formato.
+     * está vacío o no cumple su formato.
      * @throws IllegalStateException si ya existe un Profesor con el
-     *         mismo número de personal o correo institucional.
+     * mismo número de personal o correo institucional.
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
     public void registrarProfesor(
@@ -159,7 +159,7 @@ public class AdministradorServicio {
      * los pasos siguientes, en vez de volver a consultarlo.
      *
      * @return el Coordinador vigente, o {@code null} si ninguno
-     *         posee el rol actualmente.
+     * posee el rol actualmente.
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
     public Profesor obtenerCoordinadorActual() throws SQLException {
@@ -172,16 +172,16 @@ public class AdministradorServicio {
      * distinto del Coordinador anterior antes de delegar en el DAO
      * la actualización transaccional.
      *
-     * @param idNuevoCoordinador    PK del Profesor seleccionado;
-     *                              debe ser mayor que 0.
+     * @param idNuevoCoordinador PK del Profesor seleccionado;
+     * debe ser mayor que 0.
      * @param idCoordinadorAnterior PK del Coordinador vigente
-     *                              obtenido previamente con
-     *                              {@link #obtenerCoordinadorActual()};
-     *                              {@code null} si no existía ninguno.
+     * obtenido previamente con
+     * {@link #obtenerCoordinadorActual()};
+     * {@code null} si no existía ninguno.
      * @throws IllegalArgumentException si {@code idNuevoCoordinador}
-     *         no es válido o coincide con el Coordinador anterior.
+     * no es válido o coincide con el Coordinador anterior.
      * @throws SQLException si ocurre un error de acceso a la BD; en
-     *         ese caso ningún cambio queda aplicado.
+     * ese caso ningún cambio queda aplicado.
      */
     public void transferirRolCoordinador(int idNuevoCoordinador,
             Integer idCoordinadorAnterior) throws SQLException {

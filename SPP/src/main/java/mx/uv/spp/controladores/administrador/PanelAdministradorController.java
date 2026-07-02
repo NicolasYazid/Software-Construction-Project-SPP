@@ -31,7 +31,7 @@ import mx.uv.spp.util.SesionUsuario;
 public class PanelAdministradorController implements Initializable {
 
     @FXML private StackPane contenedor;
-    @FXML private VBox      panelBienvenida;
+    @FXML private VBox panelBienvenida;
 
     private static final String VISTA_PROFESORES =
             "/mx/uv/spp/vistas/administrador/PanelProfesores.fxml";
@@ -42,7 +42,7 @@ public class PanelAdministradorController implements Initializable {
      * Inicializa el panel mostrando la vista de bienvenida.
      *
      * @param ubicacion URL del FXML (no usado).
-     * @param recursos  Paquete de i18n (no usado).
+     * @param recursos Paquete de i18n (no usado).
      */
     @Override
     public void initialize(URL ubicacion, ResourceBundle recursos) {

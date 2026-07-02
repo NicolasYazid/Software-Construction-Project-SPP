@@ -49,7 +49,7 @@ public final class Validador {
     /**
      * Verifica que una cadena de texto no sea nula ni esté vacía.
      *
-     * @param valor      Valor a validar.
+     * @param valor Valor a validar.
      * @param nombreCampo Nombre del campo, incluido en el mensaje de error.
      * @throws IllegalArgumentException si {@code valor} es nulo o vacío.
      */
@@ -65,11 +65,11 @@ public final class Validador {
     /**
      * Verifica que una cadena no supere una longitud máxima.
      *
-     * @param valor      Valor a validar; no puede ser nulo.
-     * @param maximo     Longitud máxima permitida (valor positivo).
+     * @param valor Valor a validar; no puede ser nulo.
+     * @param maximo Longitud máxima permitida (valor positivo).
      * @param nombreCampo Nombre del campo para el mensaje de error.
      * @throws IllegalArgumentException si {@code valor} es nulo o supera
-     *         {@code maximo} caracteres.
+     * {@code maximo} caracteres.
      */
     public static void validarLongitudMaxima(String valor, int maximo,
             String nombreCampo) {
@@ -91,7 +91,7 @@ public final class Validador {
      *
      * @param contrasena Contraseña en texto plano a validar.
      * @throws IllegalArgumentException si {@code contrasena} es nula,
-     *         vacía, demasiado corta o no contiene los tipos requeridos.
+     * vacía, demasiado corta o no contiene los tipos requeridos.
      */
     public static void validarContrasena(String contrasena) {
         if (contrasena == null || contrasena.isEmpty()) {
@@ -106,7 +106,7 @@ public final class Validador {
         }
         boolean tieneMayuscula = false;
         boolean tieneMinuscula = false;
-        boolean tieneDigito    = false;
+        boolean tieneDigito = false;
 
         for (char caracter : contrasena.toCharArray()) {
             if (Character.isUpperCase(caracter)) {
@@ -133,7 +133,7 @@ public final class Validador {
      *
      * @param correo Dirección de correo a validar.
      * @throws IllegalArgumentException si {@code correo} es nulo, vacío
-     *         o no cumple el formato estándar de correo electrónico.
+     * o no cumple el formato estándar de correo electrónico.
      */
     public static void validarCorreo(String correo) {
         if (correo == null || correo.trim().isEmpty()) {
@@ -155,7 +155,7 @@ public final class Validador {
      *
      * @param matricula Matrícula a validar (ej. zS21013417).
      * @throws IllegalArgumentException si {@code matricula} es nula, vacía
-     *         o no sigue el formato esperado.
+     * o no sigue el formato esperado.
      */
     public static void validarMatricula(String matricula) {
         if (matricula == null || matricula.trim().isEmpty()) {
@@ -177,8 +177,8 @@ public final class Validador {
      *
      * @param numeroPersonal Número de personal a validar.
      * @throws IllegalArgumentException si es nulo, vacío o no tiene
-     *         exactamente {@value Constantes#LONGITUD_NUMERO_PERSONAL}
-     *         dígitos.
+     * exactamente {@value Constantes#LONGITUD_NUMERO_PERSONAL}
+     * dígitos.
      */
     public static void validarNumeroPersonal(String numeroPersonal) {
         if (numeroPersonal == null
@@ -203,7 +203,7 @@ public final class Validador {
      *
      * @param correo Correo institucional a validar.
      * @throws IllegalArgumentException si es nulo, vacío o no cumple
-     *         el formato {@code nombre@fei.uv.mx}.
+     * el formato {@code nombre@fei.uv.mx}.
      */
     public static void validarCorreoInstitucionalProfesor(
             String correo) {
@@ -225,10 +225,10 @@ public final class Validador {
      * únicamente letras, espacios, apóstrofes, puntos o guiones, sin
      * dígitos ni símbolos atípicos (CU-Admin.-01, FA-04).
      *
-     * @param valor       Valor a validar.
+     * @param valor Valor a validar.
      * @param nombreCampo Nombre del campo, incluido en el mensaje de error.
      * @throws IllegalArgumentException si {@code valor} es nulo, vacío
-     *         o contiene dígitos u otros caracteres no permitidos.
+     * o contiene dígitos u otros caracteres no permitidos.
      */
     public static void validarSoloLetras(String valor,
             String nombreCampo) {
@@ -252,7 +252,7 @@ public final class Validador {
      *
      * @param calificacion Valor numérico de la calificación a validar.
      * @throws IllegalArgumentException si {@code calificacion} está fuera
-     *         del rango [0, 10].
+     * del rango [0, 10].
      */
     public static void validarCalificacion(double calificacion) {
         if (calificacion < Constantes.CALIFICACION_ESCALA_MINIMA
@@ -271,10 +271,10 @@ public final class Validador {
      * {@value Constantes#ESCALA_AUTOEVALUACION_MIN} y
      * {@value Constantes#ESCALA_AUTOEVALUACION_MAX} (inclusive).
      *
-     * @param puntuacion  Valor entero del criterio a validar.
+     * @param puntuacion Valor entero del criterio a validar.
      * @param nombreCriterio Nombre del criterio evaluado, para el mensaje.
      * @throws IllegalArgumentException si {@code puntuacion} está fuera
-     *         del rango [1, 5] definido en la sección 8 del proyecto.
+     * del rango [1, 5] definido en la sección 8 del proyecto.
      */
     public static void validarCriterioAutoevaluacion(int puntuacion,
             String nombreCriterio) {
@@ -293,10 +293,10 @@ public final class Validador {
      * Verifica que el tamaño de un archivo no supere el límite
      * permitido de {@value Constantes#TAMANO_MAX_ARCHIVO_MB} MB.
      *
-     * @param tamanoBytes   Tamaño del archivo en bytes.
+     * @param tamanoBytes Tamaño del archivo en bytes.
      * @param nombreArchivo Nombre del archivo, incluido en el mensaje.
      * @throws IllegalArgumentException si {@code tamanoBytes} es negativo
-     *         o supera {@link Constantes#TAMANO_MAX_ARCHIVO_BYTES}.
+     * o supera {@link Constantes#TAMANO_MAX_ARCHIVO_BYTES}.
      */
     public static void validarTamanoArchivo(long tamanoBytes,
             String nombreArchivo) {
@@ -323,12 +323,12 @@ public final class Validador {
      * Se usa como defensa adicional al filtro del {@code FileChooser},
      * que solo restringe la selección a nivel de interfaz.
      *
-     * @param nombreArchivo         Nombre del archivo a validar.
+     * @param nombreArchivo Nombre del archivo a validar.
      * @param extensionesPermitidas Extensiones aceptadas, incluido el
-     *                              punto (ej. {@code ".pdf"}).
+     * punto (ej. {@code ".pdf"}).
      * @throws IllegalArgumentException si {@code nombreArchivo} es
-     *         nulo, vacío, o no termina con ninguna extensión
-     *         permitida.
+     * nulo, vacío, o no termina con ninguna extensión
+     * permitida.
      */
     public static void validarExtension(String nombreArchivo,
             String... extensionesPermitidas) {

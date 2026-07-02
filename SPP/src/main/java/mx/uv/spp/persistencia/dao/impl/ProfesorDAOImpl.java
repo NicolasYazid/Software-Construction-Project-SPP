@@ -227,7 +227,7 @@ public class ProfesorDAOImpl implements ProfesorDAO {
      *
      * @param rs ResultSet posicionado en la fila a mapear.
      * @return instancia de {@link Profesor} con los datos visibles
-     *         en los listados del Administrador.
+     * en los listados del Administrador.
      * @throws SQLException si alguna columna no existe en el RS.
      */
     private Profesor mapearResultSet(ResultSet rs)

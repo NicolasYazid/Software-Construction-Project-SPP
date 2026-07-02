@@ -25,7 +25,7 @@ public interface MensajeGrupoDAO {
      * Inserta un nuevo mensaje de grupo y retorna el id generado.
      *
      * @param mensaje Datos del mensaje; su campo
-     *                {@code idMensajeGrupo} es ignorado.
+     * {@code idMensajeGrupo} es ignorado.
      * @return identificador auto-generado del registro insertado.
      * @throws SQLException si ocurre un error de acceso a la BD.
      */
