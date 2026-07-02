@@ -36,10 +36,10 @@ public class Profesor extends Academico {
      * sus datos, incluido el turno que lo distingue de un Coordinador.
      *
      * @param id                 Identificador del registro en la BD.
-     * @param numPersonal        Número de personal UV.
+     * @param numeroPersonal     Número de personal UV.
      * @param nombre             Nombre(s) cifrado con AES-128.
-     * @param primerApellido     Primer apellido cifrado.
-     * @param segundoApellido    Segundo apellido cifrado; null si no aplica.
+     * @param apellidoPaterno    Apellido paterno cifrado.
+     * @param apellidoMaterno    Apellido materno cifrado; null si no aplica.
      * @param correo             Correo cifrado; identificador de login.
      * @param contrasena         Contraseña cifrada con AES-128.
      * @param estado             Activo o No Activo.
@@ -49,15 +49,15 @@ public class Profesor extends Academico {
      * @param fechaBloqueo       Momento del bloqueo; null si no bloqueado.
      * @param turno              Turno de trabajo: Matutino o Vespertino.
      */
-    public Profesor(int id, String numPersonal,
-            String nombre, String primerApellido,
-            String segundoApellido, String correo,
+    public Profesor(int id, String numeroPersonal,
+            String nombre, String apellidoPaterno,
+            String apellidoMaterno, String correo,
             String contrasena, String estado,
             LocalDate fechaRegistro, int tiempoServicio,
             int intentosFallidos, LocalDateTime fechaBloqueo,
             String turno) {
-        super(id, numPersonal, nombre, primerApellido,
-                segundoApellido, correo, contrasena, estado,
+        super(id, numeroPersonal, nombre, apellidoPaterno,
+                apellidoMaterno, correo, contrasena, estado,
                 fechaRegistro, tiempoServicio,
                 intentosFallidos, fechaBloqueo);
         this.turno = turno;

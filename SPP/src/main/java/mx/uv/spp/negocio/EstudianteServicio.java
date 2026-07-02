@@ -298,7 +298,7 @@ public class EstudianteServicio {
         double calificacion =
                 (puntuacionTotal
                  / (double) Constantes.PUNTUACION_MAX_AUTOEVALUACION)
-                * Constantes.CALIFICACION_MAXIMA;
+                * Constantes.CALIFICACION_ESCALA_MAXIMA;
         Autoevaluacion auto = new Autoevaluacion(
                 0, idDocumento,
                 respuestas[0],  respuestas[1],  respuestas[2],

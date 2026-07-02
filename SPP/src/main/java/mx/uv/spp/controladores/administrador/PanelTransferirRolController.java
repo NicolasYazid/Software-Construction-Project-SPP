@@ -47,7 +47,7 @@ import mx.uv.spp.persistencia.dao.impl.ProfesorDAOImpl;
 public class PanelTransferirRolController implements Initializable {
 
     @FXML private TableView<Profesor>           tblProfesores;
-    @FXML private TableColumn<Profesor, String> colNumPersonal;
+    @FXML private TableColumn<Profesor, String> colNumeroPersonal;
     @FXML private TableColumn<Profesor, String> colNombre;
     @FXML private TableColumn<Profesor, String> colCorreo;
     @FXML private Button                        btnTransferirRol;
@@ -59,7 +59,7 @@ public class PanelTransferirRolController implements Initializable {
     private static final int    ANCHO_DIALOGO  = 760;
     private static final int    ALTO_DIALOGO   = 480;
 
-    private static final String MENSAJE_EX01 =
+    private static final String MENSAJE_ERROR_CONEXION_BD =
             "Error: no fue posible conectarse con la base de datos, "
             + "inténtelo de nuevo ahora o en unos minutos.";
 
@@ -144,8 +144,8 @@ public class PanelTransferirRolController implements Initializable {
         administradorServicio =
                 new AdministradorServicio(new ProfesorDAOImpl());
 
-        colNumPersonal.setCellValueFactory(
-                new PropertyValueFactory<>("numPersonal"));
+        colNumeroPersonal.setCellValueFactory(
+                new PropertyValueFactory<>("numeroPersonal"));
         colNombre.setCellValueFactory(
                 new PropertyValueFactory<>("nombreCompleto"));
         colCorreo.setCellValueFactory(
@@ -196,7 +196,7 @@ public class PanelTransferirRolController implements Initializable {
             Alert alerta = new Alert(AlertType.ERROR);
             alerta.setTitle("Error de conexión con la base de datos");
             alerta.setHeaderText(null);
-            alerta.setContentText(MENSAJE_EX01);
+            alerta.setContentText(MENSAJE_ERROR_CONEXION_BD);
             ensancharAlerta(alerta);
             alerta.showAndWait();
             cerrarVentana();
@@ -267,7 +267,7 @@ public class PanelTransferirRolController implements Initializable {
             Alert alerta = new Alert(AlertType.ERROR);
             alerta.setTitle("Error de conexión con la base de datos");
             alerta.setHeaderText(null);
-            alerta.setContentText(MENSAJE_EX01);
+            alerta.setContentText(MENSAJE_ERROR_CONEXION_BD);
             ensancharAlerta(alerta);
             alerta.showAndWait();
         }

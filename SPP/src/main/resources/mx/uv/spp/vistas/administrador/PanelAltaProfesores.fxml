@@ -95,7 +95,7 @@
 
                     <Label text="Ingresa el número de personal"
                            styleClass="lbl-campo" />
-                    <TextField fx:id="txtNumPersonal"
+                    <TextField fx:id="txtNumeroPersonal"
                                promptText="Exactamente 10 dígitos (ej. 1234567890)"
                                maxWidth="Infinity"
                                styleClass="txt-campo" />

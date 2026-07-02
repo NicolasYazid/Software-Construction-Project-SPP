@@ -123,7 +123,7 @@ public class ProfesorServicio {
                     + "para la inscripción " + idInscripcion + ".");
         }
         if (doc.getCalificacion()
-                >= Constantes.CALIFICACION_MINIMA) {
+                >= Constantes.CALIFICACION_ESCALA_MINIMA) {
             throw new IllegalStateException(
                     "La EvaluacionOV ya tiene calificación "
                     + "registrada: " + doc.getCalificacion() + ".");
@@ -232,8 +232,8 @@ public class ProfesorServicio {
      */
     private void validarRangoCalificacion(double calificacion) {
         if (calificacion % 1.0 != 0.0
-                || calificacion < Constantes.CALIFICACION_MIN
-                || calificacion > Constantes.CALIFICACION_MAX) {
+                || calificacion < Constantes.CALIFICACION_EVIDENCIA_MINIMA
+                || calificacion > Constantes.CALIFICACION_EVIDENCIA_MAXIMA) {
             throw new IllegalArgumentException(
                     "La calificación debe ser un número entero"
                     + " del 1 al 10.");

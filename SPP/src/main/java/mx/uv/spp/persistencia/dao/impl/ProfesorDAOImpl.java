@@ -85,16 +85,16 @@ public class ProfesorDAOImpl implements ProfesorDAO {
         Connection con = ConexionBD.obtenerInstancia()
                 .obtenerConexion();
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, profesor.getNumPersonal());
+            ps.setString(1, profesor.getNumeroPersonal());
             ps.setString(2, profesor.getNombre());
-            ps.setString(3, profesor.getPrimerApellido());
+            ps.setString(3, profesor.getApellidoPaterno());
 
-            String segundoApellido = profesor.getSegundoApellido();
-            if (segundoApellido == null
-                    || segundoApellido.isEmpty()) {
+            String apellidoMaterno = profesor.getApellidoMaterno();
+            if (apellidoMaterno == null
+                    || apellidoMaterno.isEmpty()) {
                 ps.setNull(4, Types.VARCHAR);
             } else {
-                ps.setString(4, segundoApellido);
+                ps.setString(4, apellidoMaterno);
             }
 
             ps.setString(5, profesor.getCorreo());

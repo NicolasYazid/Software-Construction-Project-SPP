@@ -64,7 +64,7 @@ public class EvaluarEvidenciaController implements Initializable {
             "-fx-text-fill: #1C3A6E;";
     private static final String ESTILO_OK =
             "-fx-text-fill: #27ae60;";
-    private static final String MENSAJE_EX01 =
+    private static final String MENSAJE_ERROR_CONEXION_BD =
             "No fue posible conectarse con la base de datos. "
             + "Inténtelo de nuevo en unos minutos.";
 
@@ -95,7 +95,7 @@ public class EvaluarEvidenciaController implements Initializable {
         colInscripcion.setCellValueFactory(
                 celda -> new SimpleStringProperty(
                         String.valueOf(
-                                celda.getValue().idInscripcion)));
+                                celda.getValue().idEstudiante)));
         colTipo.setCellValueFactory(
                 celda -> new SimpleStringProperty(
                         celda.getValue().nombreTipo));
@@ -146,7 +146,7 @@ public class EvaluarEvidenciaController implements Initializable {
             for (Documento doc : pendientes) {
                 FilaEvidencia fila = new FilaEvidencia();
                 fila.idDocumento    = doc.getIdDocumento();
-                fila.idInscripcion  = doc.getIdInscripcion();
+                fila.idEstudiante   = doc.getIdEstudiante();
                 fila.nombreTipo     =
                         obtenerNombreTipo(doc.getIdTipoEvidencia());
                 fila.rutaArchivo    =
@@ -169,7 +169,7 @@ public class EvaluarEvidenciaController implements Initializable {
             System.err.println(
                     "Error al cargar evidencias pendientes: "
                     + e.getMessage());
-            mostrarMensaje(ESTILO_ERROR, MENSAJE_EX01);
+            mostrarMensaje(ESTILO_ERROR, MENSAJE_ERROR_CONEXION_BD);
         }
     }
 
@@ -211,7 +211,7 @@ public class EvaluarEvidenciaController implements Initializable {
         TextInputDialog dialogo = new TextInputDialog();
         dialogo.setTitle("Calificar evidencia");
         dialogo.setHeaderText(
-                "Estudiante " + fila.idInscripcion
+                "Estudiante " + fila.idEstudiante
                 + " — " + fila.nombreTipo);
         dialogo.setContentText(
                 "Calificación (número entero del 1 al 10):");
@@ -232,8 +232,8 @@ public class EvaluarEvidenciaController implements Initializable {
             return;
         }
         if (calificacion % 1.0 != 0.0
-                || calificacion < Constantes.CALIFICACION_MIN
-                || calificacion > Constantes.CALIFICACION_MAX) {
+                || calificacion < Constantes.CALIFICACION_EVIDENCIA_MINIMA
+                || calificacion > Constantes.CALIFICACION_EVIDENCIA_MAXIMA) {
             mostrarMensaje(ESTILO_ERROR,
                     "La calificación debe ser un número "
                     + "entero del 1 al 10.");
@@ -267,7 +267,7 @@ public class EvaluarEvidenciaController implements Initializable {
             System.err.println(
                     "Error al calificar evidencia: "
                     + e.getMessage());
-            mostrarMensaje(ESTILO_ERROR, MENSAJE_EX01);
+            mostrarMensaje(ESTILO_ERROR, MENSAJE_ERROR_CONEXION_BD);
         }
     }
 
@@ -323,7 +323,7 @@ public class EvaluarEvidenciaController implements Initializable {
      */
     static class FilaEvidencia {
         int idDocumento;
-        int idInscripcion;
+        int idEstudiante;
         String nombreTipo = "";
         String rutaArchivo = "";
         String nombreArchivo = "";

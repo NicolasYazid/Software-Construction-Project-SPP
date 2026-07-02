@@ -27,7 +27,7 @@ public class Proyecto {
     private String metodologia;
     private int    duracionMeses;
     private String horarioLaboral;
-    private String recurso;
+    private String recursos;
     private String responsabilidades;
     private int    cupoMaximo;
     private int    cupoDisponible;
@@ -53,7 +53,7 @@ public class Proyecto {
      * @param metodologia       Metodología de trabajo.
      * @param duracionMeses     Duración en meses.
      * @param horarioLaboral    Horario en la OV.
-     * @param recurso           Recursos provistos por la OV.
+     * @param recursos          Recursos provistos por la OV.
      * @param responsabilidades Responsabilidades adicionales.
      * @param cupoMaximo        Número máximo de Estudiantes.
      * @param cupoDisponible    Cupos restantes.
@@ -63,7 +63,7 @@ public class Proyecto {
             int idResponsable, String nombreProyecto,
             String descripcion, String actividades,
             String metodologia, int duracionMeses,
-            String horarioLaboral, String recurso,
+            String horarioLaboral, String recursos,
             String responsabilidades, int cupoMaximo,
             int cupoDisponible, String estado) {
         this.idProyecto        = idProyecto;
@@ -75,7 +75,7 @@ public class Proyecto {
         this.metodologia       = metodologia;
         this.duracionMeses     = duracionMeses;
         this.horarioLaboral    = horarioLaboral;
-        this.recurso           = recurso;
+        this.recursos          = recursos;
         this.responsabilidades = responsabilidades;
         this.cupoMaximo        = cupoMaximo;
         this.cupoDisponible    = cupoDisponible;
@@ -109,8 +109,8 @@ public class Proyecto {
     public String getHorarioLaboral() { return horarioLaboral; }
     public void setHorarioLaboral(String horarioLaboral) { this.horarioLaboral = horarioLaboral; }
 
-    public String getRecurso() { return recurso; }
-    public void setRecurso(String recurso) { this.recurso = recurso; }
+    public String getRecursos() { return recursos; }
+    public void setRecursos(String recursos) { this.recursos = recursos; }
 
     public String getResponsabilidades() { return responsabilidades; }
     public void setResponsabilidades(String responsabilidades) { this.responsabilidades = responsabilidades; }

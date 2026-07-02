@@ -27,6 +27,7 @@ public class Documento {
 
     private int           idDocumento;
     private int           idInscripcion;
+    private int           idEstudiante;
     private int           idTipoEvidencia;
     private int           idEstadoDocumento;
     private String        rutaArchivo;
@@ -125,6 +126,29 @@ public class Documento {
      */
     public void setIdInscripcion(int idInscripcion) {
         this.idInscripcion = idInscripcion;
+    }
+
+    /**
+     * Retorna el identificador del Estudiante propietario del
+     * documento. A diferencia de {@link #getIdInscripcion()}, este
+     * campo se puebla al leer desde consultas que exponen
+     * directamente {@code estudiante_id} (por ejemplo, las vistas
+     * del Profesor que listan entregas por Estudiante).
+     *
+     * @return identificador del Estudiante.
+     */
+    public int getIdEstudiante() {
+        return idEstudiante;
+    }
+
+    /**
+     * Establece el identificador del Estudiante propietario del
+     * documento.
+     *
+     * @param idEstudiante Identificador del Estudiante.
+     */
+    public void setIdEstudiante(int idEstudiante) {
+        this.idEstudiante = idEstudiante;
     }
 
     /**

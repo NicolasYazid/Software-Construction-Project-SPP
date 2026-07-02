@@ -81,10 +81,10 @@ public final class Constantes {
     // --- Calificaciones ---
 
     /** Valor numérico mínimo que puede recibir un estudiante. */
-    public static final int CALIFICACION_MINIMA = 0;
+    public static final int CALIFICACION_ESCALA_MINIMA = 0;
 
     /** Valor numérico máximo que puede recibir un estudiante. */
-    public static final int CALIFICACION_MAXIMA = 10;
+    public static final int CALIFICACION_ESCALA_MAXIMA = 10;
 
     // --- Autoevaluación del estudiante ---
 
@@ -110,9 +110,6 @@ public final class Constantes {
 
     /** Estado temporal de una cuenta bloqueada por intentos fallidos. */
     public static final String ESTADO_BLOQUEADO = "Bloqueado";
-
-    /** Estado de un proyecto publicado y visible para los Estudiantes. */
-    public static final String ESTADO_PROYECTO_DISPONIBLE = "activo";
 
     // --- IDs del catálogo entregable (spp_db, tabla entregable) ---
     // Posición 1-15 según el INSERT semilla del script spp_db.sql.
@@ -211,12 +208,13 @@ public final class Constantes {
 
     /**
      * Mínimo que el Profesor puede asignar a una evidencia; distinto
-     * de CALIFICACION_MINIMA (0) que aplica a la calificación final.
+     * de CALIFICACION_ESCALA_MINIMA (0) que aplica a la calificación
+     * final.
      */
-    public static final double CALIFICACION_MIN = 1.0;
+    public static final double CALIFICACION_EVIDENCIA_MINIMA = 1.0;
 
     /** Máximo que el Profesor puede asignar a una evidencia. */
-    public static final double CALIFICACION_MAX = 10.0;
+    public static final double CALIFICACION_EVIDENCIA_MAXIMA = 10.0;
 
     // --- Centinela de calificación en capa POJO/DAO ---
 

@@ -65,7 +65,7 @@ public class CalificacionOVController implements Initializable {
             "-fx-text-fill: #1C3A6E;";
     private static final String ESTILO_OK =
             "-fx-text-fill: #27ae60;";
-    private static final String MENSAJE_EX01 =
+    private static final String MENSAJE_ERROR_CONEXION_BD =
             "No fue posible conectarse con la base de datos. "
             + "Inténtelo de nuevo en unos minutos.";
 
@@ -148,7 +148,7 @@ public class CalificacionOVController implements Initializable {
             for (Documento doc : pendientes) {
                 FilaOV fila = new FilaOV();
                 fila.idDocumento = doc.getIdDocumento();
-                fila.idEstudiante = doc.getIdInscripcion();
+                fila.idEstudiante = doc.getIdEstudiante();
                 fila.nombreTipo = doc.getIdTipoEvidencia()
                         == Constantes.TIPO_EVIDENCIA_EVALUACION_OV
                         ? "Evaluación OV 1"
@@ -174,7 +174,7 @@ public class CalificacionOVController implements Initializable {
             System.err.println(
                     "Error al cargar evaluaciones OV: "
                     + e.getMessage());
-            mostrarMensaje(ESTILO_ERROR, MENSAJE_EX01);
+            mostrarMensaje(ESTILO_ERROR, MENSAJE_ERROR_CONEXION_BD);
         }
     }
 
@@ -238,8 +238,8 @@ public class CalificacionOVController implements Initializable {
             return;
         }
         if (calificacion % 1.0 != 0.0
-                || calificacion < Constantes.CALIFICACION_MIN
-                || calificacion > Constantes.CALIFICACION_MAX) {
+                || calificacion < Constantes.CALIFICACION_EVIDENCIA_MINIMA
+                || calificacion > Constantes.CALIFICACION_EVIDENCIA_MAXIMA) {
             mostrarMensaje(ESTILO_ERROR,
                     "La calificación debe ser un número "
                     + "entero entre 1 y 10.");
@@ -275,7 +275,7 @@ public class CalificacionOVController implements Initializable {
             System.err.println(
                     "Error al registrar calificación OV: "
                     + e.getMessage());
-            mostrarMensaje(ESTILO_ERROR, MENSAJE_EX01);
+            mostrarMensaje(ESTILO_ERROR, MENSAJE_ERROR_CONEXION_BD);
         }
     }
 

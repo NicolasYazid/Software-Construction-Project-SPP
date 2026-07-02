@@ -37,7 +37,7 @@ import mx.uv.spp.util.SesionUsuario;
 public class PanelProfesoresController implements Initializable {
 
     @FXML private TableView<Profesor>           tblProfesores;
-    @FXML private TableColumn<Profesor, String> colNumPersonal;
+    @FXML private TableColumn<Profesor, String> colNumeroPersonal;
     @FXML private TableColumn<Profesor, String> colNombre;
     @FXML private TableColumn<Profesor, String> colCorreo;
     @FXML private TableColumn<Profesor, String> colEstado;
@@ -67,8 +67,8 @@ public class PanelProfesoresController implements Initializable {
         administradorServicio =
                 new AdministradorServicio(new ProfesorDAOImpl());
 
-        colNumPersonal.setCellValueFactory(
-                new PropertyValueFactory<>("numPersonal"));
+        colNumeroPersonal.setCellValueFactory(
+                new PropertyValueFactory<>("numeroPersonal"));
         colNombre.setCellValueFactory(
                 new PropertyValueFactory<>("nombreCompleto"));
         colCorreo.setCellValueFactory(

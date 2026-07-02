@@ -38,7 +38,7 @@ import mx.uv.spp.util.Validador;
  */
 public class PanelAltaProfesoresController implements Initializable {
 
-    @FXML private TextField     txtNumPersonal;
+    @FXML private TextField     txtNumeroPersonal;
     @FXML private TextField     txtNombre;
     @FXML private TextField     txtApellidoPaterno;
     @FXML private TextField     txtApellidoMaterno;
@@ -52,7 +52,7 @@ public class PanelAltaProfesoresController implements Initializable {
     private static final String VISTA_COORDINADOR =
             "/mx/uv/spp/vistas/administrador/PanelSeccionCoordinador.fxml";
 
-    private static final String MENSAJE_EX01 =
+    private static final String MENSAJE_ERROR_CONEXION_BD =
             "Error: no fue posible conectarse con la base de datos, "
             + "inténtelo de nuevo ahora o en unos minutos";
 
@@ -155,7 +155,7 @@ public class PanelAltaProfesoresController implements Initializable {
      */
     @FXML
     private void onBtnRegistrar() {
-        String numPersonal     = txtNumPersonal.getText().trim();
+        String numeroPersonal     = txtNumeroPersonal.getText().trim();
         String nombre          = txtNombre.getText().trim();
         String apellidoPaterno = txtApellidoPaterno.getText().trim();
         String apellidoMaterno = txtApellidoMaterno.getText().trim();
@@ -163,7 +163,7 @@ public class PanelAltaProfesoresController implements Initializable {
         String contrasena      = pwdContrasena.getText();
 
         // Paso 3 / FA-02: ningún campo vacío, excepto apellido materno.
-        if (numPersonal.isEmpty() || nombre.isEmpty()
+        if (numeroPersonal.isEmpty() || nombre.isEmpty()
                 || apellidoPaterno.isEmpty() || correo.isEmpty()
                 || contrasena.isEmpty()) {
             mostrarAlerta(AlertType.WARNING, "Datos faltantes",
@@ -174,7 +174,7 @@ public class PanelAltaProfesoresController implements Initializable {
 
         // Paso 4 / FA-03: formato de número de personal y correo.
         try {
-            Validador.validarNumeroPersonal(numPersonal);
+            Validador.validarNumeroPersonal(numeroPersonal);
             Validador.validarCorreoInstitucionalProfesor(correo);
         } catch (IllegalArgumentException formatoInvalido) {
             mostrarAlerta(AlertType.WARNING, "Formato inválido",
@@ -222,7 +222,7 @@ public class PanelAltaProfesoresController implements Initializable {
         // Paso 8 (FA-06) y 9 (EX-01): duplicados y conexión a la BD.
         try {
             administradorServicio.registrarProfesor(
-                    numPersonal, nombre, apellidoPaterno,
+                    numeroPersonal, nombre, apellidoPaterno,
                     apellidoMaterno, correo, contrasena);
         } catch (IllegalStateException duplicado) {
             mostrarAlerta(AlertType.WARNING, "Profesor duplicado",
@@ -241,7 +241,7 @@ public class PanelAltaProfesoresController implements Initializable {
                     + errorConexion.getMessage());
             mostrarAlerta(AlertType.ERROR,
                     "Error de conexión con la base de datos",
-                    MENSAJE_EX01);
+                    MENSAJE_ERROR_CONEXION_BD);
             return;
         }
 
@@ -332,7 +332,7 @@ public class PanelAltaProfesoresController implements Initializable {
      * exitoso, dejando la ventana lista para un nuevo alta.
      */
     private void limpiarFormulario() {
-        txtNumPersonal.clear();
+        txtNumeroPersonal.clear();
         txtNombre.clear();
         txtApellidoPaterno.clear();
         txtApellidoMaterno.clear();

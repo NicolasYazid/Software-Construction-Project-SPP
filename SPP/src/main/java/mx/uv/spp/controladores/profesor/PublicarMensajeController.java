@@ -56,7 +56,7 @@ public class PublicarMensajeController implements Initializable {
             "-fx-text-fill: #1C3A6E;";
     private static final String ESTILO_OK =
             "-fx-text-fill: #27ae60;";
-    private static final String MENSAJE_EX01 =
+    private static final String MENSAJE_ERROR_CONEXION_BD =
             "No fue posible conectarse con la base de datos. "
             + "Inténtelo de nuevo en unos minutos.";
     private static final String TEXTO_SIN_ADJUNTO =
@@ -138,7 +138,7 @@ public class PublicarMensajeController implements Initializable {
         } catch (SQLException e) {
             System.err.println(
                     "Error al publicar mensaje: " + e.getMessage());
-            mostrarMensaje(ESTILO_ERROR, MENSAJE_EX01);
+            mostrarMensaje(ESTILO_ERROR, MENSAJE_ERROR_CONEXION_BD);
         }
     }
 
@@ -194,7 +194,7 @@ public class PublicarMensajeController implements Initializable {
             System.err.println(
                     "Error al cargar grupos del Profesor: "
                     + e.getMessage());
-            mostrarMensaje(ESTILO_ERROR, MENSAJE_EX01);
+            mostrarMensaje(ESTILO_ERROR, MENSAJE_ERROR_CONEXION_BD);
         }
     }
 

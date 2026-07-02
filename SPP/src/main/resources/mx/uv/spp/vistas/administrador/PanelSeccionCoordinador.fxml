@@ -60,7 +60,7 @@
                     <!-- Tarjeta con los datos del coordinador -->
                     <VBox styleClass="tarjeta-coordinador">
                         <Label fx:id="lblNombre" styleClass="lbl-dato-coordinador" text="Nombre: " />
-                        <Label fx:id="lblNumPersonal" styleClass="lbl-dato-coordinador" text="Número de personal: " />
+                        <Label fx:id="lblNumeroPersonal" styleClass="lbl-dato-coordinador" text="Número de personal: " />
                         <Label fx:id="lblCorreo" styleClass="lbl-dato-coordinador" text="Correo: " />
                     </VBox>
 

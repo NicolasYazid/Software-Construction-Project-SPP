@@ -92,19 +92,19 @@ public class AdministradorServicio {
         Validador.validarSoloLetras(
                 apellidoPaterno, "apellido paterno");
 
-        String segundoApellido = apellidoMaterno == null
+        String apellidoMaternoNormalizado = apellidoMaterno == null
                 ? "" : apellidoMaterno.trim();
-        if (!segundoApellido.isEmpty()) {
+        if (!apellidoMaternoNormalizado.isEmpty()) {
             Validador.validarSoloLetras(
-                    segundoApellido, "apellido materno");
+                    apellidoMaternoNormalizado, "apellido materno");
         }
 
         Validador.validarContrasena(contrasena);
 
-        String numPersonalNormalizado = numeroPersonal.trim();
+        String numeroPersonalNormalizado = numeroPersonal.trim();
         String correoNormalizado = correoInstitucional.trim();
 
-        if (profesorDAO.existeNumeroPersonal(numPersonalNormalizado)
+        if (profesorDAO.existeNumeroPersonal(numeroPersonalNormalizado)
                 || profesorDAO.existeCorreoInstitucional(
                         correoNormalizado)) {
             throw new IllegalStateException(
@@ -114,10 +114,11 @@ public class AdministradorServicio {
 
         Profesor nuevo = new Profesor(
                 0,
-                numPersonalNormalizado,
+                numeroPersonalNormalizado,
                 nombre.trim(),
                 apellidoPaterno.trim(),
-                segundoApellido.isEmpty() ? null : segundoApellido,
+                apellidoMaternoNormalizado.isEmpty()
+                        ? null : apellidoMaternoNormalizado,
                 correoNormalizado,
                 contrasena,
                 Constantes.ESTADO_ACTIVO,

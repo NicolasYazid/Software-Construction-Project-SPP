@@ -101,7 +101,7 @@ public class DocumentosInicialesController implements Initializable {
                         celda.getValue().estado));
         colArchivo.setCellValueFactory(
                 celda -> new SimpleStringProperty(
-                        celda.getValue().archivo));
+                        celda.getValue().nombreArchivo));
 
         colAccion.setCellFactory(columna -> new TableCell<>() {
             private final Button btnSubir =
@@ -124,7 +124,7 @@ public class DocumentosInicialesController implements Initializable {
                 }
                 FilaDocumento fila = getTableView()
                         .getItems().get(getIndex());
-                if (fila.idTipo
+                if (fila.idTipoEvidencia
                         == Constantes.TIPO_EVIDENCIA_OFICIO_ASIGNACION) {
                     setGraphic(null);
                 } else {
@@ -167,15 +167,15 @@ public class DocumentosInicialesController implements Initializable {
                                 idInscripcion, tipos[i]);
                 FilaDocumento fila = new FilaDocumento();
                 fila.nombre = nombres[i];
-                fila.idTipo = tipos[i];
+                fila.idTipoEvidencia = tipos[i];
                 if (doc != null) {
                     fila.estado = obtenerNombreEstado(
                             doc.getIdEstadoDocumento());
-                    fila.archivo = doc.getNombreArchivo() != null
+                    fila.nombreArchivo = doc.getNombreArchivo() != null
                             ? doc.getNombreArchivo() : "";
                 } else {
                     fila.estado = "Pendiente";
-                    fila.archivo = "";
+                    fila.nombreArchivo = "";
                 }
                 filas.add(fila);
             }
@@ -232,7 +232,7 @@ public class DocumentosInicialesController implements Initializable {
         try {
             estudianteServicio.entregarDocumento(
                     idInscripcion,
-                    fila.idTipo,
+                    fila.idTipoEvidencia,
                     archivo.getAbsolutePath(),
                     archivo.getName());
             mostrarMensaje(ESTILO_OK,
@@ -293,9 +293,9 @@ public class DocumentosInicialesController implements Initializable {
      */
     static class FilaDocumento {
         String nombre = "";
-        int idTipo;
+        int idTipoEvidencia;
         String estado = "Pendiente";
-        String archivo = "";
+        String nombreArchivo = "";
     }
 
 }

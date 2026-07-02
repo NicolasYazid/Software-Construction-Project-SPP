@@ -75,7 +75,7 @@ public class DocumentoDAOImpl implements DocumentoDAO {
     public List<Documento> obtenerPorInscripcionYTipo(
             int idInscripcion, int idTipoEvidencia)
             throws SQLException {
-        int estudianteId = obtenerEstudianteId(idInscripcion);
+        int idEstudiante = obtenerEstudianteId(idInscripcion);
         String sqlObtenerPorTipo =
                 "SELECT id, estudiante_id, entregable_id,"
                 + " estado, archivo_adjunto,"
@@ -88,7 +88,7 @@ public class DocumentoDAOImpl implements DocumentoDAO {
                 .obtenerConexion();
         try (PreparedStatement psObtenerPorTipo =
                 con.prepareStatement(sqlObtenerPorTipo)) {
-            psObtenerPorTipo.setInt(1, estudianteId);
+            psObtenerPorTipo.setInt(1, idEstudiante);
             psObtenerPorTipo.setInt(2, idTipoEvidencia);
             try (ResultSet rsDocumentos =
                     psObtenerPorTipo.executeQuery()) {
@@ -110,7 +110,7 @@ public class DocumentoDAOImpl implements DocumentoDAO {
     public Documento obtenerPorInscripcionYTipoUnico(
             int idInscripcion, int idTipoEvidencia)
             throws SQLException {
-        int estudianteId = obtenerEstudianteId(idInscripcion);
+        int idEstudiante = obtenerEstudianteId(idInscripcion);
         String sqlObtenerUnico =
                 "SELECT id, estudiante_id, entregable_id,"
                 + " estado, archivo_adjunto,"
@@ -123,7 +123,7 @@ public class DocumentoDAOImpl implements DocumentoDAO {
                 .obtenerConexion();
         try (PreparedStatement psObtenerUnico =
                 con.prepareStatement(sqlObtenerUnico)) {
-            psObtenerUnico.setInt(1, estudianteId);
+            psObtenerUnico.setInt(1, idEstudiante);
             psObtenerUnico.setInt(2, idTipoEvidencia);
             try (ResultSet rsDocumento =
                     psObtenerUnico.executeQuery()) {
@@ -143,7 +143,7 @@ public class DocumentoDAOImpl implements DocumentoDAO {
      */
     @Override
     public int insertar(Documento documento) throws SQLException {
-        int estudianteId = obtenerEstudianteId(
+        int idEstudiante = obtenerEstudianteId(
                 documento.getIdInscripcion());
         String sqlInsertar = "INSERT INTO entrega"
                 + " (estudiante_id, entregable_id, estado,"
@@ -153,7 +153,7 @@ public class DocumentoDAOImpl implements DocumentoDAO {
                 .obtenerConexion();
         try (PreparedStatement psInsertar = con.prepareStatement(
                 sqlInsertar, Statement.RETURN_GENERATED_KEYS)) {
-            psInsertar.setInt(1, estudianteId);
+            psInsertar.setInt(1, idEstudiante);
             psInsertar.setInt(2, documento.getIdTipoEvidencia());
             psInsertar.setString(3, estadoIntAString(
                     documento.getIdEstadoDocumento()));
@@ -326,7 +326,7 @@ public class DocumentoDAOImpl implements DocumentoDAO {
             throws SQLException {
         Documento doc = new Documento();
         doc.setIdDocumento(rsDocumento.getInt("id"));
-        doc.setIdInscripcion(rsDocumento.getInt("estudiante_id"));
+        doc.setIdEstudiante(rsDocumento.getInt("estudiante_id"));
         doc.setIdTipoEvidencia(rsDocumento.getInt("entregable_id"));
         doc.setIdEstadoDocumento(estadoStringAInt(
                 rsDocumento.getString("estado")));

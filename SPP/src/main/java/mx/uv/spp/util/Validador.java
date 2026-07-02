@@ -247,20 +247,20 @@ public final class Validador {
 
     /**
      * Verifica que una calificación esté dentro del rango válido:
-     * entre {@value Constantes#CALIFICACION_MINIMA} y
-     * {@value Constantes#CALIFICACION_MAXIMA} (inclusive).
+     * entre {@value Constantes#CALIFICACION_ESCALA_MINIMA} y
+     * {@value Constantes#CALIFICACION_ESCALA_MAXIMA} (inclusive).
      *
      * @param calificacion Valor numérico de la calificación a validar.
      * @throws IllegalArgumentException si {@code calificacion} está fuera
      *         del rango [0, 10].
      */
     public static void validarCalificacion(double calificacion) {
-        if (calificacion < Constantes.CALIFICACION_MINIMA
-                || calificacion > Constantes.CALIFICACION_MAXIMA) {
+        if (calificacion < Constantes.CALIFICACION_ESCALA_MINIMA
+                || calificacion > Constantes.CALIFICACION_ESCALA_MAXIMA) {
             throw new IllegalArgumentException(
                     "La calificación debe ser un valor entre "
-                    + Constantes.CALIFICACION_MINIMA + " y "
-                    + Constantes.CALIFICACION_MAXIMA
+                    + Constantes.CALIFICACION_ESCALA_MINIMA + " y "
+                    + Constantes.CALIFICACION_ESCALA_MAXIMA
                     + ". Valor recibido: " + calificacion);
         }
     }

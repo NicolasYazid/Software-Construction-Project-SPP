@@ -200,8 +200,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             case ADMINISTRADOR:
                 return "SELECT id AS id_usuario,"
                         + " usuario AS nombre,"
-                        + " NULL AS primer_apellido,"
-                        + " NULL AS segundo_apellido,"
+                        + " NULL AS apellido_paterno,"
+                        + " NULL AS apellido_materno,"
                         + " contrasenia,"
                         + " 'activo' AS estado,"
                         + " intentos_fallidos,"
@@ -211,8 +211,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             case COORDINADOR:
                 return "SELECT id AS id_usuario,"
                         + " nombre,"
-                        + " apellido_paterno AS primer_apellido,"
-                        + " apellido_materno AS segundo_apellido,"
+                        + " apellido_paterno,"
+                        + " apellido_materno,"
                         + " contrasenia, estado,"
                         + " intentos_fallidos,"
                         + " fecha_bloqueo"
@@ -222,8 +222,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             case PROFESOR:
                 return "SELECT id AS id_usuario,"
                         + " nombre,"
-                        + " apellido_paterno AS primer_apellido,"
-                        + " apellido_materno AS segundo_apellido,"
+                        + " apellido_paterno,"
+                        + " apellido_materno,"
                         + " contrasenia, estado,"
                         + " intentos_fallidos,"
                         + " fecha_bloqueo"
@@ -233,8 +233,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             case ESTUDIANTE:
                 return "SELECT id AS id_usuario,"
                         + " nombre,"
-                        + " apellido_paterno AS primer_apellido,"
-                        + " apellido_materno AS segundo_apellido,"
+                        + " apellido_paterno,"
+                        + " apellido_materno,"
                         + " contrasenia, estado,"
                         + " intentos_fallidos,"
                         + " fecha_bloqueo"
@@ -290,7 +290,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
     /**
      * Construye el nombre completo leyendo las columnas {@code nombre},
-     * {@code primer_apellido} y {@code segundo_apellido}. El
+     * {@code apellido_paterno} y {@code apellido_materno}. El
      * Administrador solo tiene la columna {@code nombre} (proyectada
      * como alias).
      *
@@ -308,14 +308,16 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         if (tipo == TipoUsuario.ADMINISTRADOR) {
             return nombre;
         }
-        String apellidoP = rsUsuario.getString("primer_apellido");
-        String apellidoM = rsUsuario.getString("segundo_apellido");
+        String apellidoPaterno =
+                rsUsuario.getString("apellido_paterno");
+        String apellidoMaterno =
+                rsUsuario.getString("apellido_materno");
         StringBuilder sb = new StringBuilder(nombre);
-        if (apellidoP != null && !apellidoP.isEmpty()) {
-            sb.append(" ").append(apellidoP);
+        if (apellidoPaterno != null && !apellidoPaterno.isEmpty()) {
+            sb.append(" ").append(apellidoPaterno);
         }
-        if (apellidoM != null && !apellidoM.isEmpty()) {
-            sb.append(" ").append(apellidoM);
+        if (apellidoMaterno != null && !apellidoMaterno.isEmpty()) {
+            sb.append(" ").append(apellidoMaterno);
         }
         return sb.toString();
     }

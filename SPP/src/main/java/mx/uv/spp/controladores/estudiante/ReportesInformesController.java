@@ -102,7 +102,7 @@ public class ReportesInformesController implements Initializable {
                         celda.getValue().estado));
         colArchivo.setCellValueFactory(
                 celda -> new SimpleStringProperty(
-                        celda.getValue().archivo));
+                        celda.getValue().nombreArchivo));
 
         colAccion.setCellFactory(columna -> new TableCell<>() {
             private final Button btnSubir = new Button("Subir");
@@ -167,15 +167,15 @@ public class ReportesInformesController implements Initializable {
                                 idInscripcion, tipos[i]);
                 FilaEvidencia fila = new FilaEvidencia();
                 fila.nombre = nombres[i];
-                fila.idTipo = tipos[i];
+                fila.idTipoEvidencia = tipos[i];
                 if (doc != null) {
                     fila.estado = obtenerNombreEstado(
                             doc.getIdEstadoDocumento());
-                    fila.archivo = doc.getNombreArchivo() != null
+                    fila.nombreArchivo = doc.getNombreArchivo() != null
                             ? doc.getNombreArchivo() : "";
                 } else {
                     fila.estado = "Pendiente";
-                    fila.archivo = "";
+                    fila.nombreArchivo = "";
                 }
                 filas.add(fila);
             }
@@ -209,8 +209,9 @@ public class ReportesInformesController implements Initializable {
         FileChooser selector = new FileChooser();
         selector.setTitle("Seleccionar archivo — " + fila.nombre);
 
-        if (fila.idTipo == Constantes.TIPO_EVIDENCIA_PRESENTACION
-                || fila.idTipo
+        if (fila.idTipoEvidencia
+                    == Constantes.TIPO_EVIDENCIA_PRESENTACION
+                || fila.idTipoEvidencia
                    == Constantes.TIPO_EVIDENCIA_PRESENTACION_2) {
             selector.getExtensionFilters().addAll(
                     new FileChooser.ExtensionFilter(
@@ -227,8 +228,9 @@ public class ReportesInformesController implements Initializable {
             return;
         }
         try {
-            if (fila.idTipo == Constantes.TIPO_EVIDENCIA_PRESENTACION
-                    || fila.idTipo
+            if (fila.idTipoEvidencia
+                        == Constantes.TIPO_EVIDENCIA_PRESENTACION
+                    || fila.idTipoEvidencia
                        == Constantes.TIPO_EVIDENCIA_PRESENTACION_2) {
                 Validador.validarExtension(
                         archivo.getName(), ".pdf", ".pptx");
@@ -259,7 +261,7 @@ public class ReportesInformesController implements Initializable {
         try {
             estudianteServicio.entregarDocumento(
                     idInscripcion,
-                    fila.idTipo,
+                    fila.idTipoEvidencia,
                     archivo.getAbsolutePath(),
                     archivo.getName());
             mostrarMensaje(ESTILO_OK,
@@ -318,9 +320,9 @@ public class ReportesInformesController implements Initializable {
      */
     static class FilaEvidencia {
         String nombre = "";
-        int idTipo;
+        int idTipoEvidencia;
         String estado = "Pendiente";
-        String archivo = "";
+        String nombreArchivo = "";
     }
 
 }

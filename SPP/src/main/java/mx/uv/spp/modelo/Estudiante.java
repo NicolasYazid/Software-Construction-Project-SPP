@@ -24,8 +24,8 @@ public class Estudiante {
     private int           idEstudiante;
     private String        matricula;
     private String        nombre;
-    private String        primerApellido;
-    private String        segundoApellido;
+    private String        apellidoPaterno;
+    private String        apellidoMaterno;
     private String        correo;
     private String        contrasena;
     private String        idioma;
@@ -50,8 +50,8 @@ public class Estudiante {
      * @param matricula          Matrícula cifrada con AES-128; identificador
      *                           único de login del estudiante (SEG-04).
      * @param nombre             Nombre(s) cifrado con AES-128.
-     * @param primerApellido     Primer apellido cifrado con AES-128.
-     * @param segundoApellido    Segundo apellido cifrado; null si no aplica.
+     * @param apellidoPaterno    Apellido paterno cifrado con AES-128.
+     * @param apellidoMaterno    Apellido materno cifrado; null si no aplica.
      * @param correo             Correo electrónico cifrado (no se usa para
      *                           login, pero es dato de contacto).
      * @param contrasena         Contraseña cifrada con AES-128 (SEG-04).
@@ -65,16 +65,16 @@ public class Estudiante {
      * @param fechaBloqueo       Momento del bloqueo; null si no bloqueado.
      */
     public Estudiante(int idEstudiante, String matricula,
-            String nombre, String primerApellido,
-            String segundoApellido, String correo,
+            String nombre, String apellidoPaterno,
+            String apellidoMaterno, String correo,
             String contrasena, String idioma,
             String lenguaIndigena, int semestre, String estado,
             int intentosFallidos, LocalDateTime fechaBloqueo) {
         this.idEstudiante    = idEstudiante;
         this.matricula       = matricula;
         this.nombre          = nombre;
-        this.primerApellido  = primerApellido;
-        this.segundoApellido = segundoApellido;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
         this.correo          = correo;
         this.contrasena      = contrasena;
         this.idioma          = idioma;
@@ -141,39 +141,39 @@ public class Estudiante {
     }
 
     /**
-     * Retorna el primer apellido en formato cifrado.
+     * Retorna el apellido paterno en formato cifrado.
      *
-     * @return primer apellido cifrado con AES-128.
+     * @return apellido paterno cifrado con AES-128.
      */
-    public String getPrimerApellido() {
-        return primerApellido;
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
     }
 
     /**
-     * Establece el primer apellido del Estudiante.
+     * Establece el apellido paterno del Estudiante.
      *
-     * @param primerApellido Primer apellido cifrado con AES-128.
+     * @param apellidoPaterno Apellido paterno cifrado con AES-128.
      */
-    public void setPrimerApellido(String primerApellido) {
-        this.primerApellido = primerApellido;
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
     }
 
     /**
-     * Retorna el segundo apellido cifrado, o {@code null} si no tiene.
+     * Retorna el apellido materno cifrado, o {@code null} si no tiene.
      *
-     * @return segundo apellido cifrado, o {@code null}.
+     * @return apellido materno cifrado, o {@code null}.
      */
-    public String getSegundoApellido() {
-        return segundoApellido;
+    public String getApellidoMaterno() {
+        return apellidoMaterno;
     }
 
     /**
-     * Establece el segundo apellido del Estudiante.
+     * Establece el apellido materno del Estudiante.
      *
-     * @param segundoApellido Segundo apellido cifrado; acepta {@code null}.
+     * @param apellidoMaterno Apellido materno cifrado; acepta {@code null}.
      */
-    public void setSegundoApellido(String segundoApellido) {
-        this.segundoApellido = segundoApellido;
+    public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
     }
 
     /**

@@ -77,8 +77,8 @@ public class SeleccionProyectoDAOImpl implements SeleccionProyectoDAO {
         }
 
         int idInscripcion = selecciones.get(0).getIdInscripcion();
-        int estudianteId = obtenerEstudianteId(idInscripcion);
-        if (estudianteId == 0) {
+        int idEstudiante = obtenerEstudianteId(idInscripcion);
+        if (idEstudiante == 0) {
             throw new SQLException(
                     "No se encontró estudiante_id para inscripción "
                     + idInscripcion);
@@ -94,7 +94,7 @@ public class SeleccionProyectoDAOImpl implements SeleccionProyectoDAO {
             for (SeleccionProyecto sel : selecciones) {
                 try (PreparedStatement psInsertarPrioridad =
                         con.prepareStatement(sqlInsertarPrioridad)) {
-                    psInsertarPrioridad.setInt(1, estudianteId);
+                    psInsertarPrioridad.setInt(1, idEstudiante);
                     psInsertarPrioridad.setInt(
                             2, sel.getIdProyecto());
                     psInsertarPrioridad.setInt(
@@ -145,7 +145,7 @@ public class SeleccionProyectoDAOImpl implements SeleccionProyectoDAO {
         try (PreparedStatement psObtenerDisponibles =
                 con.prepareStatement(sqlObtenerDisponibles)) {
             psObtenerDisponibles.setString(1,
-                    Constantes.ESTADO_PROYECTO_DISPONIBLE);
+                    Constantes.ESTADO_ACTIVO);
             try (ResultSet rsProyectos =
                     psObtenerDisponibles.executeQuery()) {
                 while (rsProyectos.next()) {

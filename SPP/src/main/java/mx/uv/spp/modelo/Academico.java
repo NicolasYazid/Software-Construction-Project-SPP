@@ -21,10 +21,10 @@ import java.time.LocalDateTime;
 public abstract class Academico {
 
     private int           id;
-    private String        numPersonal;
+    private String        numeroPersonal;
     private String        nombre;
-    private String        primerApellido;
-    private String        segundoApellido;
+    private String        apellidoPaterno;
+    private String        apellidoMaterno;
     private String        correo;
     private String        contrasena;
     private String        estado;
@@ -45,10 +45,10 @@ public abstract class Academico {
      * sus datos.
      *
      * @param id                 Identificador del registro en la BD.
-     * @param numPersonal        Número de personal UV del académico.
+     * @param numeroPersonal     Número de personal UV del académico.
      * @param nombre             Nombre(s) almacenado cifrado AES-128.
-     * @param primerApellido     Primer apellido, cifrado con AES-128.
-     * @param segundoApellido    Segundo apellido cifrado; null si no aplica.
+     * @param apellidoPaterno    Apellido paterno, cifrado con AES-128.
+     * @param apellidoMaterno    Apellido materno cifrado; null si no aplica.
      * @param correo             Correo cifrado; identificador de login
      *                           para actores académicos (sec. 4).
      * @param contrasena         Contraseña cifrada con AES-128 (SEG-04).
@@ -59,17 +59,17 @@ public abstract class Academico {
      *                           al llegar a 3 se bloquea la cuenta (SEG-01).
      * @param fechaBloqueo       Momento del bloqueo; null si no está bloqueado.
      */
-    protected Academico(int id, String numPersonal,
-            String nombre, String primerApellido,
-            String segundoApellido, String correo,
+    protected Academico(int id, String numeroPersonal,
+            String nombre, String apellidoPaterno,
+            String apellidoMaterno, String correo,
             String contrasena, String estado,
             LocalDate fechaRegistro, int tiempoServicio,
             int intentosFallidos, LocalDateTime fechaBloqueo) {
         this.id              = id;
-        this.numPersonal     = numPersonal;
+        this.numeroPersonal  = numeroPersonal;
         this.nombre          = nombre;
-        this.primerApellido  = primerApellido;
-        this.segundoApellido = segundoApellido;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
         this.correo          = correo;
         this.contrasena      = contrasena;
         this.estado          = estado;
@@ -102,17 +102,17 @@ public abstract class Academico {
      *
      * @return número de personal institucional.
      */
-    public String getNumPersonal() {
-        return numPersonal;
+    public String getNumeroPersonal() {
+        return numeroPersonal;
     }
 
     /**
      * Establece el número de personal UV.
      *
-     * @param numPersonal Clave institucional única del académico.
+     * @param numeroPersonal Clave institucional única del académico.
      */
-    public void setNumPersonal(String numPersonal) {
-        this.numPersonal = numPersonal;
+    public void setNumeroPersonal(String numeroPersonal) {
+        this.numeroPersonal = numeroPersonal;
     }
 
     /**
@@ -134,40 +134,40 @@ public abstract class Academico {
     }
 
     /**
-     * Retorna el primer apellido en formato cifrado.
+     * Retorna el apellido paterno en formato cifrado.
      *
-     * @return primer apellido cifrado con AES-128.
+     * @return apellido paterno cifrado con AES-128.
      */
-    public String getPrimerApellido() {
-        return primerApellido;
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
     }
 
     /**
-     * Establece el primer apellido del académico.
+     * Establece el apellido paterno del académico.
      *
-     * @param primerApellido Primer apellido cifrado con AES-128.
+     * @param apellidoPaterno Apellido paterno cifrado con AES-128.
      */
-    public void setPrimerApellido(String primerApellido) {
-        this.primerApellido = primerApellido;
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
     }
 
     /**
-     * Retorna el segundo apellido en formato cifrado,
-     * o {@code null} si el académico no tiene segundo apellido.
+     * Retorna el apellido materno en formato cifrado,
+     * o {@code null} si el académico no tiene apellido materno.
      *
-     * @return segundo apellido cifrado, o {@code null}.
+     * @return apellido materno cifrado, o {@code null}.
      */
-    public String getSegundoApellido() {
-        return segundoApellido;
+    public String getApellidoMaterno() {
+        return apellidoMaterno;
     }
 
     /**
-     * Establece el segundo apellido del académico.
+     * Establece el apellido materno del académico.
      *
-     * @param segundoApellido Segundo apellido cifrado; acepta {@code null}.
+     * @param apellidoMaterno Apellido materno cifrado; acepta {@code null}.
      */
-    public void setSegundoApellido(String segundoApellido) {
-        this.segundoApellido = segundoApellido;
+    public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
     }
 
     /**
@@ -217,11 +217,11 @@ public abstract class Academico {
     public String getNombreCompleto() {
         StringBuilder completo = new StringBuilder(
                 nombre != null ? nombre : "");
-        if (primerApellido != null && !primerApellido.isEmpty()) {
-            completo.append(" ").append(primerApellido);
+        if (apellidoPaterno != null && !apellidoPaterno.isEmpty()) {
+            completo.append(" ").append(apellidoPaterno);
         }
-        if (segundoApellido != null && !segundoApellido.isEmpty()) {
-            completo.append(" ").append(segundoApellido);
+        if (apellidoMaterno != null && !apellidoMaterno.isEmpty()) {
+            completo.append(" ").append(apellidoMaterno);
         }
         return completo.toString();
     }

@@ -34,7 +34,7 @@ import mx.uv.spp.util.SesionUsuario;
 public class PanelSeccionCoordinadorController implements Initializable {
 
     @FXML private Label  lblNombre;
-    @FXML private Label  lblNumPersonal;
+    @FXML private Label  lblNumeroPersonal;
     @FXML private Label  lblCorreo;
     @FXML private Label  lblMensaje;
     @FXML private Button btnCambiarCoordinador;
@@ -44,7 +44,7 @@ public class PanelSeccionCoordinadorController implements Initializable {
     private static final String VISTA_PROFESORES =
             "/mx/uv/spp/vistas/administrador/PanelProfesores.fxml";
 
-    private static final String MENSAJE_EX01 =
+    private static final String MENSAJE_ERROR_CONEXION_BD =
             "Error: no fue posible conectarse con la base de datos, "
             + "inténtelo de nuevo ahora o en unos minutos.";
 
@@ -167,14 +167,14 @@ public class PanelSeccionCoordinadorController implements Initializable {
 
         if (coordinadorActual == null) {
             lblNombre.setText("Nombre: —");
-            lblNumPersonal.setText("Número de personal: —");
+            lblNumeroPersonal.setText("Número de personal: —");
             lblCorreo.setText("Correo: —");
         } else {
             lblNombre.setText(
                     "Nombre: " + coordinadorActual.getNombreCompleto());
-            lblNumPersonal.setText(
+            lblNumeroPersonal.setText(
                     "Número de personal: "
-                    + coordinadorActual.getNumPersonal());
+                    + coordinadorActual.getNumeroPersonal());
             lblCorreo.setText(
                     "Correo: " + coordinadorActual.getCorreo());
         }
@@ -187,7 +187,7 @@ public class PanelSeccionCoordinadorController implements Initializable {
         Alert alerta = new Alert(AlertType.ERROR);
         alerta.setTitle("Error de conexión con la base de datos");
         alerta.setHeaderText(null);
-        alerta.setContentText(MENSAJE_EX01);
+        alerta.setContentText(MENSAJE_ERROR_CONEXION_BD);
         alerta.setResizable(true);
         alerta.getDialogPane().setMinWidth(ANCHO_MINIMO_ALERTA);
         alerta.getDialogPane().setPrefWidth(ANCHO_MINIMO_ALERTA);

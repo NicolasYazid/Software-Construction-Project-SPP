@@ -42,7 +42,7 @@
                        styleClass="tbl-profesores"
                        VBox.vgrow="ALWAYS">
                 <columns>
-                    <TableColumn fx:id="colNumPersonal"
+                    <TableColumn fx:id="colNumeroPersonal"
                                  text="No. Personal"
                                  prefWidth="160.0" />
                     <TableColumn fx:id="colNombre"
