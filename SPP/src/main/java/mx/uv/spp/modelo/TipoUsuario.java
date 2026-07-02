@@ -12,7 +12,7 @@ package mx.uv.spp.modelo;
  * Determina qué tabla de la base de datos se consulta al autenticar
  * y qué campo se usa como identificador de login: correo electrónico
  * para ADMINISTRADOR, COORDINADOR y PROFESOR; matrícula UV para
- * ESTUDIANTE (sección 4 del CLAUDE.md).
+ * ESTUDIANTE.
  *
  * @author Nicolás Yazid Cruz Hernández
  * @author Isaac Adriano Vázquez Torres
